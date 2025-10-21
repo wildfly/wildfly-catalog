@@ -57,6 +57,16 @@
     "scmURL" : "https://github.com/wildfly/wildfly-cloud-galleon-pack",
     "layers" : [ "base-server", "cloud-default-config", "ejb-dist-cache", "elytron-oidc-client", "embedded-activemq", "jpa", "jpa-distributed", "logging", "mail", "management", "messaging-activemq", "transactions", "undertow", "web-clustering", "webservices" ]
   }, {
+    "mavenCoordinates" : "org.wildfly.extras.grpc:wildfly-grpc-feature-pack:0.1.14.Final",
+    "name" : "gRPC Feature Pack for WildFly",
+    "description" : "This feature pack provides gRPC capabilities for the WildFly Application Server",
+    "licenses" : [ "Apache License, Version 2.0" ],
+    "projectURL" : "https://github.com/wildfly-extras/wildfly-grpc-feature-pack",
+    "scmURL" : "https://github.com/wildfly-extras/wildfly-grpc-feature-pack",
+    "layers" : [ "grpc" ],
+    "modelReference" : "featurePacks/org.wildfly.extras.grpc_wildfly-grpc-feature-pack/doc/reference/index.html",
+    "logMessagesReference" : "featurePacks/org.wildfly.extras.grpc_wildfly-grpc-feature-pack/doc/log-message-reference.html"
+  }, {
     "mavenCoordinates" : "org.wildfly.generative-ai:wildfly-ai-feature-pack:0.8.1",
     "name" : "AI Feature pack for WildFly",
     "description" : "Feature pack to provide AI integration for WildFly",
@@ -13093,6 +13103,51 @@
   }, {
     "name" : "RPC (Remote Procedure Call)",
     "functionalities" : [ {
+      "name" : "grpc",
+      "stability" : "preview",
+      "dependencies" : [ {
+        "name" : "cdi",
+        "optional" : false
+      } ],
+      "managementModel" : {
+        "socket-binding-group" : {
+          "standard-sockets" : {
+            "_address" : "featurePacks/org.wildfly_wildfly-galleon-pack/doc/reference/socket-binding-group/index.html",
+            "socket-binding" : {
+              "grpc" : {
+                "_address" : "featurePacks/org.wildfly_wildfly-galleon-pack/doc/reference/socket-binding-group/socket-binding/index.html",
+                "attributes" : [ {
+                  "name" : "port",
+                  "value" : "${jboss.grpc.port:9555}",
+                  "_address" : "featurePacks/org.wildfly_wildfly-galleon-pack/doc/reference/socket-binding-group/socket-binding/index.html#port"
+                } ]
+              }
+            }
+          }
+        },
+        "subsystem" : {
+          "grpc" : {
+            "_address" : "featurePacks/org.wildfly.extras.grpc_wildfly-grpc-feature-pack/doc/reference/subsystem/grpc/index.html",
+            "attributes" : [ {
+              "name" : "socket-binding",
+              "value" : "grpc",
+              "_address" : "featurePacks/org.wildfly.extras.grpc_wildfly-grpc-feature-pack/doc/reference/subsystem/grpc/index.html#socket-binding"
+            } ]
+          }
+        }
+      },
+      "configurations" : [ {
+        "_address" : "featurePacks/org.wildfly_wildfly-galleon-pack/doc/reference/socket-binding-group/socket-binding/index.html#port",
+        "attribute" : "port",
+        "system-properties" : [ "jboss.grpc.port" ],
+        "environment-variables" : [ ]
+      } ],
+      "packages" : [ "org.wildfly.extension.grpc" ],
+      "feature-pack" : "org.wildfly.extras.grpc:wildfly-grpc-feature-pack:0.1.14.Final",
+      "description" : "This layer can be used to deploy gRPC services in the application server.",
+      "glowAddOn" : "grpc",
+      "glowDiscoverable" : false
+    }, {
       "name" : "iiop-openjdk",
       "stability" : "default",
       "dependencies" : [ {
