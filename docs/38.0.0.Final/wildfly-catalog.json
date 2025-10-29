@@ -67,6 +67,14 @@
     "modelReference" : "featurePacks/org.wildfly.extras.grpc_wildfly-grpc-feature-pack/doc/reference/index.html",
     "logMessagesReference" : "featurePacks/org.wildfly.extras.grpc_wildfly-grpc-feature-pack/doc/log-message-reference.html"
   }, {
+    "mavenCoordinates" : "org.wildfly:wildfly-myfaces-feature-pack:2.0.1.Final",
+    "name" : "MyFaces 4 Support for WildFly - Feature Pack",
+    "description" : "MyFaces 4 Support for WildFly - Feature Pack",
+    "licenses" : [ "Apache License, Version 2.0" ],
+    "projectURL" : "https://wildfly.org",
+    "scmURL" : "https://github.com/wildfly-extras/wildfly-myfaces-feature-pack",
+    "layers" : [ "myfaces" ]
+  }, {
     "mavenCoordinates" : "org.wildfly.generative-ai:wildfly-ai-feature-pack:0.8.1",
     "name" : "AI Feature pack for WildFly",
     "description" : "Feature pack to provide AI integration for WildFly",
@@ -11564,6 +11572,34 @@
         "valueDescription" : "Comma separated list. Annotations are java package, full class or pattern ending with .*. e.g.: `org.eclipse.microprofile.config.inject`"
       } ],
       "glowDiscoverable" : true
+    }, {
+      "name" : "myfaces",
+      "stability" : "default",
+      "dependencies" : [ {
+        "name" : "cdi",
+        "optional" : false
+      }, {
+        "name" : "jsf",
+        "optional" : false
+      } ],
+      "managementModel" : {
+        "subsystem" : {
+          "jsf" : {
+            "_address" : "featurePacks/org.wildfly_wildfly-galleon-pack/doc/reference/subsystem/jsf/index.html",
+            "attributes" : [ {
+              "name" : "default-jsf-impl-slot",
+              "value" : "myfaces",
+              "_address" : "featurePacks/org.wildfly_wildfly-galleon-pack/doc/reference/subsystem/jsf/index.html#default-jsf-impl-slot"
+            } ]
+          }
+        }
+      },
+      "configurations" : [ ],
+      "packages" : [ "jakarta.faces.api.myfaces", "jakarta.faces.impl.myfaces", "org.jboss.as.jsf", "org.jboss.as.jsf-injection.myfaces" ],
+      "feature-pack" : "org.wildfly:wildfly-myfaces-feature-pack:2.0.1.Final",
+      "description" : "Support for Jakarta Faces, MyFaces implementation.",
+      "glowAddOn" : "myfaces",
+      "glowDiscoverable" : false
     }, {
       "name" : "naming",
       "stability" : "default",
