@@ -75,6 +75,16 @@
     "scmURL" : "https://github.com/wildfly-extras/wildfly-myfaces-feature-pack",
     "layers" : [ "myfaces" ]
   }, {
+    "mavenCoordinates" : "org.wildfly.extras.graphql:wildfly-microprofile-graphql-feature-pack:2.6.0.Final",
+    "name" : "WildFly MicroProfile GraphQL - Feature Pack",
+    "description" : "WildFly implementation of MicroProfile GraphQL",
+    "licenses" : [ "Apache License, Version 2.0" ],
+    "projectURL" : "https://github.com/wildfly-extras/wildfly-graphql-feature-pack/",
+    "scmURL" : "https://github.com/wildfly-extras/wildfly-graphql-feature-pack",
+    "layers" : [ "microprofile-graphql" ],
+    "modelReference" : "featurePacks/org.wildfly.extras.graphql_wildfly-microprofile-graphql-feature-pack/doc/reference/index.html",
+    "logMessagesReference" : "featurePacks/org.wildfly.extras.graphql_wildfly-microprofile-graphql-feature-pack/doc/log-message-reference.html"
+  }, {
     "mavenCoordinates" : "org.wildfly.generative-ai:wildfly-ai-feature-pack:0.8.1",
     "name" : "AI Feature pack for WildFly",
     "description" : "Feature pack to provide AI integration for WildFly",
@@ -12773,6 +12783,40 @@
       }, {
         "name" : "org.wildfly.rule.annotations",
         "value" : "org.eclipse.microprofile.rest.client.annotation,org.eclipse.microprofile.rest.client.inject",
+        "ruleDescription" : "Expected annotations ",
+        "valueDescription" : "Comma separated list. Annotations are java package, full class or pattern ending with .*. e.g.: `org.eclipse.microprofile.config.inject`"
+      } ],
+      "glowDiscoverable" : true
+    } ]
+  }, {
+    "name" : "Microprofile",
+    "functionalities" : [ {
+      "name" : "microprofile-graphql",
+      "stability" : "community",
+      "dependencies" : [ {
+        "name" : "cdi",
+        "optional" : false
+      }, {
+        "name" : "microprofile-config",
+        "optional" : false
+      } ],
+      "managementModel" : {
+        "subsystem" : {
+          "microprofile-graphql-client-smallrye" : {
+            "_address" : "featurePacks/org.wildfly.extras.graphql_wildfly-microprofile-graphql-feature-pack/doc/reference/subsystem/microprofile-graphql-client-smallrye/index.html"
+          },
+          "microprofile-graphql-smallrye" : {
+            "_address" : "featurePacks/org.wildfly.extras.graphql_wildfly-microprofile-graphql-feature-pack/doc/reference/subsystem/microprofile-graphql-smallrye/index.html"
+          }
+        }
+      },
+      "configurations" : [ ],
+      "packages" : [ "io.smallrye.graphql", "io.smallrye.graphql.api", "io.smallrye.graphql.client.api", "io.smallrye.graphql.client.common", "io.smallrye.graphql.client.vertx", "org.wildfly.extension.microprofile.graphql-client-smallrye", "org.wildfly.extension.microprofile.graphql-smallrye" ],
+      "feature-pack" : "org.wildfly.extras.graphql:wildfly-microprofile-graphql-feature-pack:2.6.0.Final",
+      "description" : "Support for microprofile graphql",
+      "glowRules" : [ {
+        "name" : "org.wildfly.rule.annotations",
+        "value" : "org.eclipse.microprofile.graphql",
         "ruleDescription" : "Expected annotations ",
         "valueDescription" : "Comma separated list. Annotations are java package, full class or pattern ending with .*. e.g.: `org.eclipse.microprofile.config.inject`"
       } ],
