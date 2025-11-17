@@ -1,0 +1,2818 @@
+{
+  "groupId" : "org.wildfly.generative-ai",
+  "artifactId" : "wildfly-ai-feature-pack",
+  "version" : "0.8.1",
+  "name" : "AI Feature pack for WildFly",
+  "description" : "Feature pack to provide AI integration for WildFly",
+  "licenses" : [ "Apache License, Version 2.0" ],
+  "url" : "https://github.com/wildfly-extras/wildfly-ai-feature-pack",
+  "scm-url" : "https://github.com/wildfly-extras/wildfly-ai-feature-pack",
+  "layers" : [ {
+    "name" : "github-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "github-chat-model" : {
+            "github" : {
+              "_address" : "/subsystem=ai/github-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.GITHUB_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@api-key"
+              }, {
+                "name" : "endpoint",
+                "value" : "${org.wildfly.ai.github.chat.url,env.GITHUB_CHAT_URL:https://models.inference.ai.azure.com}",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@endpoint"
+              }, {
+                "name" : "log-requests-responses",
+                "value" : "${org.wildfly.ai.github.chat.log,env.GITHUB_CHAT_LOG:true}",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@log-requests-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.github.chat.model.name,env.GITHUB_CHAT_MODEL_NAME:gpt-4o-mini}",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@model-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=github"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/github-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Github chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Github Models API for LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,github-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=github]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/github-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "GITHUB_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/github-chat-model=*@@@endpoint",
+      "attribute" : "endpoint",
+      "system-properties" : [ "org.wildfly.ai.github.chat.url" ],
+      "environment-variables" : [ "GITHUB_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/github-chat-model=*@@@log-requests-responses",
+      "attribute" : "log-requests-responses",
+      "system-properties" : [ "org.wildfly.ai.github.chat.log" ],
+      "environment-variables" : [ "GITHUB_CHAT_LOG" ]
+    }, {
+      "_address" : "/subsystem=ai/github-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.github.chat.model.name" ],
+      "environment-variables" : [ "GITHUB_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "com.azure", "dev.langchain4j.github", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "web-search-engines",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "web-search-content-retriever" : {
+            "web-search-retriever" : {
+              "_address" : "/subsystem=ai/web-search-content-retriever=*",
+              "attributes" : [ {
+                "name" : "tavily",
+                "value" : "{api-key=${env.TAVILY_API_KEY}, base-url=https://api.tavily.com, connect-timeout=20000, exclude-domains=[example.org], include-domains=[example.com], include-answer=true}",
+                "_address" : "/subsystem=ai/web-search-content-retriever=*@@@tavily"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "ai"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/web-search-engines/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Web Search Engine content retriever"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Web search engines as content retrievers"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-content-retriever,web-search-engines"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=web-search-retriever]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/web-search-content-retriever=*@@@tavily",
+      "attribute" : "tavily",
+      "system-properties" : [ ],
+      "environment-variables" : [ "TAVILY_API_KEY" ]
+    } ],
+    "packages" : [ "dev.langchain4j.web-search-engines", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "neo4j-content-retriever",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,contentRetrieverName=neo4j-retriever"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/neo4j-content-retriever/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Neo4J content retriever"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Neo4J as a content retriever"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-content-retriever,neo4j-content-retriever"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=neo4j-retriever]"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.neo4j" ]
+  }, {
+    "name" : "mistral-ai-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "mistral-ai-chat-model" : {
+            "mistral" : {
+              "_address" : "/subsystem=ai/mistral-ai-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.MISTRAL_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@api-key"
+              }, {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.mistral.chat.url,env.MISTRAL_CHAT_URL:https://api.mistral.ai/v1}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@base-url"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.mistral.chat.log.request,env.MISTRAL_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.mistral.chat.log.response,env.MISTRAL_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.mistral.chat.model.name,env.MISTRAL_CHAT_MODEL_NAME:mistral-small-latest}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@model-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=mistral"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/mistral-ai-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Mistral chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use MistralAI API for LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,mistral-ai-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=mistral]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "MISTRAL_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.mistral.chat.url" ],
+      "environment-variables" : [ "MISTRAL_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.mistral.chat.log.request" ],
+      "environment-variables" : [ "MISTRAL_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.mistral.chat.log.response" ],
+      "environment-variables" : [ "MISTRAL_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.mistral.chat.model.name" ],
+      "environment-variables" : [ "MISTRAL_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.mistral-ai", "dev.langchain4j.openai", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "github-streaming-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "github-chat-model" : {
+            "streaming-github" : {
+              "_address" : "/subsystem=ai/github-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.GITHUB_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@api-key"
+              }, {
+                "name" : "endpoint",
+                "value" : "${org.wildfly.ai.github.chat.url,env.GITHUB_CHAT_URL:https://models.inference.ai.azure.com}",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@endpoint"
+              }, {
+                "name" : "log-requests-responses",
+                "value" : "${org.wildfly.ai.github.chat.log,env.GITHUB_CHAT_LOG:true}",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@log-requests-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.github.chat.model.name,env.GITHUB_CHAT_MODEL_NAME:gpt-4o-mini}",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@model-name"
+              }, {
+                "name" : "streaming",
+                "value" : "true",
+                "_address" : "/subsystem=ai/github-chat-model=*@@@streaming"
+              } ]
+            }
+          }
+        },
+        "logging" : {
+          "_address" : "/subsystem=logging",
+          "logger" : {
+            "com.azure" : {
+              "_address" : "/subsystem=logging/logger=*",
+              "attributes" : [ {
+                "name" : "level",
+                "value" : "OFF",
+                "_address" : "/subsystem=logging/logger=*@@@level"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-github"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/github-streaming-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Github streaming chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Github Models for LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,github-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-github]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/github-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "GITHUB_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/github-chat-model=*@@@endpoint",
+      "attribute" : "endpoint",
+      "system-properties" : [ "org.wildfly.ai.github.chat.url" ],
+      "environment-variables" : [ "GITHUB_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/github-chat-model=*@@@log-requests-responses",
+      "attribute" : "log-requests-responses",
+      "system-properties" : [ "org.wildfly.ai.github.chat.log" ],
+      "environment-variables" : [ "GITHUB_CHAT_LOG" ]
+    }, {
+      "_address" : "/subsystem=ai/github-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.github.chat.model.name" ],
+      "environment-variables" : [ "GITHUB_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "com.azure", "dev.langchain4j.github", "org.apache.commons.logging", "org.apache.logging.log4j.api", "org.jboss.as.logging", "org.jboss.logging.jul-to-slf4j-stub", "org.slf4j", "org.slf4j.impl", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "ollama-neo4j-content-retriever",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    }, {
+      "name" : "neo4j-content-retriever",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "neo4j-content-retriever" : {
+            "ollama-neo4j-retriever" : {
+              "_address" : "/subsystem=ai/neo4j-content-retriever=*",
+              "attributes" : [ {
+                "name" : "bolt-url",
+                "value" : "${org.wildfly.ai.neo4j.url,env.NEO4J_URL:neo4j://localhost:7687}",
+                "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@bolt-url"
+              }, {
+                "name" : "chat-language-model",
+                "value" : "cypher_model",
+                "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@chat-language-model"
+              }, {
+                "name" : "credential-reference",
+                "value" : "{clear-text=${org.wildfly.ai.neo4j.password,env.NEO4J_PASSWORD:neo4jpassword}}",
+                "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@credential-reference"
+              }, {
+                "name" : "username",
+                "value" : "${org.wildfly.ai.neo4j.username,env.NEO4J_USER:neo4j}",
+                "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@username"
+              } ]
+            }
+          },
+          "ollama-chat-model" : {
+            "cypher_model" : {
+              "_address" : "/subsystem=ai/ollama-chat-model=*",
+              "attributes" : [ {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.ollama.chat.url,env.OLLAMA_NEO4J_CHAT_URL:http://127.0.0.1:11434}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url"
+              }, {
+                "name" : "connect-timeout",
+                "value" : "600000",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@connect-timeout"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.ollama.chat.log.request,env.OLLAMA_NEO4J_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.ollama.chat.log.response,env.OLLAMA_NEO4J_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.ollama.chat.model.name,env.OLLAMA_NEO4J_CHAT_MODEL_NAME:tomasonjo/llama3-text2cypher-demo}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,contentRetrieverName=ollama-neo4j-retriever"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/neo4j-content-retriever/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Neo4J content retriever using Ollama model for query generation"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Neo4J as a content retriever"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-content-retriever,neo4j-content-retriever"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=ollama-neo4j-retriever]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@bolt-url",
+      "attribute" : "bolt-url",
+      "system-properties" : [ "org.wildfly.ai.neo4j.url" ],
+      "environment-variables" : [ "NEO4J_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@credential-reference",
+      "attribute" : "credential-reference",
+      "system-properties" : [ "org.wildfly.ai.neo4j.password" ],
+      "environment-variables" : [ "NEO4J_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@username",
+      "attribute" : "username",
+      "system-properties" : [ "org.wildfly.ai.neo4j.username" ],
+      "environment-variables" : [ "NEO4J_USER" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.url" ],
+      "environment-variables" : [ "OLLAMA_NEO4J_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.log.request" ],
+      "environment-variables" : [ "OLLAMA_NEO4J_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.log.response" ],
+      "environment-variables" : [ "OLLAMA_NEO4J_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.model.name" ],
+      "environment-variables" : [ "OLLAMA_NEO4J_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.neo4j", "dev.langchain4j.ollama", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "openai-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "openai-chat-model" : {
+            "openai" : {
+              "_address" : "/subsystem=ai/openai-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.OPENAI_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+              }, {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.openai.chat.url,env.OPENAI_CHAT_URL:https://api.openai.com/v1}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.openai.chat.log.request,env.OPENAI_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.openai.chat.log.response,env.OPENAI_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.openai.chat.model.name,env.OPENAI_CHAT_MODEL_NAME:llama3-8b-8192}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=openai"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/openai-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for OpenAI chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use OpenAI API for LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,openai-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=openai]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "OPENAI_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.url" ],
+      "environment-variables" : [ "OPENAI_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.log.request" ],
+      "environment-variables" : [ "OPENAI_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.log.response" ],
+      "environment-variables" : [ "OPENAI_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.model.name" ],
+      "environment-variables" : [ "OPENAI_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.openai", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "ollama-streaming-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "ollama-chat-model" : {
+            "streaming-ollama" : {
+              "_address" : "/subsystem=ai/ollama-chat-model=*",
+              "attributes" : [ {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.ollama.chat.url,env.OLLAMA_CHAT_URL:http://127.0.0.1:11434}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url"
+              }, {
+                "name" : "connect-timeout",
+                "value" : "600000",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@connect-timeout"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.ollama.chat.log.request,env.OLLAMA_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.ollama.chat.log.response,env.OLLAMA_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.ollama.chat.model.name,env.OLLAMA_CHAT_MODEL_NAME:llama3.1:8b}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name"
+              }, {
+                "name" : "streaming",
+                "value" : "true",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@streaming"
+              }, {
+                "name" : "temperature",
+                "value" : "${org.wildfly.ai.ollama.chat.temperature,env.OLLAMA_CHAT_TEMPERATURE:0.9}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@temperature"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-ollama"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/ollama-streaming-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Ollama streaming chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use ollama for LLM interactions and embeddings"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,ollama-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-ollama]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.url" ],
+      "environment-variables" : [ "OLLAMA_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.log.request" ],
+      "environment-variables" : [ "OLLAMA_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.log.response" ],
+      "environment-variables" : [ "OLLAMA_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.model.name" ],
+      "environment-variables" : [ "OLLAMA_CHAT_MODEL_NAME" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@temperature",
+      "attribute" : "temperature",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.temperature" ],
+      "environment-variables" : [ "OLLAMA_CHAT_TEMPERATURE" ]
+    } ],
+    "packages" : [ "dev.langchain4j.ollama", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "weaviate-embedding-store",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "socket-binding-group" : {
+        "standard-sockets" : {
+          "_address" : "/socket-binding-group=*",
+          "remote-destination-outbound-socket-binding" : {
+            "${org.wildfly.ai.weaviate.socket-binding,env.WEAVIATE_SOCKET_BINDING:weaviate}" : {
+              "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+              "attributes" : [ {
+                "name" : "host",
+                "value" : "${org.wildfly.ai.weaviate.host,env.WEAVIATE_HOST:localhost}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host"
+              }, {
+                "name" : "port",
+                "value" : "${org.wildfly.ai.weaviate.port,env.WEAVIATE_PORT:8090}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port"
+              } ]
+            }
+          }
+        }
+      },
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "weaviate-embedding-store" : {
+            "weaviate" : {
+              "_address" : "/subsystem=ai/weaviate-embedding-store=*",
+              "attributes" : [ {
+                "name" : "metadata",
+                "value" : "[url,language,parent_url,file_name,file_path,title,subtitle]",
+                "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@metadata"
+              }, {
+                "name" : "object-class",
+                "value" : "${org.wildfly.ai.weaviate.object-class,env.WEAVIATE_OBJECT_CLASS:Simple}",
+                "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@object-class"
+              }, {
+                "name" : "socket-binding",
+                "value" : "${org.wildfly.ai.weaviate.socket-binding,env.WEAVIATE_SOCKET_BINDING:weaviate}",
+                "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@socket-binding"
+              }, {
+                "name" : "ssl-enabled",
+                "value" : "${org.wildfly.ai.weaviate.ssl-enabled,env.WEAVIATE_SSL_ENABLED:false}",
+                "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@ssl-enabled"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/weaviate-embedding-store/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Weaviate embedding store"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Weaviate as an embedding store"
+    }, {
+      "name" : "org.wildfly.rule.expect-add-on-family",
+      "value" : "ai-embedding-model"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-store,weaviate-embedding-store"
+    } ],
+    "configurations" : [ {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host",
+      "attribute" : "host",
+      "system-properties" : [ "org.wildfly.ai.weaviate.host" ],
+      "environment-variables" : [ "WEAVIATE_HOST" ]
+    }, {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port",
+      "attribute" : "port",
+      "system-properties" : [ "org.wildfly.ai.weaviate.port" ],
+      "environment-variables" : [ "WEAVIATE_PORT" ]
+    }, {
+      "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@object-class",
+      "attribute" : "object-class",
+      "system-properties" : [ "org.wildfly.ai.weaviate.object-class" ],
+      "environment-variables" : [ "WEAVIATE_OBJECT_CLASS" ]
+    }, {
+      "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@socket-binding",
+      "attribute" : "socket-binding",
+      "system-properties" : [ "org.wildfly.ai.weaviate.socket-binding" ],
+      "environment-variables" : [ "WEAVIATE_SOCKET_BINDING" ]
+    }, {
+      "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@ssl-enabled",
+      "attribute" : "ssl-enabled",
+      "system-properties" : [ "org.wildfly.ai.weaviate.ssl-enabled" ],
+      "environment-variables" : [ "WEAVIATE_SSL_ENABLED" ]
+    } ],
+    "packages" : [ "dev.langchain4j.weaviate", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "wasm",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ee-concurrency",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "wasm" : {
+          "_address" : "/subsystem=wasm"
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.class",
+      "value" : "org.wildfly.wasm.api.*"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "WASM"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for WASM WASI subsystem"
+    }, {
+      "name" : "org.wildfly.rule.annotations",
+      "value" : "org.wildfly.wasm.api.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.wildfly.extension.wasm" ]
+  }, {
+    "name" : "ollama-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "ollama-chat-model" : {
+            "ollama" : {
+              "_address" : "/subsystem=ai/ollama-chat-model=*",
+              "attributes" : [ {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.ollama.chat.url,env.OLLAMA_CHAT_URL:http://127.0.0.1:11434}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url"
+              }, {
+                "name" : "connect-timeout",
+                "value" : "600000",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@connect-timeout"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.ollama.chat.log.request,env.OLLAMA_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.ollama.chat.log.response,env.OLLAMA_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.ollama.chat.model.name,env.OLLAMA_CHAT_MODEL_NAME:llama3.1:8b}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name"
+              }, {
+                "name" : "temperature",
+                "value" : "${org.wildfly.ai.ollama.chat.temperature,env.OLLAMA_CHAT_TEMPERATURE:0.9}",
+                "_address" : "/subsystem=ai/ollama-chat-model=*@@@temperature"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=ollama"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/ollama-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Ollama chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use ollama for LLM interactions and embeddings"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,ollama-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=ollama]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.url" ],
+      "environment-variables" : [ "OLLAMA_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.log.request" ],
+      "environment-variables" : [ "OLLAMA_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.log.response" ],
+      "environment-variables" : [ "OLLAMA_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.model.name" ],
+      "environment-variables" : [ "OLLAMA_CHAT_MODEL_NAME" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-chat-model=*@@@temperature",
+      "attribute" : "temperature",
+      "system-properties" : [ "org.wildfly.ai.ollama.chat.temperature" ],
+      "environment-variables" : [ "OLLAMA_CHAT_TEMPERATURE" ]
+    } ],
+    "packages" : [ "dev.langchain4j.ollama", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-model-all-minilm-l6-v2-q",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-model" : {
+            "all-minilm-l6-v2-q" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+              "attributes" : [ {
+                "name" : "embedding-class",
+                "value" : "dev.langchain4j.model.embedding.onnx.allminilml6v2q.AllMiniLmL6V2QuantizedEmbeddingModel",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+              }, {
+                "name" : "module",
+                "value" : "dev.langchain4j.embeddings.all-minilm-l6-v2-q",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,in-memory-embedding-model-all-minilm-l6-v2-q"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for all-minilm-l6-v2-q in memory embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Quantized SentenceTransformers all-MiniLM-L6-v2 embedding model that runs within your Java application's process."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.embeddings.all-minilm-l6-v2-q", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "groq-streaming-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "openai-chat-model" : {
+            "streaming-groq" : {
+              "_address" : "/subsystem=ai/openai-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.GROQ_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+              }, {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.groq.chat.url,env.GROQ_CHAT_URL:https://api.groq.com/openai/v1}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.groq.chat.log.request,env.GROQ_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.groq.chat.log.response,env.GROQ_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.groq.chat.model.name,env.GROQ_CHAT_MODEL_NAME:llama3-8b-8192}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+              }, {
+                "name" : "streaming",
+                "value" : "true",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@streaming"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-groq"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/groq-streaming-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Groq streaming chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use OpenAI API for GROQ LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,groq-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-groq]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "GROQ_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.groq.chat.url" ],
+      "environment-variables" : [ "GROQ_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.groq.chat.log.request" ],
+      "environment-variables" : [ "GROQ_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.groq.chat.log.response" ],
+      "environment-variables" : [ "GROQ_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.groq.chat.model.name" ],
+      "environment-variables" : [ "GROQ_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.openai", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "mcp",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ee-concurrency",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "mcp" : {
+          "_address" : "/subsystem=mcp"
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.class",
+      "value" : "org.wildfly.mcp.api.*"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Model Context Protocol"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for MCP subsystem"
+    }, {
+      "name" : "org.wildfly.rule.annotations",
+      "value" : "org.wildfly.mcp.api.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.wildfly.extension.mcp" ]
+  }, {
+    "name" : "default-embedding-content-retriever",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    }, {
+      "name" : "in-memory-embedding-model-all-minilm-l6-v2",
+      "optional" : false
+    }, {
+      "name" : "in-memory-embedding-store",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "embedding-store-content-retriever" : {
+            "embedding-store-retriever" : {
+              "_address" : "/subsystem=ai/embedding-store-content-retriever=*",
+              "attributes" : [ {
+                "name" : "embedding-model",
+                "value" : "all-minilm-l6-v2",
+                "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@embedding-model"
+              }, {
+                "name" : "embedding-store",
+                "value" : "in-memory",
+                "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@embedding-store"
+              }, {
+                "name" : "max-results",
+                "value" : "${org.wildfly.ai.embedding.retriever.max.results,env.EMBEDDING_RETRIEVER_MAX_RESULTS:2}",
+                "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@max-results"
+              }, {
+                "name" : "min-score",
+                "value" : "${org.wildfly.ai.embedding.retriever.min.score,env.EMBEDDING_RETRIEVER_MIN_SCORE:0.7}",
+                "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@min-score"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "all-dependencies"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,contentRetrieverName=embedding-store-retriever"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/default-embedding-content-retriever/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for a default embedding content retriever using in memory embedding store and all-minilm-l6-v2 embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use embedding content retriever"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-content-retriever,default-embedding-content-retriever"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=embedding-store-retriever]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@max-results",
+      "attribute" : "max-results",
+      "system-properties" : [ "org.wildfly.ai.embedding.retriever.max.results" ],
+      "environment-variables" : [ "EMBEDDING_RETRIEVER_MAX_RESULTS" ]
+    }, {
+      "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@min-score",
+      "attribute" : "min-score",
+      "system-properties" : [ "org.wildfly.ai.embedding.retriever.min.score" ],
+      "environment-variables" : [ "EMBEDDING_RETRIEVER_MIN_SCORE" ]
+    } ],
+    "packages" : [ "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-model-bge-small-en-v15-q",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-model" : {
+            "bge-small-en-v15-q" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+              "attributes" : [ {
+                "name" : "embedding-class",
+                "value" : "dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+              }, {
+                "name" : "module",
+                "value" : "dev.langchain4j.embeddings.bge-small-en-v15-q",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,in-memory-embedding-model-bge-small-en-v15-q"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for bge-small-en-v15-q in memory embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Quantized BAAI bge-small-en embedding model that runs within your Java application's process."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.embeddings.bge-small-en-v15-q", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-model-all-minilm-l6-v2",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-model" : {
+            "all-minilm-l6-v2" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+              "attributes" : [ {
+                "name" : "embedding-class",
+                "value" : "dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+              }, {
+                "name" : "module",
+                "value" : "dev.langchain4j.embeddings.all-minilm-l6-v2",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,in-memory-embedding-model-all-minilm-l6-v2"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for all-minilm-l6-v2 in memory embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "SentenceTransformers all-MiniLM-L6-v2 embedding model that runs within your Java application's process."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.embeddings.all-minilm-l6-v2", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "ollama-embedding-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "ollama-embedding-model" : {
+            "ollama" : {
+              "_address" : "/subsystem=ai/ollama-embedding-model=*",
+              "attributes" : [ {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.ollama.embedding.url,env.OLLAMA_EMBEDDING_URL:http://127.0.0.1:11434}",
+                "_address" : "/subsystem=ai/ollama-embedding-model=*@@@base-url"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.ollama.embedding.log.request,env.OLLAMA_EMBEDDING_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/ollama-embedding-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.ollama.embedding.log.response,env.OLLAMA_EMBEDDING_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/ollama-embedding-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.ollama.embedding.model.name,env.OLLAMA_EMBEDDING_MODEL_NAME:llama3.1:8b}",
+                "_address" : "/subsystem=ai/ollama-embedding-model=*@@@model-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/ollama-embedding-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Ollama embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use ollama for embedding"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,ollama-embedding-model"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/ollama-embedding-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.ollama.embedding.url" ],
+      "environment-variables" : [ "OLLAMA_EMBEDDING_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-embedding-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.ollama.embedding.log.request" ],
+      "environment-variables" : [ "OLLAMA_EMBEDDING_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-embedding-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.ollama.embedding.log.response" ],
+      "environment-variables" : [ "OLLAMA_EMBEDDING_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/ollama-embedding-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.ollama.embedding.model.name" ],
+      "environment-variables" : [ "OLLAMA_EMBEDDING_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.ollama", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "openai-streaming-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "openai-chat-model" : {
+            "streaming-openai" : {
+              "_address" : "/subsystem=ai/openai-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.OPENAI_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+              }, {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.openai.chat.url,env.OPENAI_CHAT_URL:https://api.openai.com/v1}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.openai.chat.log.request,env.OPENAI_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.openai.chat.log.response,env.OPENAI_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.openai.chat.model.name,env.OPENAI_CHAT_MODEL_NAME:llama3-8b-8192}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+              }, {
+                "name" : "streaming",
+                "value" : "true",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@streaming"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-openai"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/openai-streaming-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for OpenAI streaming chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use OpenAI API for LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,openai-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-openai]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "OPENAI_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.url" ],
+      "environment-variables" : [ "OPENAI_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.log.request" ],
+      "environment-variables" : [ "OPENAI_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.log.response" ],
+      "environment-variables" : [ "OPENAI_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.model.name" ],
+      "environment-variables" : [ "OPENAI_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.openai", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-model-bge-small-en-q",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-model" : {
+            "bge-small-en" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+              "attributes" : [ {
+                "name" : "embedding-class",
+                "value" : "dev.langchain4j.model.embedding.onnx.bgesmallenq.BgeSmallEnQuantizedEmbeddingModel",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+              }, {
+                "name" : "module",
+                "value" : "dev.langchain4j.embeddings.bge-small-en-q",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,in-memory-embedding-model-bge-small-en-q"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for all-bge-small-en-q in memory embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Quantized BAAI bge-small-en embedding model that runs within your Java application's process."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.embeddings.bge-small-en-q", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "openai-neo4j-content-retriever",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    }, {
+      "name" : "neo4j-content-retriever",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "neo4j-content-retriever" : {
+            "openai-neo4j-retriever" : {
+              "_address" : "/subsystem=ai/neo4j-content-retriever=*",
+              "attributes" : [ {
+                "name" : "bolt-url",
+                "value" : "${org.wildfly.ai.neo4j.url,env.NEO4J_URL:neo4j://localhost:7687}",
+                "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@bolt-url"
+              }, {
+                "name" : "chat-language-model",
+                "value" : "cypher_model",
+                "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@chat-language-model"
+              }, {
+                "name" : "credential-reference",
+                "value" : "{clear-text=${org.wildfly.ai.neo4j.password,env.NEO4J_PASSWORD:neo4jpassword}}",
+                "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@credential-reference"
+              }, {
+                "name" : "username",
+                "value" : "${org.wildfly.ai.neo4j.username,env.NEO4J_USER:neo4j}",
+                "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@username"
+              } ]
+            }
+          },
+          "openai-chat-model" : {
+            "cypher_model" : {
+              "_address" : "/subsystem=ai/openai-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.OPENAI_NEO4J_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+              }, {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.openai.chat.url,env.OPENAI_NEO4J_CHAT_URL:https://api.openai.com/v1}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.openai.chat.log.request,env.OPENAI_NEO4J_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.openai.chat.log.response,env.OPENAI_NEO4J_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.openai.chat.model.name,env.OPENAI_NEO4J_CHAT_MODEL_NAME:llama3-8b-8192}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,contentRetrieverName=openai-neo4j-retriever"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/neo4j-content-retriever/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Neo4J content retriever using OpenAI model for query generation"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Neo4J as a content retriever"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-content-retriever,neo4j-content-retriever"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=openai-neo4j-retriever]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@bolt-url",
+      "attribute" : "bolt-url",
+      "system-properties" : [ "org.wildfly.ai.neo4j.url" ],
+      "environment-variables" : [ "NEO4J_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@credential-reference",
+      "attribute" : "credential-reference",
+      "system-properties" : [ "org.wildfly.ai.neo4j.password" ],
+      "environment-variables" : [ "NEO4J_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@username",
+      "attribute" : "username",
+      "system-properties" : [ "org.wildfly.ai.neo4j.username" ],
+      "environment-variables" : [ "NEO4J_USER" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "OPENAI_NEO4J_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.url" ],
+      "environment-variables" : [ "OPENAI_NEO4J_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.log.request" ],
+      "environment-variables" : [ "OPENAI_NEO4J_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.log.response" ],
+      "environment-variables" : [ "OPENAI_NEO4J_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.model.name" ],
+      "environment-variables" : [ "OPENAI_NEO4J_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.neo4j", "dev.langchain4j.openai", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "mcp-client-stdio",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "mcp-client-stdio" : {
+            "mcp-stdio" : {
+              "_address" : "/subsystem=ai/mcp-client-stdio=*",
+              "attributes" : [ {
+                "name" : "args",
+                "value" : "[]",
+                "_address" : "/subsystem=ai/mcp-client-stdio=*@@@args"
+              }, {
+                "name" : "cmd",
+                "value" : "java",
+                "_address" : "/subsystem=ai/mcp-client-stdio=*@@@cmd"
+              } ]
+            }
+          },
+          "mcp-tool-provider" : {
+            "mcp-stdio" : {
+              "_address" : "/subsystem=ai/mcp-tool-provider=*",
+              "attributes" : [ {
+                "name" : "mcp-clients",
+                "value" : "[mcp-stdio]",
+                "_address" : "/subsystem=ai/mcp-tool-provider=*@@@mcp-clients"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,toolProviderName=mcp-stdio"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for MCP stdio client"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use MCP SSE client as tool provider LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-mcp-client,mcp-client-sse"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.mcp-client", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "ai",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai"
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.class",
+      "value" : "dev.langchain4j.*,org.eclipse.microprofile.ai.llm.*"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for LangChain4j Integration"
+    }, {
+      "name" : "org.wildfly.rule.annotations",
+      "value" : "dev.langchain4j.*,org.eclipse.microprofile.ai.llm.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-model-e5-small-v2",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-model" : {
+            "e5-small-v2" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+              "attributes" : [ {
+                "name" : "embedding-class",
+                "value" : "dev.langchain4j.model.embedding.onnx.e5smallv2.E5SmallV2EmbeddingModel",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+              }, {
+                "name" : "module",
+                "value" : "dev.langchain4j.embeddings.e5-small-v2",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,in-memory-embedding-model-e5-small-v2"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for e5-small-v2 in memory embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Microsoft E5-small-v2 embedding model that runs within your Java application's process."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.embeddings.e5-small-v2", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "mcp-server",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "mcp",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "mcp" : {
+          "_address" : "/subsystem=mcp",
+          "mcp-server" : {
+            "server" : {
+              "_address" : "/subsystem=mcp/mcp-server=*",
+              "attributes" : [ {
+                "name" : "messages-path",
+                "value" : "messages",
+                "_address" : "/subsystem=mcp/mcp-server=*@@@messages-path"
+              }, {
+                "name" : "sse-path",
+                "value" : "sse",
+                "_address" : "/subsystem=mcp/mcp-server=*@@@sse-path"
+              }, {
+                "name" : "streamable-path",
+                "value" : "stream",
+                "_address" : "/subsystem=mcp/mcp-server=*@@@streamable-path"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.class",
+      "value" : "org.wildfly.mcp.api.*"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Model Context Protocol Server"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for MCP Server"
+    }, {
+      "name" : "org.wildfly.rule.annotations",
+      "value" : "org.wildfly.mcp.api.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.wildfly.extension.mcp" ]
+  }, {
+    "name" : "chroma-embedding-store",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "chroma-embedding-store" : {
+            "chroma" : {
+              "_address" : "/subsystem=ai/chroma-embedding-store=*",
+              "attributes" : [ {
+                "name" : "api-version",
+                "value" : "${org.wildfly.ai.chroma.api-version,env.CHROMA_API_VERSION:V2}",
+                "_address" : "/subsystem=ai/chroma-embedding-store=*@@@api-version"
+              }, {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.chroma.url,env.CHROMA_URL:http://localhost:8000}",
+                "_address" : "/subsystem=ai/chroma-embedding-store=*@@@base-url"
+              }, {
+                "name" : "connect-timeout",
+                "value" : "${org.wildfly.ai.chroma.timeout,env.CHROMA_TIMEOUT:20000}",
+                "_address" : "/subsystem=ai/chroma-embedding-store=*@@@connect-timeout"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.chroma.log.request,env.CHROMA_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/chroma-embedding-store=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.chroma.log.response,env.CHROMA_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/chroma-embedding-store=*@@@log-responses"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/chroma-embedding-store/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for ChromaDB as an embedding store"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Chroma as an embedding store"
+    }, {
+      "name" : "org.wildfly.rule.expect-add-on-family",
+      "value" : "ai-embedding-model"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-store,chroma-embedding-store"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/chroma-embedding-store=*@@@api-version",
+      "attribute" : "api-version",
+      "system-properties" : [ "org.wildfly.ai.chroma.api-version" ],
+      "environment-variables" : [ "CHROMA_API_VERSION" ]
+    }, {
+      "_address" : "/subsystem=ai/chroma-embedding-store=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.chroma.url" ],
+      "environment-variables" : [ "CHROMA_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/chroma-embedding-store=*@@@connect-timeout",
+      "attribute" : "connect-timeout",
+      "system-properties" : [ "org.wildfly.ai.chroma.timeout" ],
+      "environment-variables" : [ "CHROMA_TIMEOUT" ]
+    }, {
+      "_address" : "/subsystem=ai/chroma-embedding-store=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.chroma.log.request" ],
+      "environment-variables" : [ "CHROMA_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/chroma-embedding-store=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.chroma.log.response" ],
+      "environment-variables" : [ "CHROMA_LOG_RESPONSE" ]
+    } ],
+    "packages" : [ "dev.langchain4j.chroma", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "chat-memory-provider",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "chat-memory" : {
+            "chat-memory" : {
+              "_address" : "/subsystem=ai/chat-memory=*",
+              "attributes" : [ {
+                "name" : "size",
+                "value" : "${org.wildfly.ai.chat-memory.size,env.CHAT_MEMORY_SIZE:5}",
+                "_address" : "/subsystem=ai/chat-memory=*@@@size"
+              }, {
+                "name" : "type",
+                "value" : "${org.wildfly.ai.chat-memory.type,env.CHAT_MEMORY_TYPE:MESSAGE}",
+                "_address" : "/subsystem=ai/chat-memory=*@@@type"
+              }, {
+                "name" : "use-http-session",
+                "value" : "${org.wildfly.ai.chat-memory.session,env.CHAT_MEMORY_SESSION:true}",
+                "_address" : "/subsystem=ai/chat-memory=*@@@use-http-session"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,chatMemoryProviderName=chat-memory"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/chat-memory-provider/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for ChatMemory"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Chat Memory Provider to keep track of the exchanges with a LLM"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,chat-memory-provider"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.memory.chat.ChatMemoryProvider,jakarta.inject.Named[value=chat-memory]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/chat-memory=*@@@size",
+      "attribute" : "size",
+      "system-properties" : [ "org.wildfly.ai.chat-memory.size" ],
+      "environment-variables" : [ "CHAT_MEMORY_SIZE" ]
+    }, {
+      "_address" : "/subsystem=ai/chat-memory=*@@@type",
+      "attribute" : "type",
+      "system-properties" : [ "org.wildfly.ai.chat-memory.type" ],
+      "environment-variables" : [ "CHAT_MEMORY_TYPE" ]
+    }, {
+      "_address" : "/subsystem=ai/chat-memory=*@@@use-http-session",
+      "attribute" : "use-http-session",
+      "system-properties" : [ "org.wildfly.ai.chat-memory.session" ],
+      "environment-variables" : [ "CHAT_MEMORY_SESSION" ]
+    } ],
+    "packages" : [ "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "gemini-streaming-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "gemini-chat-model" : {
+            "streaming-gemini" : {
+              "_address" : "/subsystem=ai/gemini-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.GEMINI_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@api-key"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.gemini.chat.log,env.GEMINI_CHAT_LOG:true}",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.gemini.chat.log,env.GEMINI_CHAT_LOG:true}",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.gemini.chat.model.name,env.GEMINI_CHAT_MODEL_NAME:gemini-2.5-flash}",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@model-name"
+              }, {
+                "name" : "streaming",
+                "value" : "true",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@streaming"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-gemini"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/gemini-streaming-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Gemini streaming chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Github Models for LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,gemini-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-gemini]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/gemini-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "GEMINI_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.gemini.chat.log" ],
+      "environment-variables" : [ "GEMINI_CHAT_LOG" ]
+    }, {
+      "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.gemini.chat.log" ],
+      "environment-variables" : [ "GEMINI_CHAT_LOG" ]
+    }, {
+      "_address" : "/subsystem=ai/gemini-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.gemini.chat.model.name" ],
+      "environment-variables" : [ "GEMINI_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.gemini", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "gemini-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "gemini-chat-model" : {
+            "gemini" : {
+              "_address" : "/subsystem=ai/gemini-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.GEMINI_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@api-key"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.gemini.chat.log,env.GEMINI_CHAT_LOG:true}",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.gemini.chat.log,env.GEMINI_CHAT_LOG:true}",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.gemini.chat.model.name,env.GEMINI_CHAT_MODEL_NAME:gemini-2.5-flash}",
+                "_address" : "/subsystem=ai/gemini-chat-model=*@@@model-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=gemini"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/gemini-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Gemini chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Github Models API for LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,gemini-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=gemini]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/gemini-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "GEMINI_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.gemini.chat.log" ],
+      "environment-variables" : [ "GEMINI_CHAT_LOG" ]
+    }, {
+      "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.gemini.chat.log" ],
+      "environment-variables" : [ "GEMINI_CHAT_LOG" ]
+    }, {
+      "_address" : "/subsystem=ai/gemini-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.gemini.chat.model.name" ],
+      "environment-variables" : [ "GEMINI_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.gemini", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-model-bge-small-en-v15",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-model" : {
+            "bge-small-en-v15" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+              "attributes" : [ {
+                "name" : "embedding-class",
+                "value" : "dev.langchain4j.model.embedding.onnx.bgesmallenv15.BgeSmallEnV15EmbeddingModel",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+              }, {
+                "name" : "module",
+                "value" : "dev.langchain4j.embeddings.bge-small-en-v15",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,in-memory-embedding-model-bge-small-en-v15"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for bge-small-env15 in memory embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "BAAI bge-small-en-v1.5 embedding model that runs within your Java application's process."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.embeddings.bge-small-en-v15", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-store",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-store" : {
+            "in-memory" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-store=*",
+              "attributes" : [ {
+                "name" : "path",
+                "value" : "${org.wildfly.ai.in-memory.embedding.file,env.IN_MEMORY_EMBEDDING_FILE:embeddings.json}",
+                "_address" : "/subsystem=ai/in-memory-embedding-store=*@@@path"
+              }, {
+                "name" : "relative-to",
+                "value" : "jboss.server.config.dir",
+                "_address" : "/subsystem=ai/in-memory-embedding-store=*@@@relative-to"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/in-memory-embedding-store/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support In Memory embedding store."
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use an in memory embedding store"
+    }, {
+      "name" : "org.wildfly.rule.expect-add-on-family",
+      "value" : "ai-embedding-model"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-store,in-memory-embedding-store"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/in-memory-embedding-store=*@@@path",
+      "attribute" : "path",
+      "system-properties" : [ "org.wildfly.ai.in-memory.embedding.file" ],
+      "environment-variables" : [ "IN_MEMORY_EMBEDDING_FILE" ]
+    } ],
+    "packages" : [ "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "mistral-ai-streaming-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "mistral-ai-chat-model" : {
+            "streaming-mistral" : {
+              "_address" : "/subsystem=ai/mistral-ai-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.MISTRAL_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@api-key"
+              }, {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.mistral.chat.url,env.MISTRAL_CHAT_URL:https://api.mistral.ai/v1}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@base-url"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.mistral.chat.log.request,env.MISTRAL_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.mistral.chat.log.response,env.MISTRAL_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.mistral.chat.model.name,env.MISTRAL_CHAT_MODEL_NAME:mistral-small-latest}",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@model-name"
+              }, {
+                "name" : "streaming",
+                "value" : "true",
+                "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@streaming"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-mistral"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/mistral-ai-streaming-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Mistral streaming chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use MistralAI API for LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,mistral-ai-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-mistral]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "MISTRAL_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.mistral.chat.url" ],
+      "environment-variables" : [ "MISTRAL_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.mistral.chat.log.request" ],
+      "environment-variables" : [ "MISTRAL_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.mistral.chat.log.response" ],
+      "environment-variables" : [ "MISTRAL_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.mistral.chat.model.name" ],
+      "environment-variables" : [ "MISTRAL_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.mistral-ai", "dev.langchain4j.openai", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "neo4j-embedding-store",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "neo4j-embedding-store" : {
+            "neo4j" : {
+              "_address" : "/subsystem=ai/neo4j-embedding-store=*",
+              "attributes" : [ {
+                "name" : "bolt-url",
+                "value" : "${org.wildfly.ai.neo4j.url,env.NEO4J_URL:neo4j://localhost:7687}",
+                "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@bolt-url"
+              }, {
+                "name" : "credential-reference",
+                "value" : "{clear-text=${org.wildfly.ai.neo4j.password,env.NEO4J_PASSWORD:neo4jpassword}}",
+                "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@credential-reference"
+              }, {
+                "name" : "dimension",
+                "value" : "${org.wildfly.ai.neo4j.dimension,env.NEO4J_DIMENSION:384}",
+                "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@dimension"
+              }, {
+                "name" : "username",
+                "value" : "${org.wildfly.ai.neo4j.username,env.NEO4J_USER:neo4j}",
+                "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@username"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/neo4j-embedding-store/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Neo4J embedding store"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use Neo4J as an embedding store"
+    }, {
+      "name" : "org.wildfly.rule.expect-add-on-family",
+      "value" : "ai-embedding-model"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-store,neo4j-embedding-store"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@bolt-url",
+      "attribute" : "bolt-url",
+      "system-properties" : [ "org.wildfly.ai.neo4j.url" ],
+      "environment-variables" : [ "NEO4J_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@credential-reference",
+      "attribute" : "credential-reference",
+      "system-properties" : [ "org.wildfly.ai.neo4j.password" ],
+      "environment-variables" : [ "NEO4J_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@dimension",
+      "attribute" : "dimension",
+      "system-properties" : [ "org.wildfly.ai.neo4j.dimension" ],
+      "environment-variables" : [ "NEO4J_DIMENSION" ]
+    }, {
+      "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@username",
+      "attribute" : "username",
+      "system-properties" : [ "org.wildfly.ai.neo4j.username" ],
+      "environment-variables" : [ "NEO4J_USER" ]
+    } ],
+    "packages" : [ "dev.langchain4j.neo4j", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-model-bge-small-en",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-model" : {
+            "bge-small-en" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+              "attributes" : [ {
+                "name" : "embedding-class",
+                "value" : "dev.langchain4j.model.embedding.onnx.bgesmallen.BgeSmallEnEmbeddingModel",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+              }, {
+                "name" : "module",
+                "value" : "dev.langchain4j.embeddings.bge-small-en",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,in-memory-embedding-model-bge-small-en"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for abge-small-en in memory embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "BAAI bge-small-en embedding model that runs within your Java application's process."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.embeddings.bge-small-en", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "in-memory-embedding-model-e5-small-v2-q",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "in-memory-embedding-model" : {
+            "e5-small-v2-q" : {
+              "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+              "attributes" : [ {
+                "name" : "embedding-class",
+                "value" : "dev.langchain4j.model.embedding.onnx.e5smallv2q.E5SmallV2QuantizedEmbeddingModel",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+              }, {
+                "name" : "module",
+                "value" : "dev.langchain4j.embeddings.e5-small-v2-q",
+                "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-embedding-model,in-memory-embedding-model-e5-small-v2-q"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for e5-small-v2-q in memory embedding model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Quantized Microsoft E5-small-v2 embedding model that runs within your Java application's process."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "dev.langchain4j.embeddings.e5-small-v2-q", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "groq-chat-model",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "openai-chat-model" : {
+            "groq" : {
+              "_address" : "/subsystem=ai/openai-chat-model=*",
+              "attributes" : [ {
+                "name" : "api-key",
+                "value" : "${env.GROQ_API_KEY:YOUR_KEY_VALUE}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+              }, {
+                "name" : "base-url",
+                "value" : "${org.wildfly.ai.openai.chat.url,env.GROQ_CHAT_URL:https://api.groq.com/openai/v1}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.groq.chat.log.request,env.GROQ_CHAT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.groq.chat.log.response,env.GROQ_CHAT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+              }, {
+                "name" : "model-name",
+                "value" : "${org.wildfly.ai.groq.chat.model.name,env.GROQ_CHAT_MODEL_NAME:llama3-8b-8192}",
+                "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=groq"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/groq-chat-model/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Groq chat model"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use OpenAI API for GROQ LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-llm,groq-chat-model"
+    }, {
+      "name" : "org.wildfly.rule.annotated.type",
+      "value" : "dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=groq]"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key",
+      "attribute" : "api-key",
+      "system-properties" : [ ],
+      "environment-variables" : [ "GROQ_API_KEY" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url",
+      "attribute" : "base-url",
+      "system-properties" : [ "org.wildfly.ai.openai.chat.url" ],
+      "environment-variables" : [ "GROQ_CHAT_URL" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.groq.chat.log.request" ],
+      "environment-variables" : [ "GROQ_CHAT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.groq.chat.log.response" ],
+      "environment-variables" : [ "GROQ_CHAT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name",
+      "attribute" : "model-name",
+      "system-properties" : [ "org.wildfly.ai.groq.chat.model.name" ],
+      "environment-variables" : [ "GROQ_CHAT_MODEL_NAME" ]
+    } ],
+    "packages" : [ "dev.langchain4j.openai", "org.wildfly.extension.ai" ]
+  }, {
+    "name" : "mcp-client-sse",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "ai",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "socket-binding-group" : {
+        "standard-sockets" : {
+          "_address" : "/socket-binding-group=*",
+          "remote-destination-outbound-socket-binding" : {
+            "mcp-sse" : {
+              "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+              "attributes" : [ {
+                "name" : "host",
+                "value" : "${org.wildfly.ai.mcp.client.host,env.MCP_CLIENT_HOST:localhost}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host"
+              }, {
+                "name" : "port",
+                "value" : "${org.wildfly.ai.mcp.client.port,env.MCP_CLIENT_PORT:8090}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port"
+              } ]
+            }
+          }
+        }
+      },
+      "subsystem" : {
+        "ai" : {
+          "_address" : "/subsystem=ai",
+          "mcp-client-sse" : {
+            "mcp-sse" : {
+              "_address" : "/subsystem=ai/mcp-client-sse=*",
+              "attributes" : [ {
+                "name" : "connect-timeout",
+                "value" : "6000000",
+                "_address" : "/subsystem=ai/mcp-client-sse=*@@@connect-timeout"
+              }, {
+                "name" : "log-requests",
+                "value" : "${org.wildfly.ai.mcp.client.log.request,env.MCP_CLIENT_LOG_REQUEST:true}",
+                "_address" : "/subsystem=ai/mcp-client-sse=*@@@log-requests"
+              }, {
+                "name" : "log-responses",
+                "value" : "${org.wildfly.ai.mcp.client.log.response,env.MCP_CLIENT_LOG_RESPONSE:true}",
+                "_address" : "/subsystem=ai/mcp-client-sse=*@@@log-responses"
+              }, {
+                "name" : "socket-binding",
+                "value" : "mcp-sse",
+                "_address" : "/subsystem=ai/mcp-client-sse=*@@@socket-binding"
+              }, {
+                "name" : "sse-path",
+                "value" : "${org.wildfly.ai.mcp.client.sse.path,env.MCP_CLIENT_SSE_PATH:/sse}",
+                "_address" : "/subsystem=ai/mcp-client-sse=*@@@sse-path"
+              } ]
+            }
+          },
+          "mcp-tool-provider" : {
+            "mcp" : {
+              "_address" : "/subsystem=ai/mcp-tool-provider=*",
+              "attributes" : [ {
+                "name" : "mcp-clients",
+                "value" : "[mcp-sse]",
+                "_address" : "/subsystem=ai/mcp-tool-provider=*@@@mcp-clients"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:ai"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value",
+      "value" : "dev.langchain4j.cdi.spi.RegisterAIService,toolProviderName=mcp"
+    }, {
+      "name" : "org.wildfly.stability",
+      "value" : "experimental"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/mcp-client-sse/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Generative AI"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for MCP SSE client"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Use MCP SSE client as tool provider LLM interactions"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "ai-mcp-client,mcp-client-sse"
+    } ],
+    "configurations" : [ {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host",
+      "attribute" : "host",
+      "system-properties" : [ "org.wildfly.ai.mcp.client.host" ],
+      "environment-variables" : [ "MCP_CLIENT_HOST" ]
+    }, {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port",
+      "attribute" : "port",
+      "system-properties" : [ "org.wildfly.ai.mcp.client.port" ],
+      "environment-variables" : [ "MCP_CLIENT_PORT" ]
+    }, {
+      "_address" : "/subsystem=ai/mcp-client-sse=*@@@log-requests",
+      "attribute" : "log-requests",
+      "system-properties" : [ "org.wildfly.ai.mcp.client.log.request" ],
+      "environment-variables" : [ "MCP_CLIENT_LOG_REQUEST" ]
+    }, {
+      "_address" : "/subsystem=ai/mcp-client-sse=*@@@log-responses",
+      "attribute" : "log-responses",
+      "system-properties" : [ "org.wildfly.ai.mcp.client.log.response" ],
+      "environment-variables" : [ "MCP_CLIENT_LOG_RESPONSE" ]
+    }, {
+      "_address" : "/subsystem=ai/mcp-client-sse=*@@@sse-path",
+      "attribute" : "sse-path",
+      "system-properties" : [ "org.wildfly.ai.mcp.client.sse.path" ],
+      "environment-variables" : [ "MCP_CLIENT_SSE_PATH" ]
+    } ],
+    "packages" : [ "dev.langchain4j.mcp-client", "org.wildfly.extension.ai" ]
+  } ]
+}

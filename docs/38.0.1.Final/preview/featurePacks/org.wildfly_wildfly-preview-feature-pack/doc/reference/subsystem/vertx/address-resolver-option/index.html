@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Management API  Reference for address-resolver-option</title>
+  <link rel="stylesheet" href="../../../../styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <script src="../../../../scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="card-header">
+<div>
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li>
+        <a href="../../../index.html">root</a>
+      </li>
+      <li>
+        <a href="../../../subsystem/vertx/index.html">subsystem=vertx</a>
+      </li>
+      <li>address-resolver-option</li>
+    </ol>
+  </nav>
+</div>    <h1>Management API Reference for address-resolver-option</h1>
+    <p>Configuration options for Vert.x hostname resolver.</p>
+
+  </header>
+<h2>Provided Capabilities (1)</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Dynamic</th>
+    <th>Other provider points</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="https://github.com/wildfly/wildfly-capabilities/tree/main/org/wildfly/extension/vertx/options/address/resolver/capability.adoc">org.wildfly.extension.vertx.options.address.resolver</a></td>
+    <td>true</td>
+    <td>
+      <p>none</p>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h2>Attributes (14)</h2>
+<ul class="attributes">
+  <li>
+    <span class="toggle-link">
+      <a id="cache-max-time-to-live" href="#cache-max-time-to-live" class="">
+         cache-max-time-to-live</a> - The cache maximum TTL value in seconds. After successful resolution IP addresses are cached with their DNS response TTL,
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The cache maximum TTL value in seconds. After successful resolution IP addresses are cached with their DNS response TTL,",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="cache-min-time-to-live" href="#cache-min-time-to-live" class="">
+         cache-min-time-to-live</a> - The cache minimum TTL value in seconds. After successful resolution IP addresses are cached with their DNS response TTL,
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The cache minimum TTL value in seconds. After successful resolution IP addresses are cached with their DNS response TTL,",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="cache-negative-time-to-live" href="#cache-negative-time-to-live" class="">
+         cache-negative-time-to-live</a> - The negative cache TTL value in seconds. After a failed hostname resolution, DNS queries won't be retried for a period of time equals to the negative TTL.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The negative cache TTL value in seconds. After a failed hostname resolution, DNS queries won't be retried for a period of time equals to the negative TTL.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="hosts-refresh-period" href="#hosts-refresh-period" class="">
+         hosts-refresh-period</a> - The hosts configuration refresh period in millis
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The hosts configuration refresh period in millis",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="hosts-value" href="#hosts-value" class="">
+         hosts-value</a> - The alternate hosts configuration file to use instead of the one provided by the os.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The alternate hosts configuration file to use instead of the one provided by the os.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="max-queries" href="#max-queries" class="">
+         max-queries</a> - The maximum number of queries when an hostname is resolved.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The maximum number of queries when an hostname is resolved.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="n-dots" href="#n-dots" class="">
+         n-dots</a> - The ndots value used when resolving using search domains, the default value is -1 which determines the value from the OS on Linux or uses the value 1.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The ndots value used when resolving using search domains, the default value is -1 which determines the value from the OS on Linux or uses the value 1.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="opt-resource-enabled" href="#opt-resource-enabled" class="">
+         opt-resource-enabled</a> - The option to enable the automatic inclusion in DNS queries of an optional record that hints the remote DNS server about how much data the resolver can read per response.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>BOOLEAN</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "BOOLEAN"
+    },
+    "description" : "The option to enable the automatic inclusion in DNS queries of an optional record that hints the remote DNS server about how much data the resolver can read per response.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="query-time-out" href="#query-time-out" class="">
+         query-time-out</a> - The query timeout in milliseconds, i.e the amount of time after a query is considered to be failed.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>LONG</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "LONG"
+    },
+    "description" : "The query timeout in milliseconds, i.e the amount of time after a query is considered to be failed.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="rd-flag" href="#rd-flag" class="">
+         rd-flag</a> - The DNS queries Recursion Desired flag value, defaults is true.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>BOOLEAN</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "BOOLEAN"
+    },
+    "description" : "The DNS queries Recursion Desired flag value, defaults is true.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="rotate-servers" href="#rotate-servers" class="">
+         rotate-servers</a> - The option to enable round-robin selection of the dns server to use. It spreads the query load among the servers and avoids all lookup to hit the first server of the list.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>BOOLEAN</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "BOOLEAN"
+    },
+    "description" : "The option to enable round-robin selection of the dns server to use. It spreads the query load among the servers and avoids all lookup to hit the first server of the list.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="round-robin-inet-address" href="#round-robin-inet-address" class="">
+         round-robin-inet-address</a> - The option to enable round-robin inet address selection of the ip address to use.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>BOOLEAN</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "BOOLEAN"
+    },
+    "description" : "The option to enable round-robin inet address selection of the ip address to use.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="search-domains" href="#search-domains" class="">
+         search-domains</a> - The lists of DNS search domains. When the search domain list is null, the effective search domain list will be populated using the system DNS search domains.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>LIST</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "LIST"
+    },
+    "description" : "The lists of DNS search domains. When the search domain list is null, the effective search domain list will be populated using the system DNS search domains.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 0,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "value-type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="servers" href="#servers" class="">
+         servers</a> - The list of DNS server addresses, an address is the IP  of the dns server, followed by an optional colon and a port.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>LIST</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "LIST"
+    },
+    "description" : "The list of DNS server addresses, an address is the IP  of the dns server, followed by an optional colon and a port.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 0,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "value-type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+<h2>Operations (2)</h2>
+<ul class="operations">
+  <li>
+    <span class="toggle-link">
+      <a id="add" href="#add" class="">
+      <abbr title="Preview feature">&#x1F17F;</abbr>&nbsp;
+      add</a> - Add the AddressResolverOptions
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <thead>
+        <tr>
+          <th>Request Parameter</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Expressions Allowed</th>
+          <th>Default value</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>cache-max-time-to-live</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The cache maximum TTL value in seconds. After successful resolution IP addresses are cached with their DNS response TTL,</td>
+        </tr>
+        <tr>
+          <td>cache-min-time-to-live</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The cache minimum TTL value in seconds. After successful resolution IP addresses are cached with their DNS response TTL,</td>
+        </tr>
+        <tr>
+          <td>cache-negative-time-to-live</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The negative cache TTL value in seconds. After a failed hostname resolution, DNS queries won't be retried for a period of time equals to the negative TTL.</td>
+        </tr>
+        <tr>
+          <td>hosts-refresh-period</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The hosts configuration refresh period in millis</td>
+        </tr>
+        <tr>
+          <td>hosts-value</td>
+          <td>STRING</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The alternate hosts configuration file to use instead of the one provided by the os.</td>
+        </tr>
+        <tr>
+          <td>max-queries</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The maximum number of queries when an hostname is resolved.</td>
+        </tr>
+        <tr>
+          <td>n-dots</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The ndots value used when resolving using search domains, the default value is -1 which determines the value from the OS on Linux or uses the value 1.</td>
+        </tr>
+        <tr>
+          <td>opt-resource-enabled</td>
+          <td>BOOLEAN</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The option to enable the automatic inclusion in DNS queries of an optional record that hints the remote DNS server about how much data the resolver can read per response.</td>
+        </tr>
+        <tr>
+          <td>query-time-out</td>
+          <td>LONG</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The query timeout in milliseconds, i.e the amount of time after a query is considered to be failed.</td>
+        </tr>
+        <tr>
+          <td>rd-flag</td>
+          <td>BOOLEAN</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The DNS queries Recursion Desired flag value, defaults is true.</td>
+        </tr>
+        <tr>
+          <td>rotate-servers</td>
+          <td>BOOLEAN</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The option to enable round-robin selection of the dns server to use. It spreads the query load among the servers and avoids all lookup to hit the first server of the list.</td>
+        </tr>
+        <tr>
+          <td>round-robin-inet-address</td>
+          <td>BOOLEAN</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The option to enable round-robin inet address selection of the ip address to use.</td>
+        </tr>
+        <tr>
+          <td>search-domains</td>
+          <td>LIST</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The lists of DNS search domains. When the search domain list is null, the effective search domain list will be populated using the system DNS search domains.</td>
+        </tr>
+        <tr>
+          <td>servers</td>
+          <td>LIST</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The list of DNS server addresses, an address is the IP  of the dns server, followed by an optional colon and a port.</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "add",
+    "description" : "Add the AddressResolverOptions",
+    "request-properties" : {
+        "cache-max-time-to-live" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The cache maximum TTL value in seconds. After successful resolution IP addresses are cached with their DNS response TTL,",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "cache-min-time-to-live" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The cache minimum TTL value in seconds. After successful resolution IP addresses are cached with their DNS response TTL,",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "cache-negative-time-to-live" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The negative cache TTL value in seconds. After a failed hostname resolution, DNS queries won't be retried for a period of time equals to the negative TTL.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "hosts-refresh-period" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The hosts configuration refresh period in millis",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "hosts-value" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The alternate hosts configuration file to use instead of the one provided by the os.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "stability" : "default"
+        },
+        "max-queries" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The maximum number of queries when an hostname is resolved.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "n-dots" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The ndots value used when resolving using search domains, the default value is -1 which determines the value from the OS on Linux or uses the value 1.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "opt-resource-enabled" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "BOOLEAN"
+            },
+            "description" : "The option to enable the automatic inclusion in DNS queries of an optional record that hints the remote DNS server about how much data the resolver can read per response.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "query-time-out" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "LONG"
+            },
+            "description" : "The query timeout in milliseconds, i.e the amount of time after a query is considered to be failed.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "rd-flag" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "BOOLEAN"
+            },
+            "description" : "The DNS queries Recursion Desired flag value, defaults is true.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "rotate-servers" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "BOOLEAN"
+            },
+            "description" : "The option to enable round-robin selection of the dns server to use. It spreads the query load among the servers and avoids all lookup to hit the first server of the list.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "round-robin-inet-address" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "BOOLEAN"
+            },
+            "description" : "The option to enable round-robin inet address selection of the ip address to use.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "search-domains" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "LIST"
+            },
+            "description" : "The lists of DNS search domains. When the search domain list is null, the effective search domain list will be populated using the system DNS search domains.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 0,
+            "max-length" : 2147483647,
+            "stability" : "default",
+            "value-type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            }
+        },
+        "servers" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "LIST"
+            },
+            "description" : "The list of DNS server addresses, an address is the IP  of the dns server, followed by an optional colon and a port.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 0,
+            "max-length" : 2147483647,
+            "stability" : "default",
+            "value-type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            }
+        }
+    },
+    "reply-properties" : {},
+    "stability" : "preview",
+    "read-only" : false,
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="remove" href="#remove" class="">
+      remove</a> - Remove the AddressResolverOptions
+    </span>
+    <div class="collapsible">
+
+
+
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "remove",
+    "description" : "Remove the AddressResolverOptions",
+    "request-properties" : {},
+    "reply-properties" : {},
+    "stability" : "default",
+    "read-only" : false,
+    "restart-required" : "all-services",
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+<h2>Galleon Features</h2>
+<p>Galleon features are to be used when creating Galleon feature-packs.</p>
+<ul class="attributes">
+  <li>
+  <span class="toggle-link">subsystem.vertx.address-resolver-option</span>
+  <div class="collapsible">
+    <div class="code-block-container">
+      <pre>
+        <code id="feature" class="language-xml">
+&lt;feature spec="subsystem.vertx.address-resolver-option"&gt;
+  &lt;param name="address-resolver-option" value="{resource name}"/&gt;
+  &lt;param name="cache-max-time-to-live" value="{value}"/&gt;
+  &lt;param name="cache-min-time-to-live" value="{value}"/&gt;
+  &lt;param name="cache-negative-time-to-live" value="{value}"/&gt;
+  &lt;param name="hosts-refresh-period" value="{value}"/&gt;
+  &lt;param name="hosts-value" value="{value}"/&gt;
+  &lt;param name="max-queries" value="{value}"/&gt;
+  &lt;param name="n-dots" value="{value}"/&gt;
+  &lt;param name="opt-resource-enabled" value="{value}"/&gt;
+  &lt;param name="query-time-out" value="{value}"/&gt;
+  &lt;param name="rd-flag" value="{value}"/&gt;
+  &lt;param name="rotate-servers" value="{value}"/&gt;
+  &lt;param name="round-robin-inet-address" value="{value}"/&gt;
+  &lt;param name="search-domains" value="{value}"/&gt;
+  &lt;param name="servers" value="{value}"/&gt;
+&lt;feature/&gt;
+        </code>
+      </pre>
+      <button class="copy-btn" onclick="copyToClipboard('feature')" title="Copy to clipboard">📋</button>
+    </div>
+  </div>
+  </li>
+</ul>
+  <footer>
+    <p>&copy; The WildFly authors 2025</p>
+  </footer>
+</div>
+</body>
+</html>

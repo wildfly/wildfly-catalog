@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Management API  Reference for wasm-tool</title>
+  <link rel="stylesheet" href="../../../../styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <script src="../../../../scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="card-header">
+<div>
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li>
+        <a href="../../../index.html">root</a>
+      </li>
+      <li>
+        <a href="../../../subsystem/wasm/index.html">subsystem=wasm</a>
+      </li>
+      <li>wasm-tool</li>
+    </ol>
+  </nav>
+</div>    <h1>Management API Reference for wasm-tool</h1>
+    <p>A WASM tool definition.</p>
+
+  </header>
+<h2>Provided Capabilities (1)</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Dynamic</th>
+    <th>Other provider points</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="https://github.com/wildfly/wildfly-capabilities/tree/main/org/wildfly/ai/mcp/server/wasm/tool/capability.adoc">org.wildfly.ai.mcp.server.wasm.tool</a></td>
+    <td>true</td>
+    <td>
+      <p>none</p>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h2>Attributes (6)</h2>
+<ul class="attributes">
+  <li>
+    <span class="toggle-link">
+      <a id="allowed-hosts" href="#allowed-hosts" class="">
+         allowed-hosts</a> - List of allowed hosts accessible from a WASM module.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>LIST</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "LIST"
+    },
+    "description" : "List of allowed hosts accessible from a WASM module.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 0,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "value-type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="max-memory-contraint" href="#max-memory-contraint" class="">
+         max-memory-contraint</a> - Maximal allowed pages memory.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "Maximal allowed pages memory.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="min-memory-contraint" href="#min-memory-contraint" class="">
+         min-memory-contraint</a> - Minimal allowed pages memory.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "Minimal allowed pages memory.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="path" href="#path" class="">
+         path</a> - The path to the WASM binary.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The path to the WASM binary.",
+    "expressions-allowed" : true,
+    "required" : true,
+    "nillable" : false,
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "filesystem-path" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="relative-to" href="#relative-to" class="">
+         relative-to</a> - The fpath to which the path is relative to.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The fpath to which the path is relative to.",
+    "expressions-allowed" : false,
+    "required" : false,
+    "nillable" : true,
+    "capability-reference" : "org.wildfly.management.path",
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services"
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="use-aot" href="#use-aot" class="">
+         use-aot</a> - Enable runtime compiler to translate the WASM instructions to Java bytecode on-the-fly in-memory.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>BOOLEAN</td>
+        </tr>
+        <tr>
+          <td>Default Value</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "BOOLEAN"
+    },
+    "description" : "Enable runtime compiler to translate the WASM instructions to Java bytecode on-the-fly in-memory.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "default" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+<h2>Operations (2)</h2>
+<ul class="operations">
+  <li>
+    <span class="toggle-link">
+      <a id="add" href="#add" class="">
+      add</a> - This operation adds the WASM subsystem
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <thead>
+        <tr>
+          <th>Request Parameter</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Expressions Allowed</th>
+          <th>Default value</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>allowed-hosts</td>
+          <td>LIST</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>List of allowed hosts accessible from a WASM module.</td>
+        </tr>
+        <tr>
+          <td>max-memory-contraint</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>Maximal allowed pages memory.</td>
+        </tr>
+        <tr>
+          <td>min-memory-contraint</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>Minimal allowed pages memory.</td>
+        </tr>
+        <tr>
+          <td>path</td>
+          <td>STRING</td>
+          <td>true</td>
+          <td>true</td>
+          <td></td>
+          <td>The path to the WASM binary.</td>
+        </tr>
+        <tr>
+          <td>relative-to</td>
+          <td>STRING</td>
+          <td>false</td>
+          <td>false</td>
+          <td></td>
+          <td>The fpath to which the path is relative to.</td>
+        </tr>
+        <tr>
+          <td>use-aot</td>
+          <td>BOOLEAN</td>
+          <td>false</td>
+          <td>true</td>
+          <td>true</td>
+          <td>Enable runtime compiler to translate the WASM instructions to Java bytecode on-the-fly in-memory.</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "add",
+    "description" : "This operation adds the WASM subsystem",
+    "request-properties" : {
+        "allowed-hosts" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "LIST"
+            },
+            "description" : "List of allowed hosts accessible from a WASM module.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 0,
+            "max-length" : 2147483647,
+            "stability" : "default",
+            "value-type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            }
+        },
+        "max-memory-contraint" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "Maximal allowed pages memory.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        },
+        "min-memory-contraint" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "Minimal allowed pages memory.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        },
+        "path" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The path to the WASM binary.",
+            "expressions-allowed" : true,
+            "required" : true,
+            "nillable" : false,
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "filesystem-path" : true,
+            "stability" : "default"
+        },
+        "relative-to" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The fpath to which the path is relative to.",
+            "expressions-allowed" : false,
+            "required" : false,
+            "nillable" : true,
+            "capability-reference" : "org.wildfly.management.path",
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "stability" : "default"
+        },
+        "use-aot" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "BOOLEAN"
+            },
+            "description" : "Enable runtime compiler to translate the WASM instructions to Java bytecode on-the-fly in-memory.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "default" : true,
+            "stability" : "default"
+        }
+    },
+    "reply-properties" : {},
+    "stability" : "default",
+    "read-only" : false,
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="remove" href="#remove" class="">
+      remove</a> - This operation removes the WASM subsystem
+    </span>
+    <div class="collapsible">
+
+
+
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "remove",
+    "description" : "This operation removes the WASM subsystem",
+    "request-properties" : {},
+    "reply-properties" : {},
+    "stability" : "default",
+    "read-only" : false,
+    "restart-required" : "resource-services",
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+<h2>Galleon Features</h2>
+<p>Galleon features are to be used when creating Galleon feature-packs.</p>
+<ul class="attributes">
+  <li>
+  <span class="toggle-link">subsystem.wasm.wasm-tool</span>
+  <div class="collapsible">
+    <div class="code-block-container">
+      <pre>
+        <code id="feature" class="language-xml">
+&lt;feature spec="subsystem.wasm.wasm-tool"&gt;
+  &lt;param name="wasm-tool" value="{resource name}"/&gt;
+  &lt;param name="allowed-hosts" value="{value}"/&gt;
+  &lt;param name="max-memory-contraint" value="{value}"/&gt;
+  &lt;param name="min-memory-contraint" value="{value}"/&gt;
+  &lt;param name="path" value="{value}"/&gt;
+  &lt;param name="relative-to" value="{value}"/&gt;
+  &lt;param name="use-aot" value="{value}"/&gt;
+&lt;feature/&gt;
+        </code>
+      </pre>
+      <button class="copy-btn" onclick="copyToClipboard('feature')" title="Copy to clipboard">📋</button>
+    </div>
+  </div>
+  </li>
+</ul>
+</div>
+</body>
+</html>

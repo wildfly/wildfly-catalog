@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Management API  Reference for vertx-option</title>
+  <link rel="stylesheet" href="../../../../styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <script src="../../../../scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="card-header">
+<div>
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li>
+        <a href="../../../index.html">root</a>
+      </li>
+      <li>
+        <a href="../../../subsystem/vertx/index.html">subsystem=vertx</a>
+      </li>
+      <li>vertx-option</li>
+    </ol>
+  </nav>
+</div>    <h1>Management API Reference for vertx-option</h1>
+    <p>The VertxOptions Definition</p>
+
+  </header>
+<h2>Provided Capabilities (1)</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Dynamic</th>
+    <th>Other provider points</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="https://github.com/wildfly/wildfly-capabilities/tree/main/org/wildfly/extension/vertx/options/capability.adoc">org.wildfly.extension.vertx.options</a></td>
+    <td>true</td>
+    <td>
+      <p>none</p>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h2>Attributes (16)</h2>
+<ul class="attributes">
+  <li>
+    <span class="toggle-link">
+      <a id="address-resolver-option" href="#address-resolver-option" class="">
+         address-resolver-option</a> - The address-resolver-option name used for the AddressResolverOptions
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The address-resolver-option name used for the AddressResolverOptions",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="blocked-thread-check-interval" href="#blocked-thread-check-interval" class="">
+         blocked-thread-check-interval</a> - The blocked thread check interval, defaults to 1000 ms
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>LONG</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "LONG"
+    },
+    "description" : "The blocked thread check interval, defaults to 1000 ms",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="blocked-thread-check-interval-unit" href="#blocked-thread-check-interval-unit" class="">
+         blocked-thread-check-interval-unit</a> - The blocked thread check interval unit, defaults to MILLISECONDS
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Allowed Values</td>
+          <td>
+            MILLISECONDS<br />
+            MICROSECONDS<br />
+            HOURS<br />
+            SECONDS<br />
+            NANOSECONDS<br />
+            DAYS<br />
+            MINUTES<br />
+          </td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The blocked thread check interval unit, defaults to MILLISECONDS",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "allowed" : [
+        "NANOSECONDS",
+        "MICROSECONDS",
+        "MILLISECONDS",
+        "SECONDS",
+        "MINUTES",
+        "HOURS",
+        "DAYS"
+    ],
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="classpath-resolving-enabled" href="#classpath-resolving-enabled" class="">
+         classpath-resolving-enabled</a> - Whether classpath resolving is enabled
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>BOOLEAN</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "BOOLEAN"
+    },
+    "description" : "Whether classpath resolving is enabled",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="event-loop-pool-size" href="#event-loop-pool-size" class="">
+         event-loop-pool-size</a> - The size of the event loop threads pool, defaults to 2 * number of cores on the machine
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The size of the event loop threads pool, defaults to 2 * number of cores on the machine",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="file-cache-dir" href="#file-cache-dir" class="">
+         file-cache-dir</a> - The file cache directory
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The file cache directory",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="file-cache-enabled" href="#file-cache-enabled" class="">
+         file-cache-enabled</a> - Whether file caching is enabled for class path resolving
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>BOOLEAN</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "BOOLEAN"
+    },
+    "description" : "Whether file caching is enabled for class path resolving",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="internal-blocking-pool-size" href="#internal-blocking-pool-size" class="">
+         internal-blocking-pool-size</a> - The size of the internal blocking thread pool, defaults to 20
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The size of the internal blocking thread pool, defaults to 20",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="max-eventloop-execute-time" href="#max-eventloop-execute-time" class="">
+         max-eventloop-execute-time</a> - The max event loop execute time, defaults to 2 seconds
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>LONG</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "LONG"
+    },
+    "description" : "The max event loop execute time, defaults to 2 seconds",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="max-eventloop-execute-time-unit" href="#max-eventloop-execute-time-unit" class="">
+         max-eventloop-execute-time-unit</a> - The max event loop execute time unit, defaults to NANOSECONDS
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Allowed Values</td>
+          <td>
+            MILLISECONDS<br />
+            MICROSECONDS<br />
+            HOURS<br />
+            SECONDS<br />
+            NANOSECONDS<br />
+            DAYS<br />
+            MINUTES<br />
+          </td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The max event loop execute time unit, defaults to NANOSECONDS",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "allowed" : [
+        "NANOSECONDS",
+        "MICROSECONDS",
+        "MILLISECONDS",
+        "SECONDS",
+        "MINUTES",
+        "HOURS",
+        "DAYS"
+    ],
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="max-worker-execute-time" href="#max-worker-execute-time" class="">
+         max-worker-execute-time</a> - The max worker execute time, defaults to 60 seconds
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>LONG</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "LONG"
+    },
+    "description" : "The max worker execute time, defaults to 60 seconds",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="max-worker-execute-time-unit" href="#max-worker-execute-time-unit" class="">
+         max-worker-execute-time-unit</a> - The max worker execute time unit, defaults to NANOSECONDS
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Allowed Values</td>
+          <td>
+            MILLISECONDS<br />
+            MICROSECONDS<br />
+            HOURS<br />
+            SECONDS<br />
+            NANOSECONDS<br />
+            DAYS<br />
+            MINUTES<br />
+          </td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The max worker execute time unit, defaults to NANOSECONDS",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "allowed" : [
+        "NANOSECONDS",
+        "MICROSECONDS",
+        "MILLISECONDS",
+        "SECONDS",
+        "MINUTES",
+        "HOURS",
+        "DAYS"
+    ],
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="prefer-native-transport" href="#prefer-native-transport" class="">
+         prefer-native-transport</a> - If native transport is preferred or not
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>BOOLEAN</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "BOOLEAN"
+    },
+    "description" : "If native transport is preferred or not",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="warning-exception-time" href="#warning-exception-time" class="">
+         warning-exception-time</a> - The warning exception time, If a thread is blocked longer than this threshold, the warning log contains a stack trace, defaults to 5 seconds
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>LONG</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "LONG"
+    },
+    "description" : "The warning exception time, If a thread is blocked longer than this threshold, the warning log contains a stack trace, defaults to 5 seconds",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="warning-exception-time-unit" href="#warning-exception-time-unit" class="">
+         warning-exception-time-unit</a> - The warning exception time, defaults to NANOSECONDS
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Allowed Values</td>
+          <td>
+            MILLISECONDS<br />
+            MICROSECONDS<br />
+            HOURS<br />
+            SECONDS<br />
+            NANOSECONDS<br />
+            DAYS<br />
+            MINUTES<br />
+          </td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "The warning exception time, defaults to NANOSECONDS",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "allowed" : [
+        "NANOSECONDS",
+        "MICROSECONDS",
+        "MILLISECONDS",
+        "SECONDS",
+        "MINUTES",
+        "HOURS",
+        "DAYS"
+    ],
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="worker-pool-size" href="#worker-pool-size" class="">
+         worker-pool-size</a> - The size of the worker thread pool, defaults to 20
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>no-services</td>
+        </tr>
+        <tr>
+          <td>Min</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>2147483647</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The size of the worker thread pool, defaults to 20",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "min" : 1,
+    "max" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "no-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+<h2>Operations (3)</h2>
+<ul class="operations">
+  <li>
+    <span class="toggle-link">
+      <a id="add" href="#add" class="">
+      <abbr title="Preview feature">&#x1F17F;</abbr>&nbsp;
+      add</a> - Add a VertxOptions
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <thead>
+        <tr>
+          <th>Request Parameter</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Expressions Allowed</th>
+          <th>Default value</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>address-resolver-option</td>
+          <td>STRING</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The address-resolver-option name used for the AddressResolverOptions</td>
+        </tr>
+        <tr>
+          <td>blocked-thread-check-interval</td>
+          <td>LONG</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The blocked thread check interval, defaults to 1000 ms</td>
+        </tr>
+        <tr>
+          <td>blocked-thread-check-interval-unit</td>
+          <td>STRING</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The blocked thread check interval unit, defaults to MILLISECONDS</td>
+        </tr>
+        <tr>
+          <td>classpath-resolving-enabled</td>
+          <td>BOOLEAN</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>Whether classpath resolving is enabled</td>
+        </tr>
+        <tr>
+          <td>event-loop-pool-size</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The size of the event loop threads pool, defaults to 2 * number of cores on the machine</td>
+        </tr>
+        <tr>
+          <td>file-cache-dir</td>
+          <td>STRING</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The file cache directory</td>
+        </tr>
+        <tr>
+          <td>file-cache-enabled</td>
+          <td>BOOLEAN</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>Whether file caching is enabled for class path resolving</td>
+        </tr>
+        <tr>
+          <td>internal-blocking-pool-size</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The size of the internal blocking thread pool, defaults to 20</td>
+        </tr>
+        <tr>
+          <td>max-eventloop-execute-time</td>
+          <td>LONG</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The max event loop execute time, defaults to 2 seconds</td>
+        </tr>
+        <tr>
+          <td>max-eventloop-execute-time-unit</td>
+          <td>STRING</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The max event loop execute time unit, defaults to NANOSECONDS</td>
+        </tr>
+        <tr>
+          <td>max-worker-execute-time</td>
+          <td>LONG</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The max worker execute time, defaults to 60 seconds</td>
+        </tr>
+        <tr>
+          <td>max-worker-execute-time-unit</td>
+          <td>STRING</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The max worker execute time unit, defaults to NANOSECONDS</td>
+        </tr>
+        <tr>
+          <td>prefer-native-transport</td>
+          <td>BOOLEAN</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>If native transport is preferred or not</td>
+        </tr>
+        <tr>
+          <td>warning-exception-time</td>
+          <td>LONG</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The warning exception time, If a thread is blocked longer than this threshold, the warning log contains a stack trace, defaults to 5 seconds</td>
+        </tr>
+        <tr>
+          <td>warning-exception-time-unit</td>
+          <td>STRING</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The warning exception time, defaults to NANOSECONDS</td>
+        </tr>
+        <tr>
+          <td>worker-pool-size</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The size of the worker thread pool, defaults to 20</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "add",
+    "description" : "Add a VertxOptions",
+    "request-properties" : {
+        "address-resolver-option" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The address-resolver-option name used for the AddressResolverOptions",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "stability" : "default"
+        },
+        "blocked-thread-check-interval" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "LONG"
+            },
+            "description" : "The blocked thread check interval, defaults to 1000 ms",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        },
+        "blocked-thread-check-interval-unit" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The blocked thread check interval unit, defaults to MILLISECONDS",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "allowed" : [
+                "NANOSECONDS",
+                "MICROSECONDS",
+                "MILLISECONDS",
+                "SECONDS",
+                "MINUTES",
+                "HOURS",
+                "DAYS"
+            ],
+            "stability" : "default"
+        },
+        "classpath-resolving-enabled" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "BOOLEAN"
+            },
+            "description" : "Whether classpath resolving is enabled",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "event-loop-pool-size" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The size of the event loop threads pool, defaults to 2 * number of cores on the machine",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        },
+        "file-cache-dir" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The file cache directory",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "stability" : "default"
+        },
+        "file-cache-enabled" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "BOOLEAN"
+            },
+            "description" : "Whether file caching is enabled for class path resolving",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "internal-blocking-pool-size" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The size of the internal blocking thread pool, defaults to 20",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        },
+        "max-eventloop-execute-time" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "LONG"
+            },
+            "description" : "The max event loop execute time, defaults to 2 seconds",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        },
+        "max-eventloop-execute-time-unit" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The max event loop execute time unit, defaults to NANOSECONDS",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "allowed" : [
+                "NANOSECONDS",
+                "MICROSECONDS",
+                "MILLISECONDS",
+                "SECONDS",
+                "MINUTES",
+                "HOURS",
+                "DAYS"
+            ],
+            "stability" : "default"
+        },
+        "max-worker-execute-time" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "LONG"
+            },
+            "description" : "The max worker execute time, defaults to 60 seconds",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        },
+        "max-worker-execute-time-unit" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The max worker execute time unit, defaults to NANOSECONDS",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "allowed" : [
+                "NANOSECONDS",
+                "MICROSECONDS",
+                "MILLISECONDS",
+                "SECONDS",
+                "MINUTES",
+                "HOURS",
+                "DAYS"
+            ],
+            "stability" : "default"
+        },
+        "prefer-native-transport" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "BOOLEAN"
+            },
+            "description" : "If native transport is preferred or not",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "warning-exception-time" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "LONG"
+            },
+            "description" : "The warning exception time, If a thread is blocked longer than this threshold, the warning log contains a stack trace, defaults to 5 seconds",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        },
+        "warning-exception-time-unit" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "The warning exception time, defaults to NANOSECONDS",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "allowed" : [
+                "NANOSECONDS",
+                "MICROSECONDS",
+                "MILLISECONDS",
+                "SECONDS",
+                "MINUTES",
+                "HOURS",
+                "DAYS"
+            ],
+            "stability" : "default"
+        },
+        "worker-pool-size" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The size of the worker thread pool, defaults to 20",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "min" : 1,
+            "max" : 2147483647,
+            "stability" : "default"
+        }
+    },
+    "reply-properties" : {},
+    "stability" : "preview",
+    "read-only" : false,
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="remove" href="#remove" class="">
+      remove</a> - Remove a VertxOptions
+    </span>
+    <div class="collapsible">
+
+
+
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "remove",
+    "description" : "Remove a VertxOptions",
+    "request-properties" : {},
+    "reply-properties" : {},
+    "stability" : "default",
+    "read-only" : false,
+    "restart-required" : "all-services",
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="show-info" href="#show-info" class="">
+      show-info</a> - Show VertxOptions information
+    </span>
+    <div class="collapsible">
+
+
+
+      <h3>Reply properties</h3>
+      <div></div>
+      <dl>
+        <dt>Type</dt>
+        <dd>OBJECT</dd>
+        <dt>Value Type</dt>
+        <dd>
+          <div class="code-block-container">
+            <pre><code class="language-json">
+OBJECT</code></pre>
+          </div>
+        </dd>
+      </dl>
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "show-info",
+    "description" : "Show VertxOptions information",
+    "request-properties" : {},
+    "reply-properties" : {
+        "type" : {
+            "TYPE_MODEL_VALUE" : "OBJECT"
+        },
+        "value-type" : {
+            "TYPE_MODEL_VALUE" : "OBJECT"
+        }
+    },
+    "stability" : "default",
+    "read-only" : false,
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+<h2>Galleon Features</h2>
+<p>Galleon features are to be used when creating Galleon feature-packs.</p>
+<ul class="attributes">
+  <li>
+  <span class="toggle-link">subsystem.vertx.vertx-option</span>
+  <div class="collapsible">
+    <div class="code-block-container">
+      <pre>
+        <code id="feature" class="language-xml">
+&lt;feature spec="subsystem.vertx.vertx-option"&gt;
+  &lt;param name="vertx-option" value="{resource name}"/&gt;
+  &lt;param name="address-resolver-option" value="{value}"/&gt;
+  &lt;param name="blocked-thread-check-interval" value="{value}"/&gt;
+  &lt;param name="blocked-thread-check-interval-unit" value="{value}"/&gt;
+  &lt;param name="classpath-resolving-enabled" value="{value}"/&gt;
+  &lt;param name="event-loop-pool-size" value="{value}"/&gt;
+  &lt;param name="file-cache-dir" value="{value}"/&gt;
+  &lt;param name="file-cache-enabled" value="{value}"/&gt;
+  &lt;param name="internal-blocking-pool-size" value="{value}"/&gt;
+  &lt;param name="max-eventloop-execute-time" value="{value}"/&gt;
+  &lt;param name="max-eventloop-execute-time-unit" value="{value}"/&gt;
+  &lt;param name="max-worker-execute-time" value="{value}"/&gt;
+  &lt;param name="max-worker-execute-time-unit" value="{value}"/&gt;
+  &lt;param name="prefer-native-transport" value="{value}"/&gt;
+  &lt;param name="warning-exception-time" value="{value}"/&gt;
+  &lt;param name="warning-exception-time-unit" value="{value}"/&gt;
+  &lt;param name="worker-pool-size" value="{value}"/&gt;
+&lt;feature/&gt;
+        </code>
+      </pre>
+      <button class="copy-btn" onclick="copyToClipboard('feature')" title="Copy to clipboard">📋</button>
+    </div>
+  </div>
+  </li>
+</ul>
+  <footer>
+    <p>&copy; The WildFly authors 2025</p>
+  </footer>
+</div>
+</body>
+</html>

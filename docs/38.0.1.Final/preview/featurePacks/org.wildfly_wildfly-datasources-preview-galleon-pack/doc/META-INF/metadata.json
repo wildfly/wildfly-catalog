@@ -1,0 +1,2115 @@
+{
+  "groupId" : "org.wildfly",
+  "artifactId" : "wildfly-datasources-preview-galleon-pack",
+  "version" : "11.2.0.Final",
+  "name" : "Drivers and datasources for WildFly EE9",
+  "description" : "Drivers and datasources for WildFly EE9",
+  "licenses" : [ "Apache License, Version 2.0" ],
+  "url" : "https://github.com/wildfly/wildfly-datasources-galleon-pack",
+  "scm-url" : "https://github.com/wildfly/wildfly-datasources-galleon-pack",
+  "copyright" : null,
+  "layers" : [ {
+    "name" : "postgresql-default-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "postgresql-datasource",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ee" : {
+          "_address" : "/subsystem=ee",
+          "service" : {
+            "default-bindings" : {
+              "_address" : "/subsystem=ee/service=default-bindings",
+              "attributes" : [ {
+                "name" : "datasource",
+                "value" : "${org.wildfly.datasources.postgresql.jndi-name,env.POSTGRESQL_JNDI:java:jboss/datasources/${org.wildfly.datasources.postgresql.datasource, env.POSTGRESQL_DATASOURCE,env.OPENSHIFT_POSTGRESQL_DATASOURCE:PostgreSQLDS}}",
+                "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,postgresql:default"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-no-default-datasource",
+      "value" : ""
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/postgresql/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ee/service=default-bindings@@@datasource",
+      "attribute" : "datasource",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.datasource", "org.wildfly.datasources.postgresql.jndi-name" ],
+      "environment-variables" : [ "OPENSHIFT_POSTGRESQL_DATASOURCE", "POSTGRESQL_DATASOURCE", "POSTGRESQL_JNDI" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "h2database-default-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "h2database-datasource",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ee" : {
+          "_address" : "/subsystem=ee",
+          "service" : {
+            "default-bindings" : {
+              "_address" : "/subsystem=ee/service=default-bindings",
+              "attributes" : [ {
+                "name" : "datasource",
+                "value" : "java:jboss/datasources/${env.H2DATABASE_DATASOURCE:H2DatabaseDS}",
+                "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ee/service=default-bindings@@@datasource",
+      "attribute" : "datasource",
+      "system-properties" : [ ],
+      "environment-variables" : [ "H2DATABASE_DATASOURCE" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "mysql-default-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "mysql-datasource",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ee" : {
+          "_address" : "/subsystem=ee",
+          "service" : {
+            "default-bindings" : {
+              "_address" : "/subsystem=ee/service=default-bindings",
+              "attributes" : [ {
+                "name" : "datasource",
+                "value" : "java:jboss/datasources/${env.OPENSHIFT_MYSQL_DATASOURCE,env.MYSQL_DATASOURCE:MySQLDS}",
+                "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,mysql:default"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-no-default-datasource",
+      "value" : ""
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mysql/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ee/service=default-bindings@@@datasource",
+      "attribute" : "datasource",
+      "system-properties" : [ ],
+      "environment-variables" : [ "MYSQL_DATASOURCE", "OPENSHIFT_MYSQL_DATASOURCE" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "oracle-default-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "oracle-datasource",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ee" : {
+          "_address" : "/subsystem=ee",
+          "service" : {
+            "default-bindings" : {
+              "_address" : "/subsystem=ee/service=default-bindings",
+              "attributes" : [ {
+                "name" : "datasource",
+                "value" : "java:jboss/datasources/${env.ORACLE_DATASOURCE,env.OPENSHIFT_ORACLE_DATASOURCE:OracleDS}",
+                "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,oracle:default"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-no-default-datasource",
+      "value" : ""
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/oracle/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ee/service=default-bindings@@@datasource",
+      "attribute" : "datasource",
+      "system-properties" : [ ],
+      "environment-variables" : [ "OPENSHIFT_ORACLE_DATASOURCE", "ORACLE_DATASOURCE" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "h2database-driver",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "jdbc-driver" : {
+            "h2database" : {
+              "_address" : "/subsystem=datasources/jdbc-driver=*",
+              "attributes" : [ {
+                "name" : "driver-module-name",
+                "value" : "com.h2database.h2database",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+              }, {
+                "name" : "driver-xa-datasource-class-name",
+                "value" : "org.h2.jdbcx.JdbcDataSource",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ ],
+    "configurations" : [ ],
+    "packages" : [ "com.h2database.h2database", "org.jboss.as.connector" ]
+  }, {
+    "name" : "mssqlserver-default-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "mssqlserver-datasource",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ee" : {
+          "_address" : "/subsystem=ee",
+          "service" : {
+            "default-bindings" : {
+              "_address" : "/subsystem=ee/service=default-bindings",
+              "attributes" : [ {
+                "name" : "datasource",
+                "value" : "java:jboss/datasources/${env.MSSQLSERVER_DATASOURCE:MSSQLServerDS}",
+                "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,mssqlserver:default"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-no-default-datasource",
+      "value" : ""
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mssqlserver/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ee/service=default-bindings@@@datasource",
+      "attribute" : "datasource",
+      "system-properties" : [ ],
+      "environment-variables" : [ "MSSQLSERVER_DATASOURCE" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "db2-default-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "db2-datasource",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ee" : {
+          "_address" : "/subsystem=ee",
+          "service" : {
+            "default-bindings" : {
+              "_address" : "/subsystem=ee/service=default-bindings",
+              "attributes" : [ {
+                "name" : "datasource",
+                "value" : "${org.wildfly.datasources.db2.jndi-name,env.DB2_JNDI:java:jboss/datasources/${org.wildfly.datasources.db2.datasource, env.DB2_DATASOURCE,env.OPENSHIFT_DB2_DATASOURCE:DB2DS}}",
+                "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,db2:default"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-no-default-datasource",
+      "value" : ""
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/db2/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ee/service=default-bindings@@@datasource",
+      "attribute" : "datasource",
+      "system-properties" : [ "org.wildfly.datasources.db2.datasource", "org.wildfly.datasources.db2.jndi-name" ],
+      "environment-variables" : [ "DB2_DATASOURCE", "DB2_JNDI", "OPENSHIFT_DB2_DATASOURCE" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "mysql-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "mysql-driver",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "data-source" : {
+            "MySQLDS" : {
+              "_address" : "/subsystem=datasources/data-source=*",
+              "attributes" : [ {
+                "name" : "background-validation",
+                "value" : "${org.wildfly.datasources.mysql.background-validation,env.MYSQL_BACKGROUND_VALIDATION:false}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+              }, {
+                "name" : "background-validation-millis",
+                "value" : "${org.wildfly.datasources.mysql.background-validation-millis,env.MYSQL_BACKGROUND_VALIDATION_MILLIS:10000}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+              }, {
+                "name" : "connection-url",
+                "value" : "${org.wildfly.datasources.mysql.connection-url,env.MYSQL_URL:jdbc:mysql://${org.wildfly.datasources.mysql.host,env.MYSQL_SERVICE_HOST,env.OPENSHIFT_MYSQL_DB_HOST,env.MYSQL_HOST:localhost}:${org.wildfly.datasources.mysql.port,env.MYSQL_SERVICE_PORT,env.OPENSHIFT_MYSQL_DB_PORT,env.MYSQL_PORT:3306}/${org.wildfly.datasources.mysql.database,env.MYSQL_DATABASE,env.OPENSHIFT_MYSQL_DB_NAME}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+              }, {
+                "name" : "driver-name",
+                "value" : "mysql",
+                "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+              }, {
+                "name" : "enabled",
+                "value" : "${org.wildfly.datasources.mysql.enabled, env.MYSQL_ENABLED:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+              }, {
+                "name" : "exception-sorter-class-name",
+                "value" : "${org.wildfly.datasources.mysql.exception-sorter-class-name, env.MYSQL_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter}",
+                "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+              }, {
+                "name" : "flush-strategy",
+                "value" : "${org.wildfly.datasources.mysql.flush-strategy,env.MYSQL_FLUSH_STRATEGY:FailingConnectionOnly}",
+                "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+              }, {
+                "name" : "idle-timeout-minutes",
+                "value" : "${org.wildfly.datasources.mysql.idle-timeout-minutes,env.MYSQL_IDLE_TIMEOUT_MINUTES:30}",
+                "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+              }, {
+                "name" : "jndi-name",
+                "value" : "${org.wildfly.datasources.mysql.jndi-name,env.MYSQL_JNDI:java:jboss/datasources/${org.wildfly.datasources.mysql.datasource,env.OPENSHIFT_MYSQL_DATASOURCE,env.MYSQL_DATASOURCE:MySQLDS}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+              }, {
+                "name" : "jta",
+                "value" : "${org.wildfly.datasources.mysql.jta,env.MYSQL_JTA:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jta"
+              }, {
+                "name" : "max-pool-size",
+                "value" : "${org.wildfly.datasources.mysql.max-pool-size,env.MYSQL_MAX_POOL_SIZE:20}",
+                "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+              }, {
+                "name" : "min-pool-size",
+                "value" : "${org.wildfly.datasources.mysql.min-pool-size,env.MYSQL_MIN_POOL_SIZE:0}",
+                "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+              }, {
+                "name" : "password",
+                "value" : "${org.wildfly.datasources.mysql.password,env.MYSQL_PASSWORD,env.OPENSHIFT_MYSQL_DB_PASSWORD}",
+                "_address" : "/subsystem=datasources/data-source=*@@@password"
+              }, {
+                "name" : "stale-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.mysql.stale-connection-checker-class-name,env.MYSQL_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+              }, {
+                "name" : "statistics-enabled",
+                "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+              }, {
+                "name" : "transaction-isolation",
+                "value" : "${org.wildfly.datasources.mysql.transaction-isolation,env.MYSQL_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+                "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+              }, {
+                "name" : "user-name",
+                "value" : "${org.wildfly.datasources.mysql.user-name,env.MYSQL_USER,env.OPENSHIFT_MYSQL_DB_USERNAME}",
+                "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+              }, {
+                "name" : "valid-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.mysql.valid-connection-checker-class-name,env.MYSQL_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+              }, {
+                "name" : "validate-on-match",
+                "value" : "${org.wildfly.datasources.mysql.validate-on-match,env.MYSQL_VALIDATE_ON_MATCH:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,mysql"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-unbound-datasources",
+      "value" : "JNDI env,MYSQL_JNDI=##ITEM##"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mysql/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation",
+      "attribute" : "background-validation",
+      "system-properties" : [ "org.wildfly.datasources.mysql.background-validation" ],
+      "environment-variables" : [ "MYSQL_BACKGROUND_VALIDATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis",
+      "attribute" : "background-validation-millis",
+      "system-properties" : [ "org.wildfly.datasources.mysql.background-validation-millis" ],
+      "environment-variables" : [ "MYSQL_BACKGROUND_VALIDATION_MILLIS" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@connection-url",
+      "attribute" : "connection-url",
+      "system-properties" : [ "org.wildfly.datasources.mysql.connection-url", "org.wildfly.datasources.mysql.database", "org.wildfly.datasources.mysql.host", "org.wildfly.datasources.mysql.port" ],
+      "environment-variables" : [ "MYSQL_DATABASE", "MYSQL_HOST", "MYSQL_PORT", "MYSQL_SERVICE_HOST", "MYSQL_SERVICE_PORT", "MYSQL_URL", "OPENSHIFT_MYSQL_DB_HOST", "OPENSHIFT_MYSQL_DB_NAME", "OPENSHIFT_MYSQL_DB_PORT" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@enabled",
+      "attribute" : "enabled",
+      "system-properties" : [ "org.wildfly.datasources.mysql.enabled" ],
+      "environment-variables" : [ "MYSQL_ENABLED" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name",
+      "attribute" : "exception-sorter-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mysql.exception-sorter-class-name" ],
+      "environment-variables" : [ "MYSQL_EXCEPTION_SORTER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy",
+      "attribute" : "flush-strategy",
+      "system-properties" : [ "org.wildfly.datasources.mysql.flush-strategy" ],
+      "environment-variables" : [ "MYSQL_FLUSH_STRATEGY" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes",
+      "attribute" : "idle-timeout-minutes",
+      "system-properties" : [ "org.wildfly.datasources.mysql.idle-timeout-minutes" ],
+      "environment-variables" : [ "MYSQL_IDLE_TIMEOUT_MINUTES" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jndi-name",
+      "attribute" : "jndi-name",
+      "system-properties" : [ "org.wildfly.datasources.mysql.datasource", "org.wildfly.datasources.mysql.jndi-name" ],
+      "environment-variables" : [ "MYSQL_DATASOURCE", "MYSQL_JNDI", "OPENSHIFT_MYSQL_DATASOURCE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jta",
+      "attribute" : "jta",
+      "system-properties" : [ "org.wildfly.datasources.mysql.jta" ],
+      "environment-variables" : [ "MYSQL_JTA" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size",
+      "attribute" : "max-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.mysql.max-pool-size" ],
+      "environment-variables" : [ "MYSQL_MAX_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size",
+      "attribute" : "min-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.mysql.min-pool-size" ],
+      "environment-variables" : [ "MYSQL_MIN_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@password",
+      "attribute" : "password",
+      "system-properties" : [ "org.wildfly.datasources.mysql.password" ],
+      "environment-variables" : [ "MYSQL_PASSWORD", "OPENSHIFT_MYSQL_DB_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name",
+      "attribute" : "stale-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mysql.stale-connection-checker-class-name" ],
+      "environment-variables" : [ "MYSQL_STALE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.datasources.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation",
+      "attribute" : "transaction-isolation",
+      "system-properties" : [ "org.wildfly.datasources.mysql.transaction-isolation" ],
+      "environment-variables" : [ "MYSQL_TX_ISOLATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@user-name",
+      "attribute" : "user-name",
+      "system-properties" : [ "org.wildfly.datasources.mysql.user-name" ],
+      "environment-variables" : [ "MYSQL_USER", "OPENSHIFT_MYSQL_DB_USERNAME" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name",
+      "attribute" : "valid-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mysql.valid-connection-checker-class-name" ],
+      "environment-variables" : [ "MYSQL_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match",
+      "attribute" : "validate-on-match",
+      "system-properties" : [ "org.wildfly.datasources.mysql.validate-on-match" ],
+      "environment-variables" : [ "MYSQL_VALIDATE_ON_MATCH" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "mysql-driver",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "jdbc-driver" : {
+            "mysql" : {
+              "_address" : "/subsystem=datasources/jdbc-driver=*",
+              "attributes" : [ {
+                "name" : "driver-module-name",
+                "value" : "com.mysql.jdbc",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+              }, {
+                "name" : "driver-xa-datasource-class-name",
+                "value" : "com.mysql.cj.jdbc.MysqlXADataSource",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.xml-path",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,mysql"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-url",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,url=jdbc:mysql:*"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.xml-path-xa",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,mysql"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-className",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,className=com.mysql.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "com.mysql.jdbc", "org.jboss.as.connector" ]
+  }, {
+    "name" : "mariadb-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "mariadb-driver",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "data-source" : {
+            "MariaDBDS" : {
+              "_address" : "/subsystem=datasources/data-source=*",
+              "attributes" : [ {
+                "name" : "background-validation",
+                "value" : "${org.wildfly.datasources.mariadb.background-validation,env.MARIADB_BACKGROUND_VALIDATION:false}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+              }, {
+                "name" : "background-validation-millis",
+                "value" : "${org.wildfly.datasources.mariadb.background-validation-millis,env.MARIADB_BACKGROUND_VALIDATION_MILLIS:10000}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+              }, {
+                "name" : "connection-url",
+                "value" : "${org.wildfly.datasources.mariadb.connection-url,env.MARIADB_URL:jdbc:mariadb://${org.wildfly.datasources.mariadb.host,env.MARIADB_SERVICE_HOST,env.MARIADB_HOST:localhost}:${org.wildfly.datasources.mariadb.port,env.MARIADB_SERVICE_PORT,env.MARIADB_PORT:3306}/${org.wildfly.datasources.mariadb.database,env.MARIADB_DATABASE}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+              }, {
+                "name" : "driver-name",
+                "value" : "mariadb",
+                "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+              }, {
+                "name" : "enabled",
+                "value" : "${org.wildfly.datasources.mariadb.enabled,env.MARIADB_ENABLED:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+              }, {
+                "name" : "exception-sorter-class-name",
+                "value" : "${org.wildfly.datasources.mariadb.exception-sorter-class-name,env.MARIADB_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter}",
+                "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+              }, {
+                "name" : "flush-strategy",
+                "value" : "${org.wildfly.datasources.mariadb.flush-strategy,env.MARIADB_FLUSH_STRATEGY:FailingConnectionOnly}",
+                "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+              }, {
+                "name" : "idle-timeout-minutes",
+                "value" : "${org.wildfly.datasources.mariadb.idle-timeout-minutes,env.MARIADB_IDLE_TIMEOUT_MINUTES:30}",
+                "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+              }, {
+                "name" : "jndi-name",
+                "value" : "${org.wildfly.datasources.mariadb.jndi-name,env.MARIADB_JNDI:java:jboss/datasources/${org.wildfly.datasources.mariadb.datasource,env.MARIADB_DATASOURCE:MariaDBDS}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+              }, {
+                "name" : "jta",
+                "value" : "${org.wildfly.datasources.mariadb.jta,env.MARIADB_JTA:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jta"
+              }, {
+                "name" : "max-pool-size",
+                "value" : "${org.wildfly.datasources.mariadb.max-pool-size,env.MARIADB_MAX_POOL_SIZE:20}",
+                "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+              }, {
+                "name" : "min-pool-size",
+                "value" : "${org.wildfly.datasources.mariadb.min-pool-size,env.MARIADB_MIN_POOL_SIZE:0}",
+                "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+              }, {
+                "name" : "password",
+                "value" : "${org.wildfly.datasources.mariadb.password,env.MARIADB_PASSWORD}",
+                "_address" : "/subsystem=datasources/data-source=*@@@password"
+              }, {
+                "name" : "stale-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.mariadb.stale-connection-checker-class-name,env.MARIADB_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+              }, {
+                "name" : "statistics-enabled",
+                "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+              }, {
+                "name" : "transaction-isolation",
+                "value" : "${org.wildfly.datasources.mariadb.transaction-isolation,env.MARIADB_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+                "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+              }, {
+                "name" : "user-name",
+                "value" : "${org.wildfly.datasources.mariadb.user-name,env.MARIADB_USER}",
+                "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+              }, {
+                "name" : "valid-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.mariadb.valid-connection-checker-class-name,env.MARIADB_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+              }, {
+                "name" : "validate-on-match",
+                "value" : "${org.wildfly.datasources.mariadb.validate-on-match,env.MARIADB_VALIDATE_ON_MATCH:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,mariadb"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-unbound-datasources",
+      "value" : "JNDI env,MARIADB_JNDI=##ITEM##"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mariadb/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation",
+      "attribute" : "background-validation",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.background-validation" ],
+      "environment-variables" : [ "MARIADB_BACKGROUND_VALIDATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis",
+      "attribute" : "background-validation-millis",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.background-validation-millis" ],
+      "environment-variables" : [ "MARIADB_BACKGROUND_VALIDATION_MILLIS" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@connection-url",
+      "attribute" : "connection-url",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.connection-url", "org.wildfly.datasources.mariadb.database", "org.wildfly.datasources.mariadb.host", "org.wildfly.datasources.mariadb.port" ],
+      "environment-variables" : [ "MARIADB_DATABASE", "MARIADB_HOST", "MARIADB_PORT", "MARIADB_SERVICE_HOST", "MARIADB_SERVICE_PORT", "MARIADB_URL" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@enabled",
+      "attribute" : "enabled",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.enabled" ],
+      "environment-variables" : [ "MARIADB_ENABLED" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name",
+      "attribute" : "exception-sorter-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.exception-sorter-class-name" ],
+      "environment-variables" : [ "MARIADB_EXCEPTION_SORTER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy",
+      "attribute" : "flush-strategy",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.flush-strategy" ],
+      "environment-variables" : [ "MARIADB_FLUSH_STRATEGY" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes",
+      "attribute" : "idle-timeout-minutes",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.idle-timeout-minutes" ],
+      "environment-variables" : [ "MARIADB_IDLE_TIMEOUT_MINUTES" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jndi-name",
+      "attribute" : "jndi-name",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.datasource", "org.wildfly.datasources.mariadb.jndi-name" ],
+      "environment-variables" : [ "MARIADB_DATASOURCE", "MARIADB_JNDI" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jta",
+      "attribute" : "jta",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.jta" ],
+      "environment-variables" : [ "MARIADB_JTA" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size",
+      "attribute" : "max-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.max-pool-size" ],
+      "environment-variables" : [ "MARIADB_MAX_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size",
+      "attribute" : "min-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.min-pool-size" ],
+      "environment-variables" : [ "MARIADB_MIN_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@password",
+      "attribute" : "password",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.password" ],
+      "environment-variables" : [ "MARIADB_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name",
+      "attribute" : "stale-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.stale-connection-checker-class-name" ],
+      "environment-variables" : [ "MARIADB_STALE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.datasources.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation",
+      "attribute" : "transaction-isolation",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.transaction-isolation" ],
+      "environment-variables" : [ "MARIADB_TX_ISOLATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@user-name",
+      "attribute" : "user-name",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.user-name" ],
+      "environment-variables" : [ "MARIADB_USER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name",
+      "attribute" : "valid-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.valid-connection-checker-class-name" ],
+      "environment-variables" : [ "MARIADB_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match",
+      "attribute" : "validate-on-match",
+      "system-properties" : [ "org.wildfly.datasources.mariadb.validate-on-match" ],
+      "environment-variables" : [ "MARIADB_VALIDATE_ON_MATCH" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "db2-driver",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "jdbc-driver" : {
+            "db2" : {
+              "_address" : "/subsystem=datasources/jdbc-driver=*",
+              "attributes" : [ {
+                "name" : "driver-module-name",
+                "value" : "com.ibm.db2",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+              }, {
+                "name" : "driver-xa-datasource-class-name",
+                "value" : "com.ibm.db2.jcc.DB2XADataSource",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.xml-path",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,db2"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-url",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,url=jdbc:db2:*"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.xml-path-xa",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,db2"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-className",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,className=com.ibm.db2.jcc.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "com.ibm.db2", "org.jboss.as.connector" ]
+  }, {
+    "name" : "oracle-driver",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "jdbc-driver" : {
+            "oracle" : {
+              "_address" : "/subsystem=datasources/jdbc-driver=*",
+              "attributes" : [ {
+                "name" : "driver-module-name",
+                "value" : "com.oracle.database.jdbc",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+              }, {
+                "name" : "driver-xa-datasource-class-name",
+                "value" : "oracle.jdbc.xa.client.OracleXADataSource",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.xml-path",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,oracle"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-url",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,url=jdbc:oracle:*"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.xml-path-xa",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,oracle"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-className",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,className=oracle.jdbc.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "com.oracle.database.jdbc", "org.jboss.as.connector" ]
+  }, {
+    "name" : "mariadb-default-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "mariadb-datasource",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "ee" : {
+          "_address" : "/subsystem=ee",
+          "service" : {
+            "default-bindings" : {
+              "_address" : "/subsystem=ee/service=default-bindings",
+              "attributes" : [ {
+                "name" : "datasource",
+                "value" : "java:jboss/datasources/${env.MARIADB_DATASOURCE:MariaDBDS}",
+                "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,mariadb:default"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-no-default-datasource",
+      "value" : ""
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mariadb/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=ee/service=default-bindings@@@datasource",
+      "attribute" : "datasource",
+      "system-properties" : [ ],
+      "environment-variables" : [ "MARIADB_DATASOURCE" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "mariadb-driver",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "jdbc-driver" : {
+            "mariadb" : {
+              "_address" : "/subsystem=datasources/jdbc-driver=*",
+              "attributes" : [ {
+                "name" : "driver-module-name",
+                "value" : "org.mariadb.jdbc",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+              }, {
+                "name" : "driver-xa-datasource-class-name",
+                "value" : "org.mariadb.jdbc.MariaDbDataSource",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.xml-path",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,mariadb"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-url",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,url=jdbc:mariadb:*"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.xml-path-xa",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,mariadb"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-className",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,className=org.mariadb.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.jboss.as.connector", "org.mariadb.jdbc" ]
+  }, {
+    "name" : "postgresql-driver",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "jdbc-driver" : {
+            "postgresql" : {
+              "_address" : "/subsystem=datasources/jdbc-driver=*",
+              "attributes" : [ {
+                "name" : "driver-module-name",
+                "value" : "org.postgresql.jdbc",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+              }, {
+                "name" : "driver-xa-datasource-class-name",
+                "value" : "org.postgresql.xa.PGXADataSource",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.xml-path",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,postgresql"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-url",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,url=jdbc:postgresql:*"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.xml-path-xa",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,postgresql"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-className",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,className=org.postgresql.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.jboss.as.connector", "org.postgresql.jdbc" ]
+  }, {
+    "name" : "mssqlserver-driver",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "jdbc-driver" : {
+            "mssqlserver" : {
+              "_address" : "/subsystem=datasources/jdbc-driver=*",
+              "attributes" : [ {
+                "name" : "driver-module-name",
+                "value" : "com.microsoft.sqlserver",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+              }, {
+                "name" : "driver-xa-datasource-class-name",
+                "value" : "com.microsoft.sqlserver.jdbc.SQLServerXADataSource",
+                "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.xml-path",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,mssqlserver"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-url",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,url=jdbc:sqlserver:*"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.xml-path-xa",
+      "value" : "[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,mssqlserver"
+    }, {
+      "name" : "org.wildfly.rule.annotation.field.value-className",
+      "value" : "jakarta.annotation.sql.DataSourceDefinition,className=com.microsoft.*"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "com.microsoft.sqlserver", "org.jboss.as.connector" ]
+  }, {
+    "name" : "postgresql-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "postgresql-driver",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "data-source" : {
+            "PostgreSQLDS" : {
+              "_address" : "/subsystem=datasources/data-source=*",
+              "attributes" : [ {
+                "name" : "background-validation",
+                "value" : "${org.wildfly.datasources.postgresql.background-validation,env.POSTGRESQL_BACKGROUND_VALIDATION:false}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+              }, {
+                "name" : "background-validation-millis",
+                "value" : "${org.wildfly.datasources.postgresql.background-validation-millis,env.POSTGRESQL_BACKGROUND_VALIDATION_MILLIS:10000}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+              }, {
+                "name" : "connection-url",
+                "value" : "${org.wildfly.datasources.postgresql.connection-url,env.POSTGRESQL_URL:jdbc:postgresql://${org.wildfly.datasources.postgresql.host,env.POSTGRESQL_SERVICE_HOST,env.OPENSHIFT_POSTGRESQL_DB_HOST,env.POSTGRESQL_HOST:localhost}:${org.wildfly.datasources.postgresql.port,env.POSTGRESQL_SERVICE_PORT,env.OPENSHIFT_POSTGRESQL_DB_PORT,env.POSTGRESQL_PORT:5432}/${org.wildfly.datasources.postgresql.database,env.POSTGRESQL_DATABASE,env.OPENSHIFT_POSTGRESQL_DB_NAME}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+              }, {
+                "name" : "driver-name",
+                "value" : "postgresql",
+                "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+              }, {
+                "name" : "enabled",
+                "value" : "${org.wildfly.datasources.postgresql.enabled, env.POSTGRESQL_ENABLED:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+              }, {
+                "name" : "exception-sorter-class-name",
+                "value" : "${org.wildfly.datasources.postgresql.exception-sorter-class-name, env.POSTGRESQL_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter}",
+                "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+              }, {
+                "name" : "flush-strategy",
+                "value" : "${org.wildfly.datasources.postgresql.flush-strategy,env.POSTGRESQL_FLUSH_STRATEGY:FailingConnectionOnly}",
+                "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+              }, {
+                "name" : "idle-timeout-minutes",
+                "value" : "${org.wildfly.datasources.postgresql.idle-timeout-minutes,env.POSTGRESQL_IDLE_TIMEOUT_MINUTES:30}",
+                "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+              }, {
+                "name" : "jndi-name",
+                "value" : "${org.wildfly.datasources.postgresql.jndi-name,env.POSTGRESQL_JNDI:java:jboss/datasources/${org.wildfly.datasources.postgresql.datasource, env.POSTGRESQL_DATASOURCE,env.OPENSHIFT_POSTGRESQL_DATASOURCE:PostgreSQLDS}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+              }, {
+                "name" : "jta",
+                "value" : "${org.wildfly.datasources.postgresql.jta,env.POSTGRESQL_JTA:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jta"
+              }, {
+                "name" : "max-pool-size",
+                "value" : "${org.wildfly.datasources.postgresql.max-pool-size,env.POSTGRESQL_MAX_POOL_SIZE:20}",
+                "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+              }, {
+                "name" : "min-pool-size",
+                "value" : "${org.wildfly.datasources.postgresql.min-pool-size,env.POSTGRESQL_MIN_POOL_SIZE:0}",
+                "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+              }, {
+                "name" : "password",
+                "value" : "${org.wildfly.datasources.postgresql.password,env.POSTGRESQL_PASSWORD,env.OPENSHIFT_POSTGRESQL_DB_PASSWORD}",
+                "_address" : "/subsystem=datasources/data-source=*@@@password"
+              }, {
+                "name" : "stale-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.postgresql.stale-connection-checker-class-name,env.POSTGRESQL_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+              }, {
+                "name" : "statistics-enabled",
+                "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+              }, {
+                "name" : "transaction-isolation",
+                "value" : "${org.wildfly.datasources.postgresql.transaction-isolation,env.POSTGRESQL_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+                "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+              }, {
+                "name" : "user-name",
+                "value" : "${org.wildfly.datasources.postgresql.user-name,env.POSTGRESQL_USER,env.OPENSHIFT_POSTGRESQL_DB_USERNAME}",
+                "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+              }, {
+                "name" : "valid-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.postgresql.valid-connection-checker-class-name,env.POSTGRESQL_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+              }, {
+                "name" : "validate-on-match",
+                "value" : "${org.wildfly.datasources.postgresql.validate-on-match,env.POSTGRESQL_VALIDATE_ON_MATCH:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,postgresql"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-unbound-datasources",
+      "value" : "JNDI env,POSTGRESQL_JNDI=##ITEM##"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/postgresql/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation",
+      "attribute" : "background-validation",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.background-validation" ],
+      "environment-variables" : [ "POSTGRESQL_BACKGROUND_VALIDATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis",
+      "attribute" : "background-validation-millis",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.background-validation-millis" ],
+      "environment-variables" : [ "POSTGRESQL_BACKGROUND_VALIDATION_MILLIS" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@connection-url",
+      "attribute" : "connection-url",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.connection-url", "org.wildfly.datasources.postgresql.database", "org.wildfly.datasources.postgresql.host", "org.wildfly.datasources.postgresql.port" ],
+      "environment-variables" : [ "OPENSHIFT_POSTGRESQL_DB_HOST", "OPENSHIFT_POSTGRESQL_DB_NAME", "OPENSHIFT_POSTGRESQL_DB_PORT", "POSTGRESQL_DATABASE", "POSTGRESQL_HOST", "POSTGRESQL_PORT", "POSTGRESQL_SERVICE_HOST", "POSTGRESQL_SERVICE_PORT", "POSTGRESQL_URL" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@enabled",
+      "attribute" : "enabled",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.enabled" ],
+      "environment-variables" : [ "POSTGRESQL_ENABLED" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name",
+      "attribute" : "exception-sorter-class-name",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.exception-sorter-class-name" ],
+      "environment-variables" : [ "POSTGRESQL_EXCEPTION_SORTER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy",
+      "attribute" : "flush-strategy",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.flush-strategy" ],
+      "environment-variables" : [ "POSTGRESQL_FLUSH_STRATEGY" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes",
+      "attribute" : "idle-timeout-minutes",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.idle-timeout-minutes" ],
+      "environment-variables" : [ "POSTGRESQL_IDLE_TIMEOUT_MINUTES" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jndi-name",
+      "attribute" : "jndi-name",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.datasource", "org.wildfly.datasources.postgresql.jndi-name" ],
+      "environment-variables" : [ "OPENSHIFT_POSTGRESQL_DATASOURCE", "POSTGRESQL_DATASOURCE", "POSTGRESQL_JNDI" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jta",
+      "attribute" : "jta",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.jta" ],
+      "environment-variables" : [ "POSTGRESQL_JTA" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size",
+      "attribute" : "max-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.max-pool-size" ],
+      "environment-variables" : [ "POSTGRESQL_MAX_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size",
+      "attribute" : "min-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.min-pool-size" ],
+      "environment-variables" : [ "POSTGRESQL_MIN_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@password",
+      "attribute" : "password",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.password" ],
+      "environment-variables" : [ "OPENSHIFT_POSTGRESQL_DB_PASSWORD", "POSTGRESQL_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name",
+      "attribute" : "stale-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.stale-connection-checker-class-name" ],
+      "environment-variables" : [ "POSTGRESQL_STALE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.datasources.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation",
+      "attribute" : "transaction-isolation",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.transaction-isolation" ],
+      "environment-variables" : [ "POSTGRESQL_TX_ISOLATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@user-name",
+      "attribute" : "user-name",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.user-name" ],
+      "environment-variables" : [ "OPENSHIFT_POSTGRESQL_DB_USERNAME", "POSTGRESQL_USER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name",
+      "attribute" : "valid-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.valid-connection-checker-class-name" ],
+      "environment-variables" : [ "POSTGRESQL_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match",
+      "attribute" : "validate-on-match",
+      "system-properties" : [ "org.wildfly.datasources.postgresql.validate-on-match" ],
+      "environment-variables" : [ "POSTGRESQL_VALIDATE_ON_MATCH" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "db2-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "db2-driver",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "data-source" : {
+            "DB2DS" : {
+              "_address" : "/subsystem=datasources/data-source=*",
+              "attributes" : [ {
+                "name" : "background-validation",
+                "value" : "${org.wildfly.datasources.db2.background-validation,env.DB2_BACKGROUND_VALIDATION:false}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+              }, {
+                "name" : "background-validation-millis",
+                "value" : "${org.wildfly.datasources.db2.background-validation-millis,env.DB2_BACKGROUND_VALIDATION_MILLIS:10000}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+              }, {
+                "name" : "connection-url",
+                "value" : "${org.wildfly.datasources.db2.connection-url,env.DB2_URL:jdbc:db2://${org.wildfly.datasources.db2.host,env.DB2_SERVICE_HOST,env.OPENSHIFT_DB2_DB_HOST,env.DB2_HOST:localhost}:${org.wildfly.datasources.db2.port,env.DB2_SERVICE_PORT,env.OPENSHIFT_DB2_DB_PORT,env.DB2_PORT:50000}/${org.wildfly.datasources.db2.database,env.DB2_DATABASE,env.OPENSHIFT_DB2_DB_NAME}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+              }, {
+                "name" : "driver-name",
+                "value" : "db2",
+                "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+              }, {
+                "name" : "enabled",
+                "value" : "${org.wildfly.datasources.db2.enabled, env.DB2_ENABLED:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+              }, {
+                "name" : "exception-sorter-class-name",
+                "value" : "${org.wildfly.datasources.db2.exception-sorter-class-name, env.DB2_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.db2.DB2ExceptionSorter}",
+                "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+              }, {
+                "name" : "flush-strategy",
+                "value" : "${org.wildfly.datasources.db2.flush-strategy,env.DB2_FLUSH_STRATEGY:FailingConnectionOnly}",
+                "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+              }, {
+                "name" : "idle-timeout-minutes",
+                "value" : "${org.wildfly.datasources.db2.idle-timeout-minutes,env.DB2_IDLE_TIMEOUT_MINUTES:30}",
+                "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+              }, {
+                "name" : "jndi-name",
+                "value" : "${org.wildfly.datasources.db2.jndi-name,env.DB2_JNDI:java:jboss/datasources/${org.wildfly.datasources.db2.datasource, env.DB2_DATASOURCE,env.OPENSHIFT_DB2_DATASOURCE:DB2DS}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+              }, {
+                "name" : "jta",
+                "value" : "${org.wildfly.datasources.db2.jta,env.DB2_JTA:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jta"
+              }, {
+                "name" : "max-pool-size",
+                "value" : "${org.wildfly.datasources.db2.max-pool-size,env.DB2_MAX_POOL_SIZE:20}",
+                "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+              }, {
+                "name" : "min-pool-size",
+                "value" : "${org.wildfly.datasources.db2.min-pool-size,env.DB2_MIN_POOL_SIZE:0}",
+                "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+              }, {
+                "name" : "password",
+                "value" : "${org.wildfly.datasources.db2.password,env.DB2_PASSWORD,env.OPENSHIFT_DB2_DB_PASSWORD}",
+                "_address" : "/subsystem=datasources/data-source=*@@@password"
+              }, {
+                "name" : "stale-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.db2.stale-connection-checker-class-name,env.DB2_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+              }, {
+                "name" : "statistics-enabled",
+                "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+              }, {
+                "name" : "transaction-isolation",
+                "value" : "${org.wildfly.datasources.db2.transaction-isolation,env.DB2_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+                "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+              }, {
+                "name" : "user-name",
+                "value" : "${org.wildfly.datasources.db2.user-name,env.DB2_USER,env.OPENSHIFT_DB2_DB_USERNAME}",
+                "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+              }, {
+                "name" : "valid-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.db2.valid-connection-checker-class-name,env.DB2_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.db2.DB2ValidConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+              }, {
+                "name" : "validate-on-match",
+                "value" : "${org.wildfly.datasources.db2.validate-on-match,env.DB2_VALIDATE_ON_MATCH:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,db2"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-unbound-datasources",
+      "value" : "JNDI env,DB2_JNDI=##ITEM##"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/db2/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation",
+      "attribute" : "background-validation",
+      "system-properties" : [ "org.wildfly.datasources.db2.background-validation" ],
+      "environment-variables" : [ "DB2_BACKGROUND_VALIDATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis",
+      "attribute" : "background-validation-millis",
+      "system-properties" : [ "org.wildfly.datasources.db2.background-validation-millis" ],
+      "environment-variables" : [ "DB2_BACKGROUND_VALIDATION_MILLIS" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@connection-url",
+      "attribute" : "connection-url",
+      "system-properties" : [ "org.wildfly.datasources.db2.connection-url", "org.wildfly.datasources.db2.database", "org.wildfly.datasources.db2.host", "org.wildfly.datasources.db2.port" ],
+      "environment-variables" : [ "DB2_DATABASE", "DB2_HOST", "DB2_PORT", "DB2_SERVICE_HOST", "DB2_SERVICE_PORT", "DB2_URL", "OPENSHIFT_DB2_DB_HOST", "OPENSHIFT_DB2_DB_NAME", "OPENSHIFT_DB2_DB_PORT" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@enabled",
+      "attribute" : "enabled",
+      "system-properties" : [ "org.wildfly.datasources.db2.enabled" ],
+      "environment-variables" : [ "DB2_ENABLED" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name",
+      "attribute" : "exception-sorter-class-name",
+      "system-properties" : [ "org.wildfly.datasources.db2.exception-sorter-class-name" ],
+      "environment-variables" : [ "DB2_EXCEPTION_SORTER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy",
+      "attribute" : "flush-strategy",
+      "system-properties" : [ "org.wildfly.datasources.db2.flush-strategy" ],
+      "environment-variables" : [ "DB2_FLUSH_STRATEGY" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes",
+      "attribute" : "idle-timeout-minutes",
+      "system-properties" : [ "org.wildfly.datasources.db2.idle-timeout-minutes" ],
+      "environment-variables" : [ "DB2_IDLE_TIMEOUT_MINUTES" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jndi-name",
+      "attribute" : "jndi-name",
+      "system-properties" : [ "org.wildfly.datasources.db2.datasource", "org.wildfly.datasources.db2.jndi-name" ],
+      "environment-variables" : [ "DB2_DATASOURCE", "DB2_JNDI", "OPENSHIFT_DB2_DATASOURCE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jta",
+      "attribute" : "jta",
+      "system-properties" : [ "org.wildfly.datasources.db2.jta" ],
+      "environment-variables" : [ "DB2_JTA" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size",
+      "attribute" : "max-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.db2.max-pool-size" ],
+      "environment-variables" : [ "DB2_MAX_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size",
+      "attribute" : "min-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.db2.min-pool-size" ],
+      "environment-variables" : [ "DB2_MIN_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@password",
+      "attribute" : "password",
+      "system-properties" : [ "org.wildfly.datasources.db2.password" ],
+      "environment-variables" : [ "DB2_PASSWORD", "OPENSHIFT_DB2_DB_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name",
+      "attribute" : "stale-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.db2.stale-connection-checker-class-name" ],
+      "environment-variables" : [ "DB2_STALE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.datasources.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation",
+      "attribute" : "transaction-isolation",
+      "system-properties" : [ "org.wildfly.datasources.db2.transaction-isolation" ],
+      "environment-variables" : [ "DB2_TX_ISOLATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@user-name",
+      "attribute" : "user-name",
+      "system-properties" : [ "org.wildfly.datasources.db2.user-name" ],
+      "environment-variables" : [ "DB2_USER", "OPENSHIFT_DB2_DB_USERNAME" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name",
+      "attribute" : "valid-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.db2.valid-connection-checker-class-name" ],
+      "environment-variables" : [ "DB2_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match",
+      "attribute" : "validate-on-match",
+      "system-properties" : [ "org.wildfly.datasources.db2.validate-on-match" ],
+      "environment-variables" : [ "DB2_VALIDATE_ON_MATCH" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "oracle-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "oracle-driver",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "data-source" : {
+            "OracleDS" : {
+              "_address" : "/subsystem=datasources/data-source=*",
+              "attributes" : [ {
+                "name" : "background-validation",
+                "value" : "${org.wildfly.datasources.oracle.background-validation,env.ORACLE_BACKGROUND_VALIDATION:false}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+              }, {
+                "name" : "background-validation-millis",
+                "value" : "${org.wildfly.datasources.oracle.background-validation-millis,env.ORACLE_BACKGROUND_VALIDATION_MILLIS:10000}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+              }, {
+                "name" : "connection-url",
+                "value" : "${org.wildfly.datasources.oracle.connection-url,env.ORACLE_URL,env.OPENSHIFT_ORACLE_URL}",
+                "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+              }, {
+                "name" : "driver-name",
+                "value" : "oracle",
+                "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+              }, {
+                "name" : "enabled",
+                "value" : "${org.wildfly.datasources.oracle.enabled,env.ORACLE_ENABLED:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+              }, {
+                "name" : "exception-sorter-class-name",
+                "value" : "${org.wildfly.datasources.oracle.exception-sorter-class-name,env.ORACLE_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.oracle.OracleExceptionSorter}",
+                "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+              }, {
+                "name" : "flush-strategy",
+                "value" : "${org.wildfly.datasources.oracle.flush-strategy,env.ORACLE_FLUSH_STRATEGY:FailingConnectionOnly}",
+                "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+              }, {
+                "name" : "idle-timeout-minutes",
+                "value" : "${org.wildfly.datasources.oracle.idle-timeout-minutes,env.ORACLE_IDLE_TIMEOUT_MINUTES:30}",
+                "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+              }, {
+                "name" : "jndi-name",
+                "value" : "${org.wildfly.datasources.oracle.jndi-name,env.ORACLE_JNDI:java:jboss/datasources/${org.wildfly.datasources.oracle.datasource,env.ORACLE_DATASOURCE,env.OPENSHIFT_ORACLE_DATASOURCE:OracleDS}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+              }, {
+                "name" : "jta",
+                "value" : "${org.wildfly.datasources.oracle.jta,env.ORACLE_JTA:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jta"
+              }, {
+                "name" : "max-pool-size",
+                "value" : "${org.wildfly.datasources.oracle.max-pool-size,env.ORACLE_MAX_POOL_SIZE:20}",
+                "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+              }, {
+                "name" : "min-pool-size",
+                "value" : "${org.wildfly.datasources.oracle.min-pool-size,env.ORACLE_MIN_POOL_SIZE:0}",
+                "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+              }, {
+                "name" : "password",
+                "value" : "${org.wildfly.datasources.oracle.password,env.ORACLE_PASSWORD,env.OPENSHIFT_ORACLE_DB_PASSWORD}",
+                "_address" : "/subsystem=datasources/data-source=*@@@password"
+              }, {
+                "name" : "stale-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.oracle.stale-connection-checker-class-name,env.ORACLE_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+              }, {
+                "name" : "statistics-enabled",
+                "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+              }, {
+                "name" : "transaction-isolation",
+                "value" : "${org.wildfly.datasources.oracle.transaction-isolation,env.ORACLE_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+                "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+              }, {
+                "name" : "user-name",
+                "value" : "${org.wildfly.datasources.oracle.user-name,env.ORACLE_USER,env.OPENSHIFT_ORACLE_DB_USERNAME}",
+                "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+              }, {
+                "name" : "valid-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.oracle.valid-connection-checker-class-name,env.ORACLE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+              }, {
+                "name" : "validate-on-match",
+                "value" : "${org.wildfly.datasources.oracle.validate-on-match,env.ORACLE_VALIDATE_ON_MATCH:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,oracle"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-unbound-datasources",
+      "value" : "JNDI env,ORACLE_JNDI=##ITEM##"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/oracle/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation",
+      "attribute" : "background-validation",
+      "system-properties" : [ "org.wildfly.datasources.oracle.background-validation" ],
+      "environment-variables" : [ "ORACLE_BACKGROUND_VALIDATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis",
+      "attribute" : "background-validation-millis",
+      "system-properties" : [ "org.wildfly.datasources.oracle.background-validation-millis" ],
+      "environment-variables" : [ "ORACLE_BACKGROUND_VALIDATION_MILLIS" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@connection-url",
+      "attribute" : "connection-url",
+      "system-properties" : [ "org.wildfly.datasources.oracle.connection-url" ],
+      "environment-variables" : [ "OPENSHIFT_ORACLE_URL", "ORACLE_URL" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@enabled",
+      "attribute" : "enabled",
+      "system-properties" : [ "org.wildfly.datasources.oracle.enabled" ],
+      "environment-variables" : [ "ORACLE_ENABLED" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name",
+      "attribute" : "exception-sorter-class-name",
+      "system-properties" : [ "org.wildfly.datasources.oracle.exception-sorter-class-name" ],
+      "environment-variables" : [ "ORACLE_EXCEPTION_SORTER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy",
+      "attribute" : "flush-strategy",
+      "system-properties" : [ "org.wildfly.datasources.oracle.flush-strategy" ],
+      "environment-variables" : [ "ORACLE_FLUSH_STRATEGY" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes",
+      "attribute" : "idle-timeout-minutes",
+      "system-properties" : [ "org.wildfly.datasources.oracle.idle-timeout-minutes" ],
+      "environment-variables" : [ "ORACLE_IDLE_TIMEOUT_MINUTES" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jndi-name",
+      "attribute" : "jndi-name",
+      "system-properties" : [ "org.wildfly.datasources.oracle.datasource", "org.wildfly.datasources.oracle.jndi-name" ],
+      "environment-variables" : [ "OPENSHIFT_ORACLE_DATASOURCE", "ORACLE_DATASOURCE", "ORACLE_JNDI" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jta",
+      "attribute" : "jta",
+      "system-properties" : [ "org.wildfly.datasources.oracle.jta" ],
+      "environment-variables" : [ "ORACLE_JTA" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size",
+      "attribute" : "max-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.oracle.max-pool-size" ],
+      "environment-variables" : [ "ORACLE_MAX_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size",
+      "attribute" : "min-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.oracle.min-pool-size" ],
+      "environment-variables" : [ "ORACLE_MIN_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@password",
+      "attribute" : "password",
+      "system-properties" : [ "org.wildfly.datasources.oracle.password" ],
+      "environment-variables" : [ "OPENSHIFT_ORACLE_DB_PASSWORD", "ORACLE_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name",
+      "attribute" : "stale-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.oracle.stale-connection-checker-class-name" ],
+      "environment-variables" : [ "ORACLE_STALE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.datasources.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation",
+      "attribute" : "transaction-isolation",
+      "system-properties" : [ "org.wildfly.datasources.oracle.transaction-isolation" ],
+      "environment-variables" : [ "ORACLE_TX_ISOLATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@user-name",
+      "attribute" : "user-name",
+      "system-properties" : [ "org.wildfly.datasources.oracle.user-name" ],
+      "environment-variables" : [ "OPENSHIFT_ORACLE_DB_USERNAME", "ORACLE_USER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name",
+      "attribute" : "valid-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.oracle.valid-connection-checker-class-name" ],
+      "environment-variables" : [ "ORACLE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match",
+      "attribute" : "validate-on-match",
+      "system-properties" : [ "org.wildfly.datasources.oracle.validate-on-match" ],
+      "environment-variables" : [ "ORACLE_VALIDATE_ON_MATCH" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "mssqlserver-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "mssqlserver-driver",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "data-source" : {
+            "MSSQLServerDS" : {
+              "_address" : "/subsystem=datasources/data-source=*",
+              "attributes" : [ {
+                "name" : "background-validation",
+                "value" : "${org.wildfly.datasources.mssqlserver.background-validation,env.MSSQLSERVER_BACKGROUND_VALIDATION:false}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+              }, {
+                "name" : "background-validation-millis",
+                "value" : "${org.wildfly.datasources.mssqlserver.background-validation-millis,env.MSSQLSERVER_BACKGROUND_VALIDATION_MILLIS:10000}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+              }, {
+                "name" : "connection-url",
+                "value" : "${org.wildfly.datasources.mssqlserver.connection-url,env.MSSQLSERVER_URL:jdbc:sqlserver://${org.wildfly.datasources.mssqlserver.host,env.MSSQLSERVER_SERVICE_HOST,env.MSSQLSERVER_HOST:localhost}:${org.wildfly.datasources.mssqlserver.port,env.MSSQLSERVER_SERVICE_PORT,env.MSSQLSERVER_PORT:1433};DatabaseName\\=${org.wildfly.datasources.mssqlserver.database,env.MSSQLSERVER_DATABASE}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+              }, {
+                "name" : "driver-name",
+                "value" : "mssqlserver",
+                "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+              }, {
+                "name" : "enabled",
+                "value" : "${org.wildfly.datasources.mssqlserver.enabled, env.MSSQLSERVER_ENABLED:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+              }, {
+                "name" : "exception-sorter-class-name",
+                "value" : "${org.wildfly.datasources.mssqlserver.exception-sorter-class-name, env.MSSQLSERVER_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.mssql.MSSQLExceptionSorter}",
+                "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+              }, {
+                "name" : "flush-strategy",
+                "value" : "${org.wildfly.datasources.mssqlserver.flush-strategy,env.MSSQLSERVER_FLUSH_STRATEGY:FailingConnectionOnly}",
+                "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+              }, {
+                "name" : "idle-timeout-minutes",
+                "value" : "${org.wildfly.datasources.mssqlserver.idle-timeout-minutes,env.MSSQLSERVER_IDLE_TIMEOUT_MINUTES:30}",
+                "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+              }, {
+                "name" : "jndi-name",
+                "value" : "${org.wildfly.datasources.mssqlserver.jndi-name,env.MSSQLSERVER_JNDI:java:jboss/datasources/${org.wildfly.datasources.mssqlserver.datasource, env.MSSQLSERVER_DATASOURCE:MSSQLServerDS}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+              }, {
+                "name" : "jta",
+                "value" : "${org.wildfly.datasources.mssqlserver.jta,env.MSSQLSERVER_JTA:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jta"
+              }, {
+                "name" : "max-pool-size",
+                "value" : "${org.wildfly.datasources.mssqlserver.max-pool-size,env.MSSQLSERVER_MAX_POOL_SIZE:20}",
+                "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+              }, {
+                "name" : "min-pool-size",
+                "value" : "${org.wildfly.datasources.mssqlserver.min-pool-size,env.MSSQLSERVER_MIN_POOL_SIZE:0}",
+                "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+              }, {
+                "name" : "password",
+                "value" : "${org.wildfly.datasources.mssqlserver.password,env.MSSQLSERVER_PASSWORD}",
+                "_address" : "/subsystem=datasources/data-source=*@@@password"
+              }, {
+                "name" : "stale-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.mssqlserver.stale-connection-checker-class-name,env.MSSQLSERVER_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+              }, {
+                "name" : "statistics-enabled",
+                "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+              }, {
+                "name" : "transaction-isolation",
+                "value" : "${org.wildfly.datasources.mssqlserver.transaction-isolation,env.MSSQLSERVER_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+                "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+              }, {
+                "name" : "user-name",
+                "value" : "${org.wildfly.datasources.mssqlserver.user-name,env.MSSQLSERVER_USER}",
+                "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+              }, {
+                "name" : "valid-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.mssqlserver.valid-connection-checker-class-name,env.MSSQLSERVER_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.mssql.MSSQLValidConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+              }, {
+                "name" : "validate-on-match",
+                "value" : "${org.wildfly.datasources.mssqlserver.validate-on-match,env.MSSQLSERVER_VALIDATE_ON_MATCH:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "database,mssqlserver"
+    }, {
+      "name" : "org.wildfly.rule.add-on-fix-unbound-datasources",
+      "value" : "JNDI env,MSSQLSERVER_JNDI=##ITEM##"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:datasources"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mssqlserver/env.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Database"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation",
+      "attribute" : "background-validation",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.background-validation" ],
+      "environment-variables" : [ "MSSQLSERVER_BACKGROUND_VALIDATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis",
+      "attribute" : "background-validation-millis",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.background-validation-millis" ],
+      "environment-variables" : [ "MSSQLSERVER_BACKGROUND_VALIDATION_MILLIS" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@connection-url",
+      "attribute" : "connection-url",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.connection-url", "org.wildfly.datasources.mssqlserver.database", "org.wildfly.datasources.mssqlserver.host", "org.wildfly.datasources.mssqlserver.port" ],
+      "environment-variables" : [ "MSSQLSERVER_DATABASE", "MSSQLSERVER_HOST", "MSSQLSERVER_PORT", "MSSQLSERVER_SERVICE_HOST", "MSSQLSERVER_SERVICE_PORT", "MSSQLSERVER_URL" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@enabled",
+      "attribute" : "enabled",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.enabled" ],
+      "environment-variables" : [ "MSSQLSERVER_ENABLED" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name",
+      "attribute" : "exception-sorter-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.exception-sorter-class-name" ],
+      "environment-variables" : [ "MSSQLSERVER_EXCEPTION_SORTER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy",
+      "attribute" : "flush-strategy",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.flush-strategy" ],
+      "environment-variables" : [ "MSSQLSERVER_FLUSH_STRATEGY" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes",
+      "attribute" : "idle-timeout-minutes",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.idle-timeout-minutes" ],
+      "environment-variables" : [ "MSSQLSERVER_IDLE_TIMEOUT_MINUTES" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jndi-name",
+      "attribute" : "jndi-name",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.datasource", "org.wildfly.datasources.mssqlserver.jndi-name" ],
+      "environment-variables" : [ "MSSQLSERVER_DATASOURCE", "MSSQLSERVER_JNDI" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jta",
+      "attribute" : "jta",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.jta" ],
+      "environment-variables" : [ "MSSQLSERVER_JTA" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size",
+      "attribute" : "max-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.max-pool-size" ],
+      "environment-variables" : [ "MSSQLSERVER_MAX_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size",
+      "attribute" : "min-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.min-pool-size" ],
+      "environment-variables" : [ "MSSQLSERVER_MIN_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@password",
+      "attribute" : "password",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.password" ],
+      "environment-variables" : [ "MSSQLSERVER_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name",
+      "attribute" : "stale-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.stale-connection-checker-class-name" ],
+      "environment-variables" : [ "MSSQLSERVER_STALE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.datasources.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation",
+      "attribute" : "transaction-isolation",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.transaction-isolation" ],
+      "environment-variables" : [ "MSSQLSERVER_TX_ISOLATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@user-name",
+      "attribute" : "user-name",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.user-name" ],
+      "environment-variables" : [ "MSSQLSERVER_USER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name",
+      "attribute" : "valid-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.valid-connection-checker-class-name" ],
+      "environment-variables" : [ "MSSQLSERVER_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match",
+      "attribute" : "validate-on-match",
+      "system-properties" : [ "org.wildfly.datasources.mssqlserver.validate-on-match" ],
+      "environment-variables" : [ "MSSQLSERVER_VALIDATE_ON_MATCH" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "h2database-datasource",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "h2database-driver",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "data-source" : {
+            "H2DatabaseDS" : {
+              "_address" : "/subsystem=datasources/data-source=*",
+              "attributes" : [ {
+                "name" : "background-validation",
+                "value" : "${org.wildfly.datasources.h2database.background-validation,env.H2DATABASE_BACKGROUND_VALIDATION:false}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+              }, {
+                "name" : "background-validation-millis",
+                "value" : "${org.wildfly.datasources.h2database.background-validation-millis,env.H2DATABASE_BACKGROUND_VALIDATION_MILLIS:10000}",
+                "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+              }, {
+                "name" : "connection-url",
+                "value" : "${org.wildfly.datasources.h2database.connection-url,env.H2DATABASE_URL,env.OPENSHIFT_H2DATABASE_URL:jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}",
+                "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+              }, {
+                "name" : "driver-name",
+                "value" : "h2database",
+                "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+              }, {
+                "name" : "enabled",
+                "value" : "${org.wildfly.datasources.h2database.enabled, env.H2DATABASE_ENABLED:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+              }, {
+                "name" : "exception-sorter-class-name",
+                "value" : "${org.wildfly.datasources.h2database.exception-sorter-class-name,env.H2DATABASE_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullExceptionSorter}",
+                "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+              }, {
+                "name" : "flush-strategy",
+                "value" : "${org.wildfly.datasources.h2database.flush-strategy,env.H2DATABASE_FLUSH_STRATEGY:FailingConnectionOnly}",
+                "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+              }, {
+                "name" : "idle-timeout-minutes",
+                "value" : "${org.wildfly.datasources.h2database.idle-timeout-minutes,env.H2DATABASE_IDLE_TIMEOUT_MINUTES:30}",
+                "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+              }, {
+                "name" : "jndi-name",
+                "value" : "${org.wildfly.datasources.h2database.jndi-name,env.H2DATABASE_JNDI:java:jboss/datasources/${org.wildfly.datasources.h2database.datasource, env.H2DATABASE_DATASOURCE,env.OPENSHIFT_H2DATABASE_DATASOURCE:H2DatabaseDS}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+              }, {
+                "name" : "jta",
+                "value" : "${org.wildfly.datasources.h2database.jta,env.H2DATABASE_JTA:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jta"
+              }, {
+                "name" : "max-pool-size",
+                "value" : "${org.wildfly.datasources.h2database.max-pool-size,env.H2DATABASE_MAX_POOL_SIZE:20}",
+                "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+              }, {
+                "name" : "min-pool-size",
+                "value" : "${org.wildfly.datasources.h2database.min-pool-size,env.H2DATABASE_MIN_POOL_SIZE:0}",
+                "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+              }, {
+                "name" : "password",
+                "value" : "${org.wildfly.datasources.h2database.password,env.H2DATABASE_PASSWORD,env.OPENSHIFT_H2DATABASE_DB_PASSWORD:sa}",
+                "_address" : "/subsystem=datasources/data-source=*@@@password"
+              }, {
+                "name" : "stale-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.h2database.stale-connection-checker-class-name,env.H2DATABASE_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+              }, {
+                "name" : "statistics-enabled",
+                "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+              }, {
+                "name" : "transaction-isolation",
+                "value" : "${org.wildfly.datasources.h2database.transaction-isolation,env.H2DATABASE_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+                "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+              }, {
+                "name" : "user-name",
+                "value" : "${org.wildfly.datasources.h2database.user-name,env.H2DATABASE_USER,env.OPENSHIFT_H2DATABASE_DB_USERNAME:sa}",
+                "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+              }, {
+                "name" : "valid-connection-checker-class-name",
+                "value" : "${org.wildfly.datasources.h2database.valid-connection-checker-class-name,env.H2DATABASE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullValidConnectionChecker}",
+                "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+              }, {
+                "name" : "validate-on-match",
+                "value" : "${org.wildfly.datasources.h2database.validate-on-match,env.H2DATABASE_VALIDATE_ON_MATCH:true}",
+                "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ ],
+    "configurations" : [ {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation",
+      "attribute" : "background-validation",
+      "system-properties" : [ "org.wildfly.datasources.h2database.background-validation" ],
+      "environment-variables" : [ "H2DATABASE_BACKGROUND_VALIDATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis",
+      "attribute" : "background-validation-millis",
+      "system-properties" : [ "org.wildfly.datasources.h2database.background-validation-millis" ],
+      "environment-variables" : [ "H2DATABASE_BACKGROUND_VALIDATION_MILLIS" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@connection-url",
+      "attribute" : "connection-url",
+      "system-properties" : [ "org.wildfly.datasources.h2database.connection-url" ],
+      "environment-variables" : [ "H2DATABASE_URL", "OPENSHIFT_H2DATABASE_URL" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@enabled",
+      "attribute" : "enabled",
+      "system-properties" : [ "org.wildfly.datasources.h2database.enabled" ],
+      "environment-variables" : [ "H2DATABASE_ENABLED" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name",
+      "attribute" : "exception-sorter-class-name",
+      "system-properties" : [ "org.wildfly.datasources.h2database.exception-sorter-class-name" ],
+      "environment-variables" : [ "H2DATABASE_EXCEPTION_SORTER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy",
+      "attribute" : "flush-strategy",
+      "system-properties" : [ "org.wildfly.datasources.h2database.flush-strategy" ],
+      "environment-variables" : [ "H2DATABASE_FLUSH_STRATEGY" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes",
+      "attribute" : "idle-timeout-minutes",
+      "system-properties" : [ "org.wildfly.datasources.h2database.idle-timeout-minutes" ],
+      "environment-variables" : [ "H2DATABASE_IDLE_TIMEOUT_MINUTES" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jndi-name",
+      "attribute" : "jndi-name",
+      "system-properties" : [ "org.wildfly.datasources.h2database.datasource", "org.wildfly.datasources.h2database.jndi-name" ],
+      "environment-variables" : [ "H2DATABASE_DATASOURCE", "H2DATABASE_JNDI", "OPENSHIFT_H2DATABASE_DATASOURCE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jta",
+      "attribute" : "jta",
+      "system-properties" : [ "org.wildfly.datasources.h2database.jta" ],
+      "environment-variables" : [ "H2DATABASE_JTA" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size",
+      "attribute" : "max-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.h2database.max-pool-size" ],
+      "environment-variables" : [ "H2DATABASE_MAX_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size",
+      "attribute" : "min-pool-size",
+      "system-properties" : [ "org.wildfly.datasources.h2database.min-pool-size" ],
+      "environment-variables" : [ "H2DATABASE_MIN_POOL_SIZE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@password",
+      "attribute" : "password",
+      "system-properties" : [ "org.wildfly.datasources.h2database.password" ],
+      "environment-variables" : [ "H2DATABASE_PASSWORD", "OPENSHIFT_H2DATABASE_DB_PASSWORD" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name",
+      "attribute" : "stale-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.h2database.stale-connection-checker-class-name" ],
+      "environment-variables" : [ "H2DATABASE_STALE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.datasources.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation",
+      "attribute" : "transaction-isolation",
+      "system-properties" : [ "org.wildfly.datasources.h2database.transaction-isolation" ],
+      "environment-variables" : [ "H2DATABASE_TX_ISOLATION" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@user-name",
+      "attribute" : "user-name",
+      "system-properties" : [ "org.wildfly.datasources.h2database.user-name" ],
+      "environment-variables" : [ "H2DATABASE_USER", "OPENSHIFT_H2DATABASE_DB_USERNAME" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name",
+      "attribute" : "valid-connection-checker-class-name",
+      "system-properties" : [ "org.wildfly.datasources.h2database.valid-connection-checker-class-name" ],
+      "environment-variables" : [ "H2DATABASE_CONNECTION_CHECKER" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match",
+      "attribute" : "validate-on-match",
+      "system-properties" : [ "org.wildfly.datasources.h2database.validate-on-match" ],
+      "environment-variables" : [ "H2DATABASE_VALIDATE_ON_MATCH" ]
+    } ],
+    "packages" : [ ]
+  } ]
+}

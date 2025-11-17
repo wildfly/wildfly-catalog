@@ -1,0 +1,233 @@
+{
+    "children" : {"subsystem" : {
+        "model-description" : {
+            "microprofile-graphql-client-smallrye" : {
+                "description" : "The Microprofile GraphQL Client subsystem implemented by SmallRye",
+                "stability" : "default",
+                "capabilities" : [{
+                    "name" : "org.wildfly.microprofile.graphql.client",
+                    "dynamic" : false,
+                    "stability" : "default"
+                }],
+                "attributes" : {},
+                "operations" : {
+                    "add" : {
+                        "operation-name" : "add",
+                        "description" : "Adds the Microprofile GraphQL Client subsystem",
+                        "request-properties" : {},
+                        "reply-properties" : {},
+                        "stability" : "default",
+                        "read-only" : false,
+                        "runtime-only" : false
+                    },
+                    "remove" : {
+                        "operation-name" : "remove",
+                        "description" : "Removes the Microprofile GraphQL Client subsystem",
+                        "request-properties" : {},
+                        "reply-properties" : {},
+                        "stability" : "default",
+                        "read-only" : false,
+                        "restart-required" : "all-services",
+                        "runtime-only" : false
+                    }
+                },
+                "notifications" : null,
+                "children" : {},
+                "address" : [[{
+                    "subsystem" : "microprofile-graphql-client-smallrye"
+                }]]
+            },
+            "microprofile-graphql-smallrye" : {
+                "description" : "The Microprofile GraphQL subsystem implemented by SmallRye",
+                "stability" : "default",
+                "capabilities" : [{
+                    "name" : "org.wildfly.microprofile.graphql",
+                    "dynamic" : false,
+                    "stability" : "default"
+                }],
+                "attributes" : {},
+                "operations" : {
+                    "add" : {
+                        "operation-name" : "add",
+                        "description" : "Adds the Microprofile GraphQL subsystem",
+                        "request-properties" : {},
+                        "reply-properties" : {},
+                        "stability" : "default",
+                        "read-only" : false,
+                        "runtime-only" : false
+                    },
+                    "remove" : {
+                        "operation-name" : "remove",
+                        "description" : "Removes the Microprofile GraphQL subsystem",
+                        "request-properties" : {},
+                        "reply-properties" : {},
+                        "stability" : "default",
+                        "read-only" : false,
+                        "restart-required" : "all-services",
+                        "runtime-only" : false
+                    }
+                },
+                "notifications" : null,
+                "children" : {},
+                "address" : [[{
+                    "subsystem" : "microprofile-graphql-smallrye"
+                }]]
+            }
+        },
+        "description" : "The subsystems that make up the server's profile."
+    }},
+    "description" : "WildFly implementation of MicroProfile GraphQL",
+    "possible-capabilities" : [
+        {
+            "name" : "org.wildfly.management.audit.handler",
+            "dynamic" : true,
+            "registration-points" : [
+                "/core-service=management/access=audit/syslog-handler=*/protocol=tls/authentication=truststore",
+                "/core-service=management/access=audit/syslog-handler=*/protocol=tls/authentication=client-certificate-store"
+            ]
+        },
+        {
+            "name" : "org.wildfly.management.configuration.changes",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/service=configuration-changes"]
+        },
+        {
+            "name" : "org.wildfly.management.console-availability",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.executor",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.external-module",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.http-interface",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/management-interface=http-interface"]
+        },
+        {
+            "name" : "org.wildfly.management.http.extensible",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/management-interface=http-interface"]
+        },
+        {
+            "name" : "org.wildfly.management.identity",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/access=identity"]
+        },
+        {
+            "name" : "org.wildfly.management.model-controller-client-factory",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.native-interface",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/management-interface=native-interface"]
+        },
+        {
+            "name" : "org.wildfly.management.notification-handler-registry",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path",
+            "dynamic" : true,
+            "registration-points" : ["/path=*"]
+        },
+        {
+            "name" : "org.wildfly.management.path-manager",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.controller.temp.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.home.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.base.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.config.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.data.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.log.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.temp.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.process-state-notifier",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.socket-binding-manager",
+            "dynamic" : false,
+            "registration-points" : ["/socket-binding-group=*"]
+        },
+        {
+            "name" : "org.wildfly.microprofile.graphql",
+            "dynamic" : false,
+            "registration-points" : ["/subsystem=microprofile-graphql-smallrye"]
+        },
+        {
+            "name" : "org.wildfly.microprofile.graphql.client",
+            "dynamic" : false,
+            "registration-points" : ["/subsystem=microprofile-graphql-client-smallrye"]
+        },
+        {
+            "name" : "org.wildfly.network.interface",
+            "dynamic" : true,
+            "registration-points" : ["/interface=*"]
+        },
+        {
+            "name" : "org.wildfly.network.outbound-socket-binding",
+            "dynamic" : true,
+            "registration-points" : [
+                "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+                "/socket-binding-group=*/local-destination-outbound-socket-binding=*"
+            ]
+        },
+        {
+            "name" : "org.wildfly.network.socket-binding",
+            "dynamic" : true,
+            "registration-points" : ["/socket-binding-group=*/socket-binding=*"]
+        },
+        {
+            "name" : "org.wildfly.server.environment",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.server.suspend-controller",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        }
+    ]
+}

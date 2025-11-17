@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Management API  Reference for embedding-store-content-retriever</title>
+  <link rel="stylesheet" href="../../../../styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <script src="../../../../scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <header class="card-header">
+<div>
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li>
+        <a href="../../../index.html">root</a>
+      </li>
+      <li>
+        <a href="../../../subsystem/ai/index.html">subsystem=ai</a>
+      </li>
+      <li>embedding-store-content-retriever</li>
+    </ol>
+  </nav>
+</div>    <h1>Management API Reference for embedding-store-content-retriever</h1>
+    <p>A ContentRetriever that retrieves content from an embedding store.</p>
+
+  </header>
+<h2>Provided Capabilities (1)</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Dynamic</th>
+    <th>Other provider points</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="https://github.com/wildfly/wildfly-capabilities/tree/main/org/wildfly/ai/rag/retriever/capability.adoc">org.wildfly.ai.rag.retriever</a></td>
+    <td>true</td>
+    <td>
+      <a href="../../../subsystem/ai/web-search-content-retriever/index.html">/subsystem=ai/web-search-content-retriever=*</a> <br/>
+      <a href="../../../subsystem/ai/neo4j-content-retriever/index.html">/subsystem=ai/neo4j-content-retriever=*</a> <br/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h2>Attributes (4)</h2>
+<ul class="attributes">
+  <li>
+    <span class="toggle-link">
+      <a id="embedding-model" href="#embedding-model" class="">
+         embedding-model</a> - Embedding model used to compute embeddings.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>all-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "Embedding model used to compute embeddings.",
+    "expressions-allowed" : true,
+    "required" : true,
+    "nillable" : false,
+    "capability-reference" : "org.wildfly.ai.embedding.model",
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "all-services"
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="embedding-store" href="#embedding-store" class="">
+         embedding-store</a> - Store were the contents and embeddings are retrieved from.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>all-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "STRING"
+    },
+    "description" : "Store were the contents and embeddings are retrieved from.",
+    "expressions-allowed" : true,
+    "required" : true,
+    "nillable" : false,
+    "capability-reference" : "org.wildfly.ai.embedding.store",
+    "min-length" : 1,
+    "max-length" : 2147483647,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "all-services"
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="max-results" href="#max-results" class="">
+         max-results</a> - The maximum number of contents to retrieve.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>INT</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>all-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "INT"
+    },
+    "description" : "The maximum number of contents to retrieve.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "all-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="min-score" href="#min-score" class="">
+         min-score</a> - The minimum relevance score for the returned contents.Contents scoring below this score are excluded from the results.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <tr>
+          <td>Type</td>
+          <td>DOUBLE</td>
+        </tr>
+        <tr>
+          <td>Is the attribute nillable?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Does the attribute allow expression?</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>Where is the attribute stored?</td>
+          <td>configuration</td>
+        </tr>
+        <tr>
+          <td>Access Type</td>
+          <td>read-write</td>
+        </tr>
+        <tr>
+          <td>Is restarted required?</td>
+          <td>all-services</td>
+        </tr>
+        <tr>
+          <td>Stability Level</td>
+          <td>default</td>
+        </tr>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+                            <pre><code class="language-json">
+{
+    "type" : {
+        "TYPE_MODEL_VALUE" : "DOUBLE"
+    },
+    "description" : "The minimum relevance score for the returned contents.Contents scoring below this score are excluded from the results.",
+    "expressions-allowed" : true,
+    "required" : false,
+    "nillable" : true,
+    "stability" : "default",
+    "access-type" : "read-write",
+    "storage" : "configuration",
+    "restart-required" : "all-services",
+    "capability-reference" : null
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+<h2>Operations (2)</h2>
+<ul class="operations">
+  <li>
+    <span class="toggle-link">
+      <a id="add" href="#add" class="">
+      add</a> - This operation adds an embedding store content retriever.
+    </span>
+    <div class="collapsible">
+
+
+      <table>
+        <thead>
+        <tr>
+          <th>Request Parameter</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Expressions Allowed</th>
+          <th>Default value</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>embedding-model</td>
+          <td>STRING</td>
+          <td>true</td>
+          <td>true</td>
+          <td></td>
+          <td>Embedding model used to compute embeddings.</td>
+        </tr>
+        <tr>
+          <td>embedding-store</td>
+          <td>STRING</td>
+          <td>true</td>
+          <td>true</td>
+          <td></td>
+          <td>Store were the contents and embeddings are retrieved from.</td>
+        </tr>
+        <tr>
+          <td>max-results</td>
+          <td>INT</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The maximum number of contents to retrieve.</td>
+        </tr>
+        <tr>
+          <td>min-score</td>
+          <td>DOUBLE</td>
+          <td>false</td>
+          <td>true</td>
+          <td></td>
+          <td>The minimum relevance score for the returned contents.Contents scoring below this score are excluded from the results.</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "add",
+    "description" : "This operation adds an embedding store content retriever.",
+    "request-properties" : {
+        "embedding-model" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "Embedding model used to compute embeddings.",
+            "expressions-allowed" : true,
+            "required" : true,
+            "nillable" : false,
+            "capability-reference" : "org.wildfly.ai.embedding.model",
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "stability" : "default"
+        },
+        "embedding-store" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "STRING"
+            },
+            "description" : "Store were the contents and embeddings are retrieved from.",
+            "expressions-allowed" : true,
+            "required" : true,
+            "nillable" : false,
+            "capability-reference" : "org.wildfly.ai.embedding.store",
+            "min-length" : 1,
+            "max-length" : 2147483647,
+            "stability" : "default"
+        },
+        "max-results" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "INT"
+            },
+            "description" : "The maximum number of contents to retrieve.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        },
+        "min-score" : {
+            "type" : {
+                "TYPE_MODEL_VALUE" : "DOUBLE"
+            },
+            "description" : "The minimum relevance score for the returned contents.Contents scoring below this score are excluded from the results.",
+            "expressions-allowed" : true,
+            "required" : false,
+            "nillable" : true,
+            "stability" : "default"
+        }
+    },
+    "reply-properties" : {},
+    "stability" : "default",
+    "read-only" : false,
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+  <li>
+    <span class="toggle-link">
+      <a id="remove" href="#remove" class="">
+      remove</a> - This operation removes an embedding store content retriever.
+    </span>
+    <div class="collapsible">
+
+
+
+
+      <table>
+        <tr>
+          <td class="toggle-link">Raw DMR model</td>
+          <td class="collapsible">
+            <div class="code-block-container">
+              <pre><code class="language-json">
+{
+    "operation-name" : "remove",
+    "description" : "This operation removes an embedding store content retriever.",
+    "request-properties" : {},
+    "reply-properties" : {},
+    "stability" : "default",
+    "read-only" : false,
+    "restart-required" : "resource-services",
+    "runtime-only" : false
+}</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+<h2>Galleon Features</h2>
+<p>Galleon features are to be used when creating Galleon feature-packs.</p>
+<ul class="attributes">
+  <li>
+  <span class="toggle-link">subsystem.ai.embedding-store-content-retriever</span>
+  <div class="collapsible">
+    <div class="code-block-container">
+      <pre>
+        <code id="feature" class="language-xml">
+&lt;feature spec="subsystem.ai.embedding-store-content-retriever"&gt;
+  &lt;param name="embedding-store-content-retriever" value="{resource name}"/&gt;
+  &lt;param name="embedding-model" value="{value}"/&gt;
+  &lt;param name="embedding-store" value="{value}"/&gt;
+  &lt;param name="max-results" value="{value}"/&gt;
+  &lt;param name="min-score" value="{value}"/&gt;
+&lt;feature/&gt;
+        </code>
+      </pre>
+      <button class="copy-btn" onclick="copyToClipboard('feature')" title="Copy to clipboard">📋</button>
+    </div>
+  </div>
+  </li>
+</ul>
+</div>
+</body>
+</html>

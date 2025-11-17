@@ -1,0 +1,2670 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Documentation for AI Feature pack for WildFly</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <script src="scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1>Documentation for AI Feature pack for WildFly</h1>
+  <p>Feature pack to provide AI integration for WildFly</p>
+  <h2 id="coords">Coordinates&nbsp;<a href="#coords" class="anchor-link">§</a></h2>
+  <div class="tabs">
+    <ul class="tab-list" role="tablist">
+      <li><button class="tab-button active" onclick="switchTab(event, 'maven-tab')" role="tab" aria-selected="true" aria-controls="maven-tab">Maven Dependency</button></li>
+      <li><button class="tab-button" onclick="switchTab(event, 'feature-pack-tab')" role="tab" aria-selected="false" aria-controls="feature-pack-tab">Feature Pack Location</button></li>
+    </ul>
+
+    <div id="maven-tab" class="tab-content active" role="tabpanel">
+      <div class="code-block-container">
+        <pre>
+            <code id="maven-dependency" class="language-xml">
+&lt;dependency>
+  &lt;groupId>org.wildfly.generative-ai&lt;/groupId>
+  &lt;artifactId>wildfly-ai-feature-pack&lt;/artifactId>
+  &lt;version>0.8.1&lt;/version>
+&lt;/dependency>
+            </code>
+        </pre>
+        <button class="copy-btn" onclick="copyToClipboard('maven-dependency')" title="Copy to clipboard">📋</button>
+      </div>
+    </div>
+
+    <div id="feature-pack-tab" class="tab-content" role="tabpanel">
+      <div class="code-block-container">
+        <pre>
+            <code id="feature-pack-location" class="language-xml">
+&lt;feature-pack>
+    &lt;location>org.wildfly.generative-ai:wildfly-ai-feature-pack:0.8.1&lt;/location>
+&lt;/feature-pack>
+            </code>
+        </pre>
+        <button class="copy-btn" onclick="copyToClipboard('feature-pack-location')" title="Copy to clipboard">📋</button>
+      </div>
+    </div>
+  </div>
+
+  <h2 id="refs">References&nbsp;<a href="#refs" class="anchor-link">§</a></h2>
+  <ul>
+    <li>
+      <a href="reference/index.html">Management API</a>
+    </li>
+    <li>
+    <a href="log-message-reference.html">Log and Exception Message Code</a>
+    </li>
+  </ul>
+
+  <h2 id="layers">Provided Layers&nbsp;<a href="#layers" class="anchor-link">§</a></h2>
+  <div class="table-of-contents">
+    <ul>
+      <li><a href="#layer-ai">ai</a></li>
+      <li><a href="#layer-chat-memory-provider">chat-memory-provider</a></li>
+      <li><a href="#layer-chroma-embedding-store">chroma-embedding-store</a></li>
+      <li><a href="#layer-default-embedding-content-retriever">default-embedding-content-retriever</a></li>
+      <li><a href="#layer-gemini-chat-model">gemini-chat-model</a></li>
+      <li><a href="#layer-gemini-streaming-chat-model">gemini-streaming-chat-model</a></li>
+      <li><a href="#layer-github-chat-model">github-chat-model</a></li>
+      <li><a href="#layer-github-streaming-chat-model">github-streaming-chat-model</a></li>
+      <li><a href="#layer-groq-chat-model">groq-chat-model</a></li>
+      <li><a href="#layer-groq-streaming-chat-model">groq-streaming-chat-model</a></li>
+      <li><a href="#layer-in-memory-embedding-model-all-minilm-l6-v2">in-memory-embedding-model-all-minilm-l6-v2</a></li>
+      <li><a href="#layer-in-memory-embedding-model-all-minilm-l6-v2-q">in-memory-embedding-model-all-minilm-l6-v2-q</a></li>
+      <li><a href="#layer-in-memory-embedding-model-bge-small-en">in-memory-embedding-model-bge-small-en</a></li>
+      <li><a href="#layer-in-memory-embedding-model-bge-small-en-q">in-memory-embedding-model-bge-small-en-q</a></li>
+      <li><a href="#layer-in-memory-embedding-model-bge-small-en-v15">in-memory-embedding-model-bge-small-en-v15</a></li>
+      <li><a href="#layer-in-memory-embedding-model-bge-small-en-v15-q">in-memory-embedding-model-bge-small-en-v15-q</a></li>
+      <li><a href="#layer-in-memory-embedding-model-e5-small-v2">in-memory-embedding-model-e5-small-v2</a></li>
+      <li><a href="#layer-in-memory-embedding-model-e5-small-v2-q">in-memory-embedding-model-e5-small-v2-q</a></li>
+      <li><a href="#layer-in-memory-embedding-store">in-memory-embedding-store</a></li>
+      <li><a href="#layer-mcp">mcp</a></li>
+      <li><a href="#layer-mcp-client-sse">mcp-client-sse</a></li>
+      <li><a href="#layer-mcp-client-stdio">mcp-client-stdio</a></li>
+      <li><a href="#layer-mcp-server">mcp-server</a></li>
+      <li><a href="#layer-mistral-ai-chat-model">mistral-ai-chat-model</a></li>
+      <li><a href="#layer-mistral-ai-streaming-chat-model">mistral-ai-streaming-chat-model</a></li>
+      <li><a href="#layer-neo4j-content-retriever">neo4j-content-retriever</a></li>
+      <li><a href="#layer-neo4j-embedding-store">neo4j-embedding-store</a></li>
+      <li><a href="#layer-ollama-chat-model">ollama-chat-model</a></li>
+      <li><a href="#layer-ollama-embedding-model">ollama-embedding-model</a></li>
+      <li><a href="#layer-ollama-neo4j-content-retriever">ollama-neo4j-content-retriever</a></li>
+      <li><a href="#layer-ollama-streaming-chat-model">ollama-streaming-chat-model</a></li>
+      <li><a href="#layer-openai-chat-model">openai-chat-model</a></li>
+      <li><a href="#layer-openai-neo4j-content-retriever">openai-neo4j-content-retriever</a></li>
+      <li><a href="#layer-openai-streaming-chat-model">openai-streaming-chat-model</a></li>
+      <li><a href="#layer-wasm">wasm</a></li>
+      <li><a href="#layer-weaviate-embedding-store">weaviate-embedding-store</a></li>
+      <li><a href="#layer-web-search-engines">web-search-engines</a></li>
+    </ul>
+  </div>
+  <h3 id="layer-ai">ai&nbsp;<a href="#layer-ai" class="anchor-link">§</a></h3>
+  <p>Support for LangChain4j Integration</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai"
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for LangChain4j Integration</li>
+    <li>org.wildfly.rule.annotations&nbsp;=&nbsp;dev.langchain4j.*,org.eclipse.microprofile.ai.llm.*</li>
+    <li>org.wildfly.rule.class&nbsp;=&nbsp;dev.langchain4j.*,org.eclipse.microprofile.ai.llm.*</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-chat-memory-provider">chat-memory-provider&nbsp;<a href="#layer-chat-memory-provider" class="anchor-link">§</a></h3>
+  <p>Support for ChatMemory</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "chat-memory" : {
+        "chat-memory" : {
+          "_address" : "/subsystem=ai/chat-memory=*",
+          "attributes" : [ {
+            "name" : "size",
+            "value" : "${org.wildfly.ai.chat-memory.size,env.CHAT_MEMORY_SIZE:5}",
+            "_address" : "/subsystem=ai/chat-memory=*@@@size"
+          }, {
+            "name" : "type",
+            "value" : "${org.wildfly.ai.chat-memory.type,env.CHAT_MEMORY_TYPE:MESSAGE}",
+            "_address" : "/subsystem=ai/chat-memory=*@@@type"
+          }, {
+            "name" : "use-http-session",
+            "value" : "${org.wildfly.ai.chat-memory.session,env.CHAT_MEMORY_SESSION:true}",
+            "_address" : "/subsystem=ai/chat-memory=*@@@use-http-session"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for ChatMemory</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,chat-memory-provider</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Chat Memory Provider to keep track of the exchanges with a LLM</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.memory.chat.ChatMemoryProvider,jakarta.inject.Named[value=chat-memory]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,chatMemoryProviderName=chat-memory</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/chat-memory-provider/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-chroma-embedding-store">chroma-embedding-store&nbsp;<a href="#layer-chroma-embedding-store" class="anchor-link">§</a></h3>
+  <p>Support for ChromaDB as an embedding store</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "chroma-embedding-store" : {
+        "chroma" : {
+          "_address" : "/subsystem=ai/chroma-embedding-store=*",
+          "attributes" : [ {
+            "name" : "api-version",
+            "value" : "${org.wildfly.ai.chroma.api-version,env.CHROMA_API_VERSION:V2}",
+            "_address" : "/subsystem=ai/chroma-embedding-store=*@@@api-version"
+          }, {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.chroma.url,env.CHROMA_URL:http://localhost:8000}",
+            "_address" : "/subsystem=ai/chroma-embedding-store=*@@@base-url"
+          }, {
+            "name" : "connect-timeout",
+            "value" : "${org.wildfly.ai.chroma.timeout,env.CHROMA_TIMEOUT:20000}",
+            "_address" : "/subsystem=ai/chroma-embedding-store=*@@@connect-timeout"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.chroma.log.request,env.CHROMA_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/chroma-embedding-store=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.chroma.log.response,env.CHROMA_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/chroma-embedding-store=*@@@log-responses"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for ChromaDB as an embedding store</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-store,chroma-embedding-store</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Chroma as an embedding store</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/chroma-embedding-store/env.yaml</li>
+    <li>org.wildfly.rule.expect-add-on-family&nbsp;=&nbsp;ai-embedding-model</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.chroma</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-default-embedding-content-retriever">default-embedding-content-retriever&nbsp;<a href="#layer-default-embedding-content-retriever" class="anchor-link">§</a></h3>
+  <p>Support for a default embedding content retriever using in memory embedding store and all-minilm-l6-v2 embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "embedding-store-content-retriever" : {
+        "embedding-store-retriever" : {
+          "_address" : "/subsystem=ai/embedding-store-content-retriever=*",
+          "attributes" : [ {
+            "name" : "embedding-model",
+            "value" : "all-minilm-l6-v2",
+            "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@embedding-model"
+          }, {
+            "name" : "embedding-store",
+            "value" : "in-memory",
+            "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@embedding-store"
+          }, {
+            "name" : "max-results",
+            "value" : "${org.wildfly.ai.embedding.retriever.max.results,env.EMBEDDING_RETRIEVER_MAX_RESULTS:2}",
+            "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@max-results"
+          }, {
+            "name" : "min-score",
+            "value" : "${org.wildfly.ai.embedding.retriever.min.score,env.EMBEDDING_RETRIEVER_MIN_SCORE:0.7}",
+            "_address" : "/subsystem=ai/embedding-store-content-retriever=*@@@min-score"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-in-memory-embedding-model-all-minilm-l6-v2">in-memory-embedding-model-all-minilm-l6-v2</a>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-in-memory-embedding-store">in-memory-embedding-store</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for a default embedding content retriever using in memory embedding store and all-minilm-l6-v2 embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-content-retriever,default-embedding-content-retriever</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;all-dependencies</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use embedding content retriever</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=embedding-store-retriever]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,contentRetrieverName=embedding-store-retriever</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/default-embedding-content-retriever/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-gemini-chat-model">gemini-chat-model&nbsp;<a href="#layer-gemini-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Gemini chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "gemini-chat-model" : {
+        "gemini" : {
+          "_address" : "/subsystem=ai/gemini-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.GEMINI_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@api-key"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.gemini.chat.log,env.GEMINI_CHAT_LOG:true}",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.gemini.chat.log,env.GEMINI_CHAT_LOG:true}",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.gemini.chat.model.name,env.GEMINI_CHAT_MODEL_NAME:gemini-2.5-flash}",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@model-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Gemini chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,gemini-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Github Models API for LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=gemini]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=gemini</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/gemini-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.gemini</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-gemini-streaming-chat-model">gemini-streaming-chat-model&nbsp;<a href="#layer-gemini-streaming-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Gemini streaming chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "gemini-chat-model" : {
+        "streaming-gemini" : {
+          "_address" : "/subsystem=ai/gemini-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.GEMINI_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@api-key"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.gemini.chat.log,env.GEMINI_CHAT_LOG:true}",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.gemini.chat.log,env.GEMINI_CHAT_LOG:true}",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.gemini.chat.model.name,env.GEMINI_CHAT_MODEL_NAME:gemini-2.5-flash}",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@model-name"
+          }, {
+            "name" : "streaming",
+            "value" : "true",
+            "_address" : "/subsystem=ai/gemini-chat-model=*@@@streaming"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Gemini streaming chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,gemini-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Github Models for LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-gemini]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-gemini</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/gemini-streaming-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.gemini</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-github-chat-model">github-chat-model&nbsp;<a href="#layer-github-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Github chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "github-chat-model" : {
+        "github" : {
+          "_address" : "/subsystem=ai/github-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.GITHUB_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@api-key"
+          }, {
+            "name" : "endpoint",
+            "value" : "${org.wildfly.ai.github.chat.url,env.GITHUB_CHAT_URL:https://models.inference.ai.azure.com}",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@endpoint"
+          }, {
+            "name" : "log-requests-responses",
+            "value" : "${org.wildfly.ai.github.chat.log,env.GITHUB_CHAT_LOG:true}",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@log-requests-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.github.chat.model.name,env.GITHUB_CHAT_MODEL_NAME:gpt-4o-mini}",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@model-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Github chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,github-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Github Models API for LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=github]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=github</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/github-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>com.azure</li>
+    <li>dev.langchain4j.github</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-github-streaming-chat-model">github-streaming-chat-model&nbsp;<a href="#layer-github-streaming-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Github streaming chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "github-chat-model" : {
+        "streaming-github" : {
+          "_address" : "/subsystem=ai/github-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.GITHUB_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@api-key"
+          }, {
+            "name" : "endpoint",
+            "value" : "${org.wildfly.ai.github.chat.url,env.GITHUB_CHAT_URL:https://models.inference.ai.azure.com}",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@endpoint"
+          }, {
+            "name" : "log-requests-responses",
+            "value" : "${org.wildfly.ai.github.chat.log,env.GITHUB_CHAT_LOG:true}",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@log-requests-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.github.chat.model.name,env.GITHUB_CHAT_MODEL_NAME:gpt-4o-mini}",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@model-name"
+          }, {
+            "name" : "streaming",
+            "value" : "true",
+            "_address" : "/subsystem=ai/github-chat-model=*@@@streaming"
+          } ]
+        }
+      }
+    },
+    "logging" : {
+      "_address" : "/subsystem=logging",
+      "logger" : {
+        "com.azure" : {
+          "_address" : "/subsystem=logging/logger=*",
+          "attributes" : [ {
+            "name" : "level",
+            "value" : "OFF",
+            "_address" : "/subsystem=logging/logger=*@@@level"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Github streaming chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,github-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Github Models for LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-github]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-github</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/github-streaming-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>com.azure</li>
+    <li>dev.langchain4j.github</li>
+    <li>org.apache.commons.logging</li>
+    <li>org.apache.logging.log4j.api</li>
+    <li>org.jboss.as.logging</li>
+    <li>org.jboss.logging.jul-to-slf4j-stub</li>
+    <li>org.slf4j</li>
+    <li>org.slf4j.impl</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-groq-chat-model">groq-chat-model&nbsp;<a href="#layer-groq-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Groq chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "openai-chat-model" : {
+        "groq" : {
+          "_address" : "/subsystem=ai/openai-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.GROQ_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+          }, {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.openai.chat.url,env.GROQ_CHAT_URL:https://api.groq.com/openai/v1}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.groq.chat.log.request,env.GROQ_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.groq.chat.log.response,env.GROQ_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.groq.chat.model.name,env.GROQ_CHAT_MODEL_NAME:llama3-8b-8192}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Groq chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,groq-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use OpenAI API for GROQ LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=groq]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=groq</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/groq-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.openai</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-groq-streaming-chat-model">groq-streaming-chat-model&nbsp;<a href="#layer-groq-streaming-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Groq streaming chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "openai-chat-model" : {
+        "streaming-groq" : {
+          "_address" : "/subsystem=ai/openai-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.GROQ_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+          }, {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.groq.chat.url,env.GROQ_CHAT_URL:https://api.groq.com/openai/v1}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.groq.chat.log.request,env.GROQ_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.groq.chat.log.response,env.GROQ_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.groq.chat.model.name,env.GROQ_CHAT_MODEL_NAME:llama3-8b-8192}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+          }, {
+            "name" : "streaming",
+            "value" : "true",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@streaming"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Groq streaming chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,groq-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use OpenAI API for GROQ LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-groq]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-groq</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/groq-streaming-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.openai</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-model-all-minilm-l6-v2">in-memory-embedding-model-all-minilm-l6-v2&nbsp;<a href="#layer-in-memory-embedding-model-all-minilm-l6-v2" class="anchor-link">§</a></h3>
+  <p>Support for all-minilm-l6-v2 in memory embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-model" : {
+        "all-minilm-l6-v2" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+          "attributes" : [ {
+            "name" : "embedding-class",
+            "value" : "dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+          }, {
+            "name" : "module",
+            "value" : "dev.langchain4j.embeddings.all-minilm-l6-v2",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for all-minilm-l6-v2 in memory embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,in-memory-embedding-model-all-minilm-l6-v2</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;SentenceTransformers all-MiniLM-L6-v2 embedding model that runs within your Java application's process.</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.embeddings.all-minilm-l6-v2</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-model-all-minilm-l6-v2-q">in-memory-embedding-model-all-minilm-l6-v2-q&nbsp;<a href="#layer-in-memory-embedding-model-all-minilm-l6-v2-q" class="anchor-link">§</a></h3>
+  <p>Support for all-minilm-l6-v2-q in memory embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-model" : {
+        "all-minilm-l6-v2-q" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+          "attributes" : [ {
+            "name" : "embedding-class",
+            "value" : "dev.langchain4j.model.embedding.onnx.allminilml6v2q.AllMiniLmL6V2QuantizedEmbeddingModel",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+          }, {
+            "name" : "module",
+            "value" : "dev.langchain4j.embeddings.all-minilm-l6-v2-q",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for all-minilm-l6-v2-q in memory embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,in-memory-embedding-model-all-minilm-l6-v2-q</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Quantized SentenceTransformers all-MiniLM-L6-v2 embedding model that runs within your Java application's process.</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.embeddings.all-minilm-l6-v2-q</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-model-bge-small-en">in-memory-embedding-model-bge-small-en&nbsp;<a href="#layer-in-memory-embedding-model-bge-small-en" class="anchor-link">§</a></h3>
+  <p>Support for abge-small-en in memory embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-model" : {
+        "bge-small-en" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+          "attributes" : [ {
+            "name" : "embedding-class",
+            "value" : "dev.langchain4j.model.embedding.onnx.bgesmallen.BgeSmallEnEmbeddingModel",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+          }, {
+            "name" : "module",
+            "value" : "dev.langchain4j.embeddings.bge-small-en",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for abge-small-en in memory embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,in-memory-embedding-model-bge-small-en</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;BAAI bge-small-en embedding model that runs within your Java application's process.</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.embeddings.bge-small-en</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-model-bge-small-en-q">in-memory-embedding-model-bge-small-en-q&nbsp;<a href="#layer-in-memory-embedding-model-bge-small-en-q" class="anchor-link">§</a></h3>
+  <p>Support for all-bge-small-en-q in memory embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-model" : {
+        "bge-small-en" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+          "attributes" : [ {
+            "name" : "embedding-class",
+            "value" : "dev.langchain4j.model.embedding.onnx.bgesmallenq.BgeSmallEnQuantizedEmbeddingModel",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+          }, {
+            "name" : "module",
+            "value" : "dev.langchain4j.embeddings.bge-small-en-q",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for all-bge-small-en-q in memory embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,in-memory-embedding-model-bge-small-en-q</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Quantized BAAI bge-small-en embedding model that runs within your Java application's process.</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.embeddings.bge-small-en-q</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-model-bge-small-en-v15">in-memory-embedding-model-bge-small-en-v15&nbsp;<a href="#layer-in-memory-embedding-model-bge-small-en-v15" class="anchor-link">§</a></h3>
+  <p>Support for bge-small-env15 in memory embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-model" : {
+        "bge-small-en-v15" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+          "attributes" : [ {
+            "name" : "embedding-class",
+            "value" : "dev.langchain4j.model.embedding.onnx.bgesmallenv15.BgeSmallEnV15EmbeddingModel",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+          }, {
+            "name" : "module",
+            "value" : "dev.langchain4j.embeddings.bge-small-en-v15",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for bge-small-env15 in memory embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,in-memory-embedding-model-bge-small-en-v15</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;BAAI bge-small-en-v1.5 embedding model that runs within your Java application's process.</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.embeddings.bge-small-en-v15</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-model-bge-small-en-v15-q">in-memory-embedding-model-bge-small-en-v15-q&nbsp;<a href="#layer-in-memory-embedding-model-bge-small-en-v15-q" class="anchor-link">§</a></h3>
+  <p>Support for bge-small-en-v15-q in memory embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-model" : {
+        "bge-small-en-v15-q" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+          "attributes" : [ {
+            "name" : "embedding-class",
+            "value" : "dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+          }, {
+            "name" : "module",
+            "value" : "dev.langchain4j.embeddings.bge-small-en-v15-q",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for bge-small-en-v15-q in memory embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,in-memory-embedding-model-bge-small-en-v15-q</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Quantized BAAI bge-small-en embedding model that runs within your Java application's process.</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.embeddings.bge-small-en-v15-q</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-model-e5-small-v2">in-memory-embedding-model-e5-small-v2&nbsp;<a href="#layer-in-memory-embedding-model-e5-small-v2" class="anchor-link">§</a></h3>
+  <p>Support for e5-small-v2 in memory embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-model" : {
+        "e5-small-v2" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+          "attributes" : [ {
+            "name" : "embedding-class",
+            "value" : "dev.langchain4j.model.embedding.onnx.e5smallv2.E5SmallV2EmbeddingModel",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+          }, {
+            "name" : "module",
+            "value" : "dev.langchain4j.embeddings.e5-small-v2",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for e5-small-v2 in memory embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,in-memory-embedding-model-e5-small-v2</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Microsoft E5-small-v2 embedding model that runs within your Java application's process.</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.embeddings.e5-small-v2</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-model-e5-small-v2-q">in-memory-embedding-model-e5-small-v2-q&nbsp;<a href="#layer-in-memory-embedding-model-e5-small-v2-q" class="anchor-link">§</a></h3>
+  <p>Support for e5-small-v2-q in memory embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-model" : {
+        "e5-small-v2-q" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-model=*",
+          "attributes" : [ {
+            "name" : "embedding-class",
+            "value" : "dev.langchain4j.model.embedding.onnx.e5smallv2q.E5SmallV2QuantizedEmbeddingModel",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@embedding-class"
+          }, {
+            "name" : "module",
+            "value" : "dev.langchain4j.embeddings.e5-small-v2-q",
+            "_address" : "/subsystem=ai/in-memory-embedding-model=*@@@module"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for e5-small-v2-q in memory embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,in-memory-embedding-model-e5-small-v2-q</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Quantized Microsoft E5-small-v2 embedding model that runs within your Java application's process.</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.embeddings.e5-small-v2-q</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-in-memory-embedding-store">in-memory-embedding-store&nbsp;<a href="#layer-in-memory-embedding-store" class="anchor-link">§</a></h3>
+  <p>Support In Memory embedding store.</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "in-memory-embedding-store" : {
+        "in-memory" : {
+          "_address" : "/subsystem=ai/in-memory-embedding-store=*",
+          "attributes" : [ {
+            "name" : "path",
+            "value" : "${org.wildfly.ai.in-memory.embedding.file,env.IN_MEMORY_EMBEDDING_FILE:embeddings.json}",
+            "_address" : "/subsystem=ai/in-memory-embedding-store=*@@@path"
+          }, {
+            "name" : "relative-to",
+            "value" : "jboss.server.config.dir",
+            "_address" : "/subsystem=ai/in-memory-embedding-store=*@@@relative-to"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support In Memory embedding store.</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-store,in-memory-embedding-store</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use an in memory embedding store</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/in-memory-embedding-store/env.yaml</li>
+    <li>org.wildfly.rule.expect-add-on-family&nbsp;=&nbsp;ai-embedding-model</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-mcp">mcp&nbsp;<a href="#layer-mcp" class="anchor-link">§</a></h3>
+  <p>Support for MCP subsystem</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "mcp" : {
+      "_address" : "/subsystem=mcp"
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>ee-concurrency</code>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Model Context Protocol</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for MCP subsystem</li>
+    <li>org.wildfly.rule.annotations&nbsp;=&nbsp;org.wildfly.mcp.api.*</li>
+    <li>org.wildfly.rule.class&nbsp;=&nbsp;org.wildfly.mcp.api.*</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.extension.mcp</li>
+  </ul>
+  <h3 id="layer-mcp-client-sse">mcp-client-sse&nbsp;<a href="#layer-mcp-client-sse" class="anchor-link">§</a></h3>
+  <p>Support for MCP SSE client</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "socket-binding-group" : {
+    "standard-sockets" : {
+      "_address" : "/socket-binding-group=*",
+      "remote-destination-outbound-socket-binding" : {
+        "mcp-sse" : {
+          "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+          "attributes" : [ {
+            "name" : "host",
+            "value" : "${org.wildfly.ai.mcp.client.host,env.MCP_CLIENT_HOST:localhost}",
+            "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host"
+          }, {
+            "name" : "port",
+            "value" : "${org.wildfly.ai.mcp.client.port,env.MCP_CLIENT_PORT:8090}",
+            "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port"
+          } ]
+        }
+      }
+    }
+  },
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "mcp-client-sse" : {
+        "mcp-sse" : {
+          "_address" : "/subsystem=ai/mcp-client-sse=*",
+          "attributes" : [ {
+            "name" : "connect-timeout",
+            "value" : "6000000",
+            "_address" : "/subsystem=ai/mcp-client-sse=*@@@connect-timeout"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.mcp.client.log.request,env.MCP_CLIENT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/mcp-client-sse=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.mcp.client.log.response,env.MCP_CLIENT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/mcp-client-sse=*@@@log-responses"
+          }, {
+            "name" : "socket-binding",
+            "value" : "mcp-sse",
+            "_address" : "/subsystem=ai/mcp-client-sse=*@@@socket-binding"
+          }, {
+            "name" : "sse-path",
+            "value" : "${org.wildfly.ai.mcp.client.sse.path,env.MCP_CLIENT_SSE_PATH:/sse}",
+            "_address" : "/subsystem=ai/mcp-client-sse=*@@@sse-path"
+          } ]
+        }
+      },
+      "mcp-tool-provider" : {
+        "mcp" : {
+          "_address" : "/subsystem=ai/mcp-tool-provider=*",
+          "attributes" : [ {
+            "name" : "mcp-clients",
+            "value" : "[mcp-sse]",
+            "_address" : "/subsystem=ai/mcp-tool-provider=*@@@mcp-clients"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for MCP SSE client</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-mcp-client,mcp-client-sse</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use MCP SSE client as tool provider LLM interactions</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,toolProviderName=mcp</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/mcp-client-sse/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.mcp-client</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-mcp-client-stdio">mcp-client-stdio&nbsp;<a href="#layer-mcp-client-stdio" class="anchor-link">§</a></h3>
+  <p>Support for MCP stdio client</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "mcp-client-stdio" : {
+        "mcp-stdio" : {
+          "_address" : "/subsystem=ai/mcp-client-stdio=*",
+          "attributes" : [ {
+            "name" : "args",
+            "value" : "[]",
+            "_address" : "/subsystem=ai/mcp-client-stdio=*@@@args"
+          }, {
+            "name" : "cmd",
+            "value" : "java",
+            "_address" : "/subsystem=ai/mcp-client-stdio=*@@@cmd"
+          } ]
+        }
+      },
+      "mcp-tool-provider" : {
+        "mcp-stdio" : {
+          "_address" : "/subsystem=ai/mcp-tool-provider=*",
+          "attributes" : [ {
+            "name" : "mcp-clients",
+            "value" : "[mcp-stdio]",
+            "_address" : "/subsystem=ai/mcp-tool-provider=*@@@mcp-clients"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for MCP stdio client</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-mcp-client,mcp-client-sse</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use MCP SSE client as tool provider LLM interactions</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,toolProviderName=mcp-stdio</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.mcp-client</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-mcp-server">mcp-server&nbsp;<a href="#layer-mcp-server" class="anchor-link">§</a></h3>
+  <p>Support for MCP Server</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "mcp" : {
+      "_address" : "/subsystem=mcp",
+      "mcp-server" : {
+        "server" : {
+          "_address" : "/subsystem=mcp/mcp-server=*",
+          "attributes" : [ {
+            "name" : "messages-path",
+            "value" : "messages",
+            "_address" : "/subsystem=mcp/mcp-server=*@@@messages-path"
+          }, {
+            "name" : "sse-path",
+            "value" : "sse",
+            "_address" : "/subsystem=mcp/mcp-server=*@@@sse-path"
+          }, {
+            "name" : "streamable-path",
+            "value" : "stream",
+            "_address" : "/subsystem=mcp/mcp-server=*@@@streamable-path"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-mcp">mcp</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Model Context Protocol Server</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for MCP Server</li>
+    <li>org.wildfly.rule.annotations&nbsp;=&nbsp;org.wildfly.mcp.api.*</li>
+    <li>org.wildfly.rule.class&nbsp;=&nbsp;org.wildfly.mcp.api.*</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.extension.mcp</li>
+  </ul>
+  <h3 id="layer-mistral-ai-chat-model">mistral-ai-chat-model&nbsp;<a href="#layer-mistral-ai-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Mistral chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "mistral-ai-chat-model" : {
+        "mistral" : {
+          "_address" : "/subsystem=ai/mistral-ai-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.MISTRAL_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@api-key"
+          }, {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.mistral.chat.url,env.MISTRAL_CHAT_URL:https://api.mistral.ai/v1}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@base-url"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.mistral.chat.log.request,env.MISTRAL_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.mistral.chat.log.response,env.MISTRAL_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.mistral.chat.model.name,env.MISTRAL_CHAT_MODEL_NAME:mistral-small-latest}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@model-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Mistral chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,mistral-ai-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use MistralAI API for LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=mistral]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=mistral</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/mistral-ai-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.mistral-ai</li>
+    <li>dev.langchain4j.openai</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-mistral-ai-streaming-chat-model">mistral-ai-streaming-chat-model&nbsp;<a href="#layer-mistral-ai-streaming-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Mistral streaming chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "mistral-ai-chat-model" : {
+        "streaming-mistral" : {
+          "_address" : "/subsystem=ai/mistral-ai-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.MISTRAL_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@api-key"
+          }, {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.mistral.chat.url,env.MISTRAL_CHAT_URL:https://api.mistral.ai/v1}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@base-url"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.mistral.chat.log.request,env.MISTRAL_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.mistral.chat.log.response,env.MISTRAL_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.mistral.chat.model.name,env.MISTRAL_CHAT_MODEL_NAME:mistral-small-latest}",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@model-name"
+          }, {
+            "name" : "streaming",
+            "value" : "true",
+            "_address" : "/subsystem=ai/mistral-ai-chat-model=*@@@streaming"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Mistral streaming chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,mistral-ai-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use MistralAI API for LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-mistral]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-mistral</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/mistral-ai-streaming-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.mistral-ai</li>
+    <li>dev.langchain4j.openai</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-neo4j-content-retriever">neo4j-content-retriever&nbsp;<a href="#layer-neo4j-content-retriever" class="anchor-link">§</a></h3>
+  <p>Support for Neo4J content retriever</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{ }</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Neo4J content retriever</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-content-retriever,neo4j-content-retriever</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Neo4J as a content retriever</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=neo4j-retriever]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,contentRetrieverName=neo4j-retriever</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/neo4j-content-retriever/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.neo4j</li>
+  </ul>
+  <h3 id="layer-neo4j-embedding-store">neo4j-embedding-store&nbsp;<a href="#layer-neo4j-embedding-store" class="anchor-link">§</a></h3>
+  <p>Support for Neo4J embedding store</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "neo4j-embedding-store" : {
+        "neo4j" : {
+          "_address" : "/subsystem=ai/neo4j-embedding-store=*",
+          "attributes" : [ {
+            "name" : "bolt-url",
+            "value" : "${org.wildfly.ai.neo4j.url,env.NEO4J_URL:neo4j://localhost:7687}",
+            "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@bolt-url"
+          }, {
+            "name" : "credential-reference",
+            "value" : "{clear-text=${org.wildfly.ai.neo4j.password,env.NEO4J_PASSWORD:neo4jpassword}}",
+            "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@credential-reference"
+          }, {
+            "name" : "dimension",
+            "value" : "${org.wildfly.ai.neo4j.dimension,env.NEO4J_DIMENSION:384}",
+            "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@dimension"
+          }, {
+            "name" : "username",
+            "value" : "${org.wildfly.ai.neo4j.username,env.NEO4J_USER:neo4j}",
+            "_address" : "/subsystem=ai/neo4j-embedding-store=*@@@username"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Neo4J embedding store</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-store,neo4j-embedding-store</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Neo4J as an embedding store</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/neo4j-embedding-store/env.yaml</li>
+    <li>org.wildfly.rule.expect-add-on-family&nbsp;=&nbsp;ai-embedding-model</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.neo4j</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-ollama-chat-model">ollama-chat-model&nbsp;<a href="#layer-ollama-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Ollama chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "ollama-chat-model" : {
+        "ollama" : {
+          "_address" : "/subsystem=ai/ollama-chat-model=*",
+          "attributes" : [ {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.ollama.chat.url,env.OLLAMA_CHAT_URL:http://127.0.0.1:11434}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url"
+          }, {
+            "name" : "connect-timeout",
+            "value" : "600000",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@connect-timeout"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.ollama.chat.log.request,env.OLLAMA_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.ollama.chat.log.response,env.OLLAMA_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.ollama.chat.model.name,env.OLLAMA_CHAT_MODEL_NAME:llama3.1:8b}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name"
+          }, {
+            "name" : "temperature",
+            "value" : "${org.wildfly.ai.ollama.chat.temperature,env.OLLAMA_CHAT_TEMPERATURE:0.9}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@temperature"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Ollama chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,ollama-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use ollama for LLM interactions and embeddings</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=ollama]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=ollama</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/ollama-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.ollama</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-ollama-embedding-model">ollama-embedding-model&nbsp;<a href="#layer-ollama-embedding-model" class="anchor-link">§</a></h3>
+  <p>Support for Ollama embedding model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "ollama-embedding-model" : {
+        "ollama" : {
+          "_address" : "/subsystem=ai/ollama-embedding-model=*",
+          "attributes" : [ {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.ollama.embedding.url,env.OLLAMA_EMBEDDING_URL:http://127.0.0.1:11434}",
+            "_address" : "/subsystem=ai/ollama-embedding-model=*@@@base-url"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.ollama.embedding.log.request,env.OLLAMA_EMBEDDING_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/ollama-embedding-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.ollama.embedding.log.response,env.OLLAMA_EMBEDDING_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/ollama-embedding-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.ollama.embedding.model.name,env.OLLAMA_EMBEDDING_MODEL_NAME:llama3.1:8b}",
+            "_address" : "/subsystem=ai/ollama-embedding-model=*@@@model-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Ollama embedding model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-model,ollama-embedding-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use ollama for embedding</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/ollama-embedding-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.ollama</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-ollama-neo4j-content-retriever">ollama-neo4j-content-retriever&nbsp;<a href="#layer-ollama-neo4j-content-retriever" class="anchor-link">§</a></h3>
+  <p>Support for Neo4J content retriever using Ollama model for query generation</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "neo4j-content-retriever" : {
+        "ollama-neo4j-retriever" : {
+          "_address" : "/subsystem=ai/neo4j-content-retriever=*",
+          "attributes" : [ {
+            "name" : "bolt-url",
+            "value" : "${org.wildfly.ai.neo4j.url,env.NEO4J_URL:neo4j://localhost:7687}",
+            "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@bolt-url"
+          }, {
+            "name" : "chat-language-model",
+            "value" : "cypher_model",
+            "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@chat-language-model"
+          }, {
+            "name" : "credential-reference",
+            "value" : "{clear-text=${org.wildfly.ai.neo4j.password,env.NEO4J_PASSWORD:neo4jpassword}}",
+            "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@credential-reference"
+          }, {
+            "name" : "username",
+            "value" : "${org.wildfly.ai.neo4j.username,env.NEO4J_USER:neo4j}",
+            "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@username"
+          } ]
+        }
+      },
+      "ollama-chat-model" : {
+        "cypher_model" : {
+          "_address" : "/subsystem=ai/ollama-chat-model=*",
+          "attributes" : [ {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.ollama.chat.url,env.OLLAMA_NEO4J_CHAT_URL:http://127.0.0.1:11434}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url"
+          }, {
+            "name" : "connect-timeout",
+            "value" : "600000",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@connect-timeout"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.ollama.chat.log.request,env.OLLAMA_NEO4J_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.ollama.chat.log.response,env.OLLAMA_NEO4J_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.ollama.chat.model.name,env.OLLAMA_NEO4J_CHAT_MODEL_NAME:tomasonjo/llama3-text2cypher-demo}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-neo4j-content-retriever">neo4j-content-retriever</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Neo4J content retriever using Ollama model for query generation</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-content-retriever,neo4j-content-retriever</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Neo4J as a content retriever</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=ollama-neo4j-retriever]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,contentRetrieverName=ollama-neo4j-retriever</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/neo4j-content-retriever/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.neo4j</li>
+    <li>dev.langchain4j.ollama</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-ollama-streaming-chat-model">ollama-streaming-chat-model&nbsp;<a href="#layer-ollama-streaming-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for Ollama streaming chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "ollama-chat-model" : {
+        "streaming-ollama" : {
+          "_address" : "/subsystem=ai/ollama-chat-model=*",
+          "attributes" : [ {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.ollama.chat.url,env.OLLAMA_CHAT_URL:http://127.0.0.1:11434}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@base-url"
+          }, {
+            "name" : "connect-timeout",
+            "value" : "600000",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@connect-timeout"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.ollama.chat.log.request,env.OLLAMA_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.ollama.chat.log.response,env.OLLAMA_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.ollama.chat.model.name,env.OLLAMA_CHAT_MODEL_NAME:llama3.1:8b}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@model-name"
+          }, {
+            "name" : "streaming",
+            "value" : "true",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@streaming"
+          }, {
+            "name" : "temperature",
+            "value" : "${org.wildfly.ai.ollama.chat.temperature,env.OLLAMA_CHAT_TEMPERATURE:0.9}",
+            "_address" : "/subsystem=ai/ollama-chat-model=*@@@temperature"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Ollama streaming chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,ollama-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use ollama for LLM interactions and embeddings</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-ollama]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-ollama</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/ollama-streaming-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.ollama</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-openai-chat-model">openai-chat-model&nbsp;<a href="#layer-openai-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for OpenAI chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "openai-chat-model" : {
+        "openai" : {
+          "_address" : "/subsystem=ai/openai-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.OPENAI_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+          }, {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.openai.chat.url,env.OPENAI_CHAT_URL:https://api.openai.com/v1}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.openai.chat.log.request,env.OPENAI_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.openai.chat.log.response,env.OPENAI_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.openai.chat.model.name,env.OPENAI_CHAT_MODEL_NAME:llama3-8b-8192}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for OpenAI chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,openai-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use OpenAI API for LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.ChatModel,jakarta.inject.Named[value=openai]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,chatModelName=openai</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/openai-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.openai</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-openai-neo4j-content-retriever">openai-neo4j-content-retriever&nbsp;<a href="#layer-openai-neo4j-content-retriever" class="anchor-link">§</a></h3>
+  <p>Support for Neo4J content retriever using OpenAI model for query generation</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "neo4j-content-retriever" : {
+        "openai-neo4j-retriever" : {
+          "_address" : "/subsystem=ai/neo4j-content-retriever=*",
+          "attributes" : [ {
+            "name" : "bolt-url",
+            "value" : "${org.wildfly.ai.neo4j.url,env.NEO4J_URL:neo4j://localhost:7687}",
+            "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@bolt-url"
+          }, {
+            "name" : "chat-language-model",
+            "value" : "cypher_model",
+            "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@chat-language-model"
+          }, {
+            "name" : "credential-reference",
+            "value" : "{clear-text=${org.wildfly.ai.neo4j.password,env.NEO4J_PASSWORD:neo4jpassword}}",
+            "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@credential-reference"
+          }, {
+            "name" : "username",
+            "value" : "${org.wildfly.ai.neo4j.username,env.NEO4J_USER:neo4j}",
+            "_address" : "/subsystem=ai/neo4j-content-retriever=*@@@username"
+          } ]
+        }
+      },
+      "openai-chat-model" : {
+        "cypher_model" : {
+          "_address" : "/subsystem=ai/openai-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.OPENAI_NEO4J_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+          }, {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.openai.chat.url,env.OPENAI_NEO4J_CHAT_URL:https://api.openai.com/v1}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.openai.chat.log.request,env.OPENAI_NEO4J_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.openai.chat.log.response,env.OPENAI_NEO4J_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.openai.chat.model.name,env.OPENAI_NEO4J_CHAT_MODEL_NAME:llama3-8b-8192}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-neo4j-content-retriever">neo4j-content-retriever</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Neo4J content retriever using OpenAI model for query generation</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-content-retriever,neo4j-content-retriever</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Neo4J as a content retriever</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=openai-neo4j-retriever]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,contentRetrieverName=openai-neo4j-retriever</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/neo4j-content-retriever/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.neo4j</li>
+    <li>dev.langchain4j.openai</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-openai-streaming-chat-model">openai-streaming-chat-model&nbsp;<a href="#layer-openai-streaming-chat-model" class="anchor-link">§</a></h3>
+  <p>Support for OpenAI streaming chat model</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "openai-chat-model" : {
+        "streaming-openai" : {
+          "_address" : "/subsystem=ai/openai-chat-model=*",
+          "attributes" : [ {
+            "name" : "api-key",
+            "value" : "${env.OPENAI_API_KEY:YOUR_KEY_VALUE}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@api-key"
+          }, {
+            "name" : "base-url",
+            "value" : "${org.wildfly.ai.openai.chat.url,env.OPENAI_CHAT_URL:https://api.openai.com/v1}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@base-url"
+          }, {
+            "name" : "log-requests",
+            "value" : "${org.wildfly.ai.openai.chat.log.request,env.OPENAI_CHAT_LOG_REQUEST:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-requests"
+          }, {
+            "name" : "log-responses",
+            "value" : "${org.wildfly.ai.openai.chat.log.response,env.OPENAI_CHAT_LOG_RESPONSE:true}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@log-responses"
+          }, {
+            "name" : "model-name",
+            "value" : "${org.wildfly.ai.openai.chat.model.name,env.OPENAI_CHAT_MODEL_NAME:llama3-8b-8192}",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@model-name"
+          }, {
+            "name" : "streaming",
+            "value" : "true",
+            "_address" : "/subsystem=ai/openai-chat-model=*@@@streaming"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for OpenAI streaming chat model</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-llm,openai-chat-model</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use OpenAI API for LLM interactions</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.model.chat.StreamingChatModel,jakarta.inject.Named[value=streaming-openai]</li>
+    <li>org.wildfly.rule.annotation.field.value&nbsp;=&nbsp;dev.langchain4j.cdi.spi.RegisterAIService,streamingChatModelName=streaming-openai</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/openai-streaming-chat-model/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.openai</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-wasm">wasm&nbsp;<a href="#layer-wasm" class="anchor-link">§</a></h3>
+  <p>Support for WASM WASI subsystem</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "wasm" : {
+      "_address" : "/subsystem=wasm"
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>ee-concurrency</code>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;WASM</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for WASM WASI subsystem</li>
+    <li>org.wildfly.rule.annotations&nbsp;=&nbsp;org.wildfly.wasm.api.*</li>
+    <li>org.wildfly.rule.class&nbsp;=&nbsp;org.wildfly.wasm.api.*</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.extension.wasm</li>
+  </ul>
+  <h3 id="layer-weaviate-embedding-store">weaviate-embedding-store&nbsp;<a href="#layer-weaviate-embedding-store" class="anchor-link">§</a></h3>
+  <p>Support for Weaviate embedding store</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "socket-binding-group" : {
+    "standard-sockets" : {
+      "_address" : "/socket-binding-group=*",
+      "remote-destination-outbound-socket-binding" : {
+        "${org.wildfly.ai.weaviate.socket-binding,env.WEAVIATE_SOCKET_BINDING:weaviate}" : {
+          "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+          "attributes" : [ {
+            "name" : "host",
+            "value" : "${org.wildfly.ai.weaviate.host,env.WEAVIATE_HOST:localhost}",
+            "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host"
+          }, {
+            "name" : "port",
+            "value" : "${org.wildfly.ai.weaviate.port,env.WEAVIATE_PORT:8090}",
+            "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port"
+          } ]
+        }
+      }
+    }
+  },
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "weaviate-embedding-store" : {
+        "weaviate" : {
+          "_address" : "/subsystem=ai/weaviate-embedding-store=*",
+          "attributes" : [ {
+            "name" : "metadata",
+            "value" : "[url,language,parent_url,file_name,file_path,title,subtitle]",
+            "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@metadata"
+          }, {
+            "name" : "object-class",
+            "value" : "${org.wildfly.ai.weaviate.object-class,env.WEAVIATE_OBJECT_CLASS:Simple}",
+            "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@object-class"
+          }, {
+            "name" : "socket-binding",
+            "value" : "${org.wildfly.ai.weaviate.socket-binding,env.WEAVIATE_SOCKET_BINDING:weaviate}",
+            "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@socket-binding"
+          }, {
+            "name" : "ssl-enabled",
+            "value" : "${org.wildfly.ai.weaviate.ssl-enabled,env.WEAVIATE_SSL_ENABLED:false}",
+            "_address" : "/subsystem=ai/weaviate-embedding-store=*@@@ssl-enabled"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Weaviate embedding store</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-embedding-store,weaviate-embedding-store</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Weaviate as an embedding store</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/weaviate-embedding-store/env.yaml</li>
+    <li>org.wildfly.rule.expect-add-on-family&nbsp;=&nbsp;ai-embedding-model</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.weaviate</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+  <h3 id="layer-web-search-engines">web-search-engines&nbsp;<a href="#layer-web-search-engines" class="anchor-link">§</a></h3>
+  <p>Support for Web Search Engine content retriever</p>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ai" : {
+      "_address" : "/subsystem=ai",
+      "web-search-content-retriever" : {
+        "web-search-retriever" : {
+          "_address" : "/subsystem=ai/web-search-content-retriever=*",
+          "attributes" : [ {
+            "name" : "tavily",
+            "value" : "{api-key=${env.TAVILY_API_KEY}, base-url=https://api.tavily.com, connect-timeout=20000, exclude-domains=[example.org], include-domains=[example.com], include-answer=true}",
+            "_address" : "/subsystem=ai/web-search-content-retriever=*@@@tavily"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-ai">ai</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Generative AI</li>
+    <li>org.wildfly.description&nbsp;=&nbsp;Support for Web Search Engine content retriever</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;ai-content-retriever,web-search-engines</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;ai</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Use Web search engines as content retrievers</li>
+    <li>org.wildfly.rule.annotated.type&nbsp;=&nbsp;dev.langchain4j.rag.content.retriever.ContentRetriever,jakarta.inject.Named[value=web-search-retriever]</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-ai-feature-pack/refs/heads/main/doc/glow-layer-doc/web-search-engines/env.yaml</li>
+    <li>org.wildfly.stability&nbsp;=&nbsp;experimental</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>dev.langchain4j.web-search-engines</li>
+    <li>org.wildfly.extension.ai</li>
+  </ul>
+
+  <h2>About</h2>
+  <p>
+    This feature pack is hosted at  <a href="https://github.com/wildfly-extras/wildfly-ai-feature-pack">https://github.com/wildfly-extras/wildfly-ai-feature-pack</a>
+  </p>
+  <p>
+    Source code of this feature pack is hosted at <a href="https://github.com/wildfly-extras/wildfly-ai-feature-pack">https://github.com/wildfly-extras/wildfly-ai-feature-pack</a>
+  </p>
+  <p>This feature pack is licensed under:</p>
+  <ul>
+    <li>Apache License, Version 2.0</li>
+  </ul>
+</div>
+</body>
+</html>
