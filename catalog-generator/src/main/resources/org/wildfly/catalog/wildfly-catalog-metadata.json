@@ -1,5 +1,5 @@
 {
-    "description": "WildFly ###REPLACE_WILDFLY_VERSION### provisioning catalog",
+    "description": "provisioning catalog",
     "documentation": [
         {
             "name": "WildFly documentation",
@@ -35,5 +35,5 @@
         "scmURL": "Feature-pack sources URL"
     },
     "glowRulesDescriptions": "https://raw.githubusercontent.com/wildfly/wildfly-galleon-feature-packs/refs/heads/release/maven/docs/rules.properties",
-    "knownFeaturePacks": "https://raw.githubusercontent.com/wildfly/wildfly-galleon-feature-packs/refs/heads/release/catalog/###REPLACE_WILDFLY_VERSION###/feature-packs.json"
+    "baseMetadataURL": "https://raw.githubusercontent.com/wildfly/wildfly-galleon-feature-packs/refs/heads/release/catalog/###REPLACE_WILDFLY_VERSION###/"
 }

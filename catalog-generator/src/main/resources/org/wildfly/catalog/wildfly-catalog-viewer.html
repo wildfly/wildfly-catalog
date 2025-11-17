@@ -348,9 +348,10 @@
                     mainPageTitleH1.textContent = jsonData.description;
                 }
             } else {
-                document.title = "WildFly Catalog Viewer";
+                const desc = "###VARIANT_DESCRIPTION### Catalog";
+                document.title = desc;
                 if (mainPageTitleH1) {
-                     mainPageTitleH1.textContent = "WildFly Catalog Viewer";
+                     mainPageTitleH1.textContent = desc;
                 }
             }
 

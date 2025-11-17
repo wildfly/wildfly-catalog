@@ -13,6 +13,7 @@
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <version.com.fasterxml.jackson>2.18.2</version.com.fasterxml.jackson>
+    <version.io.quarkus.qute>3.23.2</version.io.quarkus.qute>
     <version.org.wildfly.glow>1.5.1.Final</version.org.wildfly.glow>
     <exec.mainClass>org.wildfly.catalog.Main</exec.mainClass>
     <wildfly.repo.scm.connection>git@github.com:wildfly-extras/wildfly-catalog.git</wildfly.repo.scm.connection>
@@ -46,6 +47,11 @@
       <groupId>org.wildfly.glow</groupId>
       <artifactId>wildfly-glow-maven-resolver</artifactId>
       <version>${version.org.wildfly.glow}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus.qute</groupId>
+      <artifactId>qute-core</artifactId>
+      <version>${version.io.quarkus.qute}</version>
     </dependency>
   </dependencies>
   <scm>

@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileAlreadyExistsException;
@@ -39,16 +40,19 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import org.jboss.galleon.universe.maven.MavenArtifact;
 import org.jboss.galleon.universe.maven.repo.MavenRepoManager;
+import org.wildfly.catalog.Resources.Variant;
+import static org.wildfly.catalog.TemplateUtils.ENGINE;
 import org.wildfly.glow.maven.MavenResolver;
 
 public class Main {
 
     private static final String VERSION_PROP = "wildfly-version";
     private static final String RELEASE_PROP = "release";
-
+    private static final String DEFAULT_VARIANT = "default";
     private static final String REPLACE_WILDFLY_VERSION = "###REPLACE_WILDFLY_VERSION###";
     private static final String REPLACE_JSON_URL = "###REPLACE_JSON_URL###";
     private static final String REPLACE_LATEST_INDEX_ENTRY = "<!-- ####REPLACE_LAST_VERSION#### -->";
+    private static final String REPLACE_WILDFLY_VARIANT = "###VARIANT_DESCRIPTION###";
     public static void main(String[] args) throws Exception {
         String wildflyVersion = System.getProperty(VERSION_PROP);
         if (wildflyVersion == null) {
@@ -57,15 +61,9 @@ public class Main {
         MavenRepoManager resolver = MavenResolver.newMavenResolver();
         boolean release = Boolean.getBoolean(RELEASE_PROP);
         Path rootDirectory = release ? Paths.get("../docs") : Paths.get("target/catalog");
-        Path targetDirectory = rootDirectory.resolve(wildflyVersion).toAbsolutePath();
-        Path featurePacksTargetDirectory = targetDirectory.resolve("featurePacks");
-        Files.createDirectories(featurePacksTargetDirectory);
+        Path wildflyVersionDirectory = rootDirectory.resolve(wildflyVersion);
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(String.join("", patchFile("wildfly-catalog-metadata.json", wildflyVersion, null, release)));
-        ObjectNode target = mapper.createObjectNode();
-        target.put("description", node.get("description").asText());
-        target.set("documentation", node.get("documentation"));
-        target.set("legend", node.get("legend"));
+        JsonNode node = mapper.readTree(String.join("", patchFile("wildfly-catalog-metadata.json", wildflyVersion, null, release, null, null)));
 
         // Glow rules description
         Properties glowRulesDescriptions = new Properties();
@@ -74,77 +72,104 @@ public class Main {
             glowRulesDescriptions.load(in);
         }
         Map<String, Map<String, JsonNode>> categories = new TreeMap<>();
-        String url = node.get("knownFeaturePacks").asText();
-        JsonNode fpList = mapper.readTree(new URL(url));
-        ArrayNode fps = (ArrayNode) fpList.get("featurePacks");
-        Iterator<JsonNode> it = fps.elements();
-        ArrayNode featurePacks = mapper.createArrayNode();
-        target.set("featurePacks", featurePacks);
-        while (it.hasNext()) {
-            ObjectNode fpNode = mapper.createObjectNode();
-            featurePacks.add(fpNode);
-            String fp = it.next().asText();
-            fpNode.put("mavenCoordinates", fp);
-            String[] coords = fp.split(":");
-            String groupId = coords[0];
-            String artifactId = coords[1];
-            String version = coords[2];
-            Path docFile = resolveMavenArtifact(resolver, groupId, artifactId, version, "doc", "zip");
-            String directoryName = (coords[0] + '_' + artifactId);
-            Path fpDirectory = featurePacksTargetDirectory.resolve(directoryName);
-            unzip(docFile, fpDirectory);
-            Path metadataFile = fpDirectory.resolve("doc/META-INF/metadata.json");
-            Path modelFile = fpDirectory.resolve("doc/META-INF/management-api.json");
-            Path logMessages = fpDirectory.resolve("doc/log-message-reference.html");
-            JsonNode subCatalog = mapper.readTree(metadataFile.toFile().toURI().toURL());
-            String name = subCatalog.get("name").asText();
-            fpNode.put("name", name);
-            fpNode.put("description", subCatalog.get("description").asText());
-            fpNode.putIfAbsent("licenses", subCatalog.get("licenses"));
-            fpNode.put("projectURL", subCatalog.get("url").asText());
-            fpNode.put("scmURL", subCatalog.get("scm-url").asText());
-            ArrayNode layersArray = (ArrayNode) subCatalog.get("layers");
-            Iterator<JsonNode> layers = layersArray.elements();
-            ArrayNode layersArrayTarget = mapper.createArrayNode();
-            fpNode.set("layers", layersArrayTarget);
-            Set<String> layersSet = new TreeSet<>();
-            while (layers.hasNext()) {
-                JsonNode layer = layers.next();
-                if (!isInternalLayer(layer)) {
-                    layersSet.add(layer.get("name").asText());
+        String baseMetadataUrl = node.get("baseMetadataURL").asText();
+        JsonNode variantsList = mapper.readTree(new URI(baseMetadataUrl + "variants.json").toURL());
+        List<Variant> variants = new ArrayList<>();
+        ArrayNode variantNodes = (ArrayNode) variantsList.get("variants");
+        // Add the default variant
+        ObjectNode defaultVariant = mapper.createObjectNode();
+        defaultVariant.put("directory", DEFAULT_VARIANT);
+        defaultVariant.put("description", "WildFly");
+        variantNodes.insert(0, defaultVariant);
+        Iterator<JsonNode> variantsIt = variantNodes.elements();
+        while (variantsIt.hasNext()) {
+            JsonNode variantNode = variantsIt.next();
+            String variantDir = variantNode.get("directory").asText();
+            String variantDescription = variantNode.get("description").asText();
+            ObjectNode target = mapper.createObjectNode();
+            target.put("description", variantDescription + " " + wildflyVersion + " " + node.get("description").asText());
+            target.set("documentation", node.get("documentation"));
+            target.set("legend", node.get("legend"));
+            variants.add(new Variant(variantDir, variantDescription));
+            JsonNode fpList = mapper.readTree(new URI(baseMetadataUrl + (variantDir.equals(DEFAULT_VARIANT) ? "" : variantDir) + "/" + "feature-packs.json").toURL());
+            Path variantDirectory = wildflyVersionDirectory.resolve(variantDir);
+            Path targetDirectory = variantDirectory.toAbsolutePath();
+            Path featurePacksTargetDirectory = targetDirectory.resolve("featurePacks");
+            Files.createDirectories(featurePacksTargetDirectory);
+            ArrayNode fps = (ArrayNode) fpList.get("featurePacks");
+            Iterator<JsonNode> it = fps.elements();
+            ArrayNode featurePacks = mapper.createArrayNode();
+            target.set("featurePacks", featurePacks);
+            while (it.hasNext()) {
+                ObjectNode fpNode = mapper.createObjectNode();
+                featurePacks.add(fpNode);
+                String fp = it.next().asText();
+                fpNode.put("mavenCoordinates", fp);
+                String[] coords = fp.split(":");
+                String groupId = coords[0];
+                String artifactId = coords[1];
+                String version = coords[2];
+                Path docFile = resolveMavenArtifact(resolver, groupId, artifactId, version, "doc", "zip");
+                String directoryName = (coords[0] + '_' + artifactId);
+                Path fpDirectory = featurePacksTargetDirectory.resolve(directoryName);
+                unzip(docFile, fpDirectory);
+                Path metadataFile = fpDirectory.resolve("doc/META-INF/metadata.json");
+                Path modelFile = fpDirectory.resolve("doc/META-INF/management-api.json");
+                Path logMessages = fpDirectory.resolve("doc/log-message-reference.html");
+                JsonNode subCatalog = mapper.readTree(metadataFile.toFile().toURI().toURL());
+                String name = subCatalog.get("name").asText();
+                fpNode.put("name", name);
+                fpNode.put("description", subCatalog.get("description").asText());
+                fpNode.putIfAbsent("licenses", subCatalog.get("licenses"));
+                fpNode.put("projectURL", subCatalog.get("url").asText());
+                fpNode.put("scmURL", subCatalog.get("scm-url").asText());
+                ArrayNode layersArray = (ArrayNode) subCatalog.get("layers");
+                Iterator<JsonNode> layers = layersArray.elements();
+                ArrayNode layersArrayTarget = mapper.createArrayNode();
+                fpNode.set("layers", layersArrayTarget);
+                Set<String> layersSet = new TreeSet<>();
+                while (layers.hasNext()) {
+                    JsonNode layer = layers.next();
+                    if (!isInternalLayer(layer)) {
+                        layersSet.add(layer.get("name").asText());
+                    }
                 }
-            }
-            for (String n : layersSet) {
-                layersArrayTarget.add(n);
-            }
+                for (String n : layersSet) {
+                    layersArrayTarget.add(n);
+                }
 
-            if (Files.exists(modelFile)) {
-                fpNode.put("modelReference", "featurePacks/" + directoryName + "/doc/reference/index.html");
+                if (Files.exists(modelFile)) {
+                    fpNode.put("modelReference", "featurePacks/" + directoryName + "/doc/reference/index.html");
+                }
+                if (Files.exists(logMessages)) {
+                    fpNode.put("logMessagesReference", "featurePacks/" + directoryName + "/doc/" + logMessages.getFileName().toString());
+                }
+                generateCatalog(subCatalog, glowRulesDescriptions, categories, mapper, featurePacksTargetDirectory);
             }
-            if (Files.exists(logMessages)) {
-                fpNode.put("logMessagesReference", "featurePacks/" + directoryName + "/doc/" + logMessages.getFileName().toString());
+            ArrayNode categoriesArray = mapper.createArrayNode();
+            target.putIfAbsent("categories", categoriesArray);
+            for (Entry<String, Map<String, JsonNode>> entry : categories.entrySet()) {
+                String categoryName = entry.getKey();
+                ObjectNode category = mapper.createObjectNode();
+                category.put("name", categoryName);
+                ArrayNode categoryLayers = mapper.createArrayNode();
+                category.put("functionalities", categoryLayers);
+                for (Entry<String, JsonNode> layersInCategory : entry.getValue().entrySet()) {
+                    categoryLayers.add(layersInCategory.getValue());
+                }
+                categoriesArray.add(category);
             }
-            generateCatalog(subCatalog, glowRulesDescriptions, categories, mapper, featurePacksTargetDirectory);
+            Path json = targetDirectory.resolve("wildfly-catalog.json");
+            Files.deleteIfExists(json);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(json.toFile(), target);
+            Path viewer = targetDirectory.resolve("index.html");
+            Files.deleteIfExists(viewer);
+            Files.write(viewer, patchFile("wildfly-catalog-viewer.html", wildflyVersion, json, release, variantDir, variantDescription));
         }
-        ArrayNode categoriesArray = mapper.createArrayNode();
-        target.putIfAbsent("categories", categoriesArray);
-        for (Entry<String, Map<String, JsonNode>> entry : categories.entrySet()) {
-            String categoryName = entry.getKey();
-            ObjectNode category = mapper.createObjectNode();
-            category.put("name", categoryName);
-            ArrayNode categoryLayers = mapper.createArrayNode();
-            category.put("functionalities", categoryLayers);
-            for (Entry<String, JsonNode> layersInCategory : entry.getValue().entrySet()) {
-                categoryLayers.add(layersInCategory.getValue());
-            }
-            categoriesArray.add(category);
-        }
-        Path json = targetDirectory.resolve("wildfly-catalog.json");
-        Files.deleteIfExists(json);
-        mapper.writerWithDefaultPrettyPrinter().writeValue(json.toFile(), target);
-        Path viewer = targetDirectory.resolve("index.html");
-        Files.deleteIfExists(viewer);
-        Files.write(viewer, patchFile("wildfly-catalog-viewer.html", wildflyVersion, json, release));
+        String variantsIndexContent = ENGINE.getTemplate("variants")
+                .data("variants", variants)
+                .render();
+        Files.write(wildflyVersionDirectory.resolve("index.html"), variantsIndexContent.getBytes());
         if (release) {
             String newEntry = "<li><a href=\"" + wildflyVersion + "/index.html\">" + wildflyVersion + "</a></li>";
             // Update index
@@ -177,8 +202,8 @@ public class Main {
         System.out.println("Catalog has been generated in " + rootDirectory.toAbsolutePath());
     }
 
-    private static List<String> patchFile(String resource, String wildflyVersion, Path jsonFile, boolean release) throws Exception {
-        String uri = "https://wildfly-extras.github.io/wildfly-catalog/" + wildflyVersion + "/wildfly-catalog.json";
+    private static List<String> patchFile(String resource, String wildflyVersion, Path jsonFile, boolean release, String variantDir, String variantDescription) throws Exception {
+        String uri = "https://wildfly-extras.github.io/wildfly-catalog/" + wildflyVersion + "/" + variantDir + "/wildfly-catalog.json";
         if (jsonFile != null) {
             if (!release) {
                 uri = jsonFile.toUri().toString();
@@ -195,6 +220,9 @@ public class Main {
                         }
                         if (line.contains(REPLACE_WILDFLY_VERSION)) {
                             line = line.replace(REPLACE_WILDFLY_VERSION, wildflyVersion);
+                        }
+                        if (line.contains(REPLACE_WILDFLY_VARIANT)) {
+                            line = line.replace(REPLACE_WILDFLY_VARIANT, variantDescription);
                         }
                         targetLines.add(line);
                     }

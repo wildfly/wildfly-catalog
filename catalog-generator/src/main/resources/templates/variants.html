@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>WildFly Catalogs</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <h1>WildFly Catalogs</h1>
+  <ul>
+  {#for variant in variants}
+    <li><a href="{variant.directory}/index.html">{variant.description} catalog</a></li>
+  {/for}
+  </ul>
+</div>
+</body>
+</html>
