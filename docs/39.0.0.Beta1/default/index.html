@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WildFly Catalog Viewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: auto;
+        }
+        h1 {
+            color: #1a73e8; /* Google Blue */
+            text-align: center;
+            border-bottom: 2px solid #1a73e8;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .category {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-left: 6px solid #1a73e8;
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease;
+        }
+        .category:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+        .category h2 {
+            margin-top: 0;
+            color: #1a73e8;
+            font-size: 1.8em;
+        }
+        .category-description {
+            font-size: 1em;
+            color: #5f6368;
+            margin-bottom: 15px;
+        }
+        .functionalities {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .functionalities li {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            margin-top: 10px;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .functionalities li strong {
+            color: #202124;
+            display: inline-block;
+            min-width: 150px; /* Align values */
+        }
+        .functionality-header {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        .functionality-header:hover {
+            background-color: #dde2e6;
+        }
+        .functionality-header .name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 0; /* Override previous margin */
+        }
+        .arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+        .arrow.expanded {
+            transform: rotate(90deg);
+        }
+        .functionality-details {
+            padding: 10px;
+            border-top: 1px solid #e0e0e0;
+            display: none; /* Hidden by default */
+        }
+        .functionality-details.visible {
+            display: block;
+        }
+        .functionalities li a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .functionalities li a:hover {
+            text-decoration: underline;
+        }
+        .dependencies-header {
+            cursor: pointer;
+            padding: 8px;
+            background-color: #f1f3f5;
+            border-radius: 3px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        .dependencies-header:hover {
+            background-color: #e9ecef;
+        }
+        .dependencies-arrow {
+            font-size: 0.9em;
+            transition: transform 0.3s ease;
+            margin-left: 5px;
+        }
+        .dependencies-arrow.expanded {
+            transform: rotate(90deg);
+        }
+        .dependencies-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-top: 5px;
+            display: none; /* Hidden by default */
+        }
+        .dependencies-list.visible {
+            display: block;
+        }
+        .documentation-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+        }
+        .tooltip-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #ccc;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 12px;
+            line-height: 16px;
+            cursor: help;
+            margin-left: 5px; 
+            font-weight: bold;
+        }
+        .tooltip-box {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            z-index: 1000;
+            max-width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border: 1px solid #555;
+        }
+        .content-title-style {
+            color: #1a73e8;
+            font-size: 1.6em;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 20px; 
+            margin-top: 30px;    
+        }
+        /* Tab interface styles */
+        .tabs {
+            margin: 1rem 0;
+        }
+
+        .tab-list {
+            display: flex;
+            margin-bottom: 0;
+            list-style: none;
+            padding: 0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .tab-label {
+            background: none;
+            border: none;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            position: relative;
+            flex: 1;
+            text-align: center;
+            border-radius: 0;
+        }
+
+        .tab-label:hover {
+            background-color: #e5e7eb;
+        }
+
+        .tab-label.active {
+            font-weight: bold;
+            background-color: #f5f2f0;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="mainPageTitle">WildFly Catalog</h1>
+        <div style="margin-bottom: 10px; text-align: center;" hidden>
+            <label for="jsonUrlInput" style="margin-right: 5px; font-size: 0.9em;">WildFly metadata json file:</label>
+            <input type="text" id="jsonUrlInput" style="padding: 8px; width: 50%; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">
+            <button id="loadJsonButton" style="padding: 8px 12px; margin-left: 5px; border-radius: 4px; border: 1px solid #ccc; background-color: #e9ecef; cursor: pointer;">Load</button>
+        </div>
+        <div id="documentation-section" class="documentation-section" style="display: none;"></div>
+        <div id="feature-packs-section" class="documentation-section" style="display: none;"></div>
+        <h2 class="content-title-style">WildFly Layers (grouped per category)</h2>
+        <div style="margin-bottom: 5px; text-align: center;">
+            <label for="stabilitySelect" style="margin-right: 5px; font-size: 0.9em;">Minimum stability level:</label>
+            <select id="stabilitySelect" style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 1em; margin-right: 10px;">
+                <option value="experimental" selected>Experimental</option>
+                <option value="preview">Preview</option>
+                <option value="community">Community</option>
+                <option value="default">Default</option>
+            </select>
+            <input type="search" id="searchInput" placeholder="Search catalog..." style="padding: 10px; width: 40%; border-radius: 4px; border: 1px solid #ccc; font-size: 1em;">
+        </div>
+        <div id="searchFields" style="margin-bottom: 20px; text-align: center; font-size: 0.9em;">
+            Search in:
+            <label style="margin-left: 10px;"><input type="checkbox" class="search-field-checkbox" value="layerName" checked> Layer Name</label>
+            <label style="margin-left: 10px;"><input type="checkbox" class="search-field-checkbox" value="description" checked> Description</label>
+            <label style="margin-left: 10px;"><input type="checkbox" class="search-field-checkbox" value="api" checked> Java API</label>
+            <label style="margin-left: 10px;"><input type="checkbox" class="search-field-checkbox" value="addOn" checked> Glow Add-On</label>
+            <label style="margin-left: 10px;"><input type="checkbox" class="search-field-checkbox" value="featurePack" checked> Feature Pack</label>
+        </div>
+        <div id="data-display"></div>
+    </div>
+
+    <script>
+        let activeTooltip = null;
+        let originalJsonData = null;
+
+        // Coordinates
+        function switchTab(buttonToEnable, activeId, toDisableId, buttonToDisable) {
+            buttonToEnable.classList.add('active');
+            buttonToEnable.setAttribute('aria-selected', 'true');
+            document.getElementById(activeId).classList.add('active');
+            document.getElementById(toDisableId).classList.remove('active');
+            buttonToDisable.classList.remove('active');
+            buttonToDisable.setAttribute('aria-selected', 'false');
+        }
+
+        function getSortedCategories(categoriesArray) {
+            if (!categoriesArray || !Array.isArray(categoriesArray)) return [];
+            const categoriesCopy = [...categoriesArray]; 
+            categoriesCopy.sort((a, b) => {
+                if (a.name === 'Internal' && b.name !== 'Internal') return 1; 
+                if (b.name === 'Internal' && a.name !== 'Internal') return -1; 
+                return 0; 
+            });
+            return categoriesCopy;
+        }
+
+        function sanitizeForId(text) {
+            if (typeof text !== 'string') return '';
+            return text.replace(/[^a-zA-Z0-9-_]/g, '_');
+        }
+
+        function showTooltip(event) {
+            event.stopPropagation(); 
+            
+            const icon = event.target; 
+
+            if (activeTooltip && activeTooltip.triggerIcon === icon) {
+                activeTooltip.remove();
+                activeTooltip = null;
+                return; 
+            }
+
+            if (activeTooltip) {
+                activeTooltip.remove();
+                activeTooltip = null;
+            }
+
+            const tooltipText = icon.dataset.tooltipText;
+            if (tooltipText == null || (typeof tooltipText === 'string' && tooltipText.trim() === '')) {
+                return;
+            }
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip-box';
+            tooltip.innerHTML = tooltipText; 
+            document.body.appendChild(tooltip);
+            
+            activeTooltip = tooltip; 
+            activeTooltip.triggerIcon = icon; 
+
+            const iconRect = icon.getBoundingClientRect();
+            tooltip.style.left = `${iconRect.right + 5 + window.scrollX}px`;
+            tooltip.style.top = `${iconRect.top + window.scrollY}px`;
+            
+            const tooltipRect = tooltip.getBoundingClientRect();
+            if (tooltipRect.right > window.innerWidth) {
+                tooltip.style.left = `${iconRect.left - tooltipRect.width - 5 + window.scrollX}px`;
+            }
+            if (tooltipRect.bottom > window.innerHeight) {
+                 tooltip.style.top = `${iconRect.bottom - tooltipRect.height + window.scrollY}px`;
+            }
+
+            setTimeout(() => {
+                document.addEventListener('click', () => {
+                    if (activeTooltip) {
+                        activeTooltip.remove();
+                        activeTooltip = null;
+                    }
+                }, { once: true });
+            }, 0);
+        }
+
+        function displayData(jsonData) {
+            const legendData = jsonData.legend || {};
+
+            const mainPageTitleH1 = document.getElementById('mainPageTitle');
+            if (jsonData.description && jsonData.description.trim() !== '') {
+                document.title = jsonData.description;
+                if (mainPageTitleH1) {
+                    mainPageTitleH1.textContent = jsonData.description;
+                }
+            } else {
+                const desc = "WildFly Catalog";
+                document.title = desc;
+                if (mainPageTitleH1) {
+                     mainPageTitleH1.textContent = desc;
+                }
+            }
+
+            function renderJsonRecursive(obj, indentLevel = 0) {
+                let html = '';
+                const indent = '&nbsp;&nbsp;'.repeat(indentLevel);
+                if (Array.isArray(obj)) {
+                    html += '[' + (obj.length > 0 ? '\n' : '');
+                    obj.forEach((item, index) => {
+                        html += indent + '&nbsp;&nbsp;' + renderJsonRecursive(item, indentLevel + 1);
+                        if (index < obj.length - 1) {
+                            html += ',';
+                        }
+                        html += '\n';
+                    });
+                    html += (obj.length > 0 ? indent : '') + ']';
+                } else if (typeof obj === 'object' && obj !== null) {
+                    let effectiveObj = obj;
+
+                    if (obj.hasOwnProperty('attribute') && typeof obj.attribute === 'string' && obj.hasOwnProperty('_address') && typeof obj._address === 'string' && obj._address.trim() !== '') {
+                        effectiveObj = { ...obj };
+                        effectiveObj.attribute = {
+                            _linkText: obj.attribute,
+                            _linkHref: obj._address,
+                            _isConfigurationLink: true
+                        };
+                        delete effectiveObj._address;
+                    }
+                    // Pre-process for 'attributes' array: inline its items as properties
+                    else if (obj.hasOwnProperty('attributes') && Array.isArray(obj.attributes)) {
+                        const newPropsFromAttributes = {};
+                        obj.attributes.forEach(attrItem => {
+                            if (attrItem && typeof attrItem.name === 'string' && attrItem.hasOwnProperty('value') && typeof attrItem._address === 'string' && attrItem._address.trim() !== '') {
+                                newPropsFromAttributes[attrItem.name] = {
+                                    _linkText: String(attrItem.value),
+                                    _linkHref: attrItem._address,
+                                    _isSpecialAttributeLink: true
+                                };
+                            }
+                        });
+
+                        if (Object.keys(newPropsFromAttributes).length > 0 || obj.attributes.length === 0) {
+                             effectiveObj = { ...obj }; // Start with a copy of original obj
+                             delete effectiveObj.attributes; // Remove the original attributes array
+                             for (const attrName in newPropsFromAttributes) {
+                                 effectiveObj[attrName] = newPropsFromAttributes[attrName];
+                             }
+                        }
+                    }
+                    
+                    html += '{' + (Object.keys(effectiveObj).length > 0 ? '\n' : '');
+                    const keysToRender = Object.keys(effectiveObj);
+
+                    keysToRender.forEach((key, index) => {
+                        const currentValue = effectiveObj[key];
+
+                        // Case 1: Property derived from 'attributes' array (name is link, value is text)
+                        if (key === 'attribute' && typeof currentValue === 'object' && currentValue !== null && currentValue._isConfigurationLink === true) {
+                             html += indent + '&nbsp;&nbsp;<strong style="color: #990055;">"' + key + '"</strong>: ';
+                             html += '<a href="' + currentValue._linkHref + '" target="_blank" rel="noopener noreferrer" style="color: #1a73e8; text-decoration: underline;">"' + String(currentValue._linkText).replace(/</g, '<').replace(/>/g, '>') + '"</a>' +
+                                    '<span class="tooltip-icon" data-tooltip-text="Navigate to the Model reference" style="cursor: help; display: inline-block; margin-left: 5px;">?</span>';
+                        }
+                        else if (typeof currentValue === 'object' && currentValue !== null && currentValue._isSpecialAttributeLink === true) {
+                            html += indent + '&nbsp;&nbsp;<a href="' + currentValue._linkHref + '" target="_blank" rel="noopener noreferrer" style="color: #1a73e8; text-decoration: underline;">"' + key + '"</a>' +
+                                    '<span class="tooltip-icon" data-tooltip-text="Navigate to the Model reference" style="cursor: help; display: inline-block; margin-left: 5px;">?</span>: ';
+                            html += '<span style="color: #008000;">"' + String(currentValue._linkText).replace(/</g, '<').replace(/>/g, '>') + '"</span>';
+                        }
+                        // Case 2: Parent Key Link (currentValue is an object containing an _address for its own documentation, and not a special attribute)
+                        else if (typeof currentValue === 'object' && currentValue !== null && 
+                                 !(currentValue._isSpecialAttributeLink === true) && /* Ensure it's not already handled by Case 1 */
+                                 typeof currentValue["_address"] === 'string' && currentValue["_address"].trim() !== '') {
+                            const urlForParentKeyLink = currentValue["_address"];
+                            html += indent + '&nbsp;&nbsp;<a href="' + urlForParentKeyLink + '" target="_blank" rel="noopener noreferrer" style="color: #1a73e8; text-decoration: underline;">"' + key + '"</a>' +
+                                    '<span class="tooltip-icon" data-tooltip-text="Navigate to the Model reference" style="cursor: help; display: inline-block; margin-left: 5px;">?</span>: ';
+                            const tempValue = { ...currentValue };
+                            delete tempValue["_address"]; 
+                            html += renderJsonRecursive(tempValue, indentLevel + 1);
+                        }
+                        // Default rendering (handles primitives, arrays, and other objects not matching above cases)
+                        else {
+                            html += indent + '&nbsp;&nbsp;<strong style="color: #990055;">"' + key + '"</strong>: ';
+                            html += renderJsonRecursive(currentValue, indentLevel + 1);
+                        }
+
+                        if (index < keysToRender.length - 1) {
+                            html += ',';
+                        }
+                        html += '\n';
+                    });
+                    html += (keysToRender.length > 0 ? indent : '') + '}';
+                } else if (typeof obj === 'string') {
+                    html += '<span style="color: #008000;">"' + obj.replace(/</g, '<').replace(/>/g, '>') + '"</span>';
+                } else if (typeof obj === 'number') {
+                    html += '<span style="color: #0000ff;">' + obj + '</span>';
+                } else if (typeof obj === 'boolean') {
+                    html += '<span style="color: #aa00ff;">' + obj + '</span>';
+                } else if (obj === null) {
+                    html += '<span style="color: #777;">null</span>';
+                }
+                return html;
+            }
+
+            const docSection = document.getElementById('documentation-section');
+            docSection.innerHTML = '';
+            if (jsonData.documentation && Array.isArray(jsonData.documentation) && jsonData.documentation.length > 0) {
+                docSection.style.display = 'block';
+
+                const docHeader = document.createElement('div');
+                docHeader.className = 'dependencies-header';
+                docHeader.style.cursor = 'pointer';
+
+                const docLabelWrapper = document.createElement('span');
+                docLabelWrapper.style.display = 'flex';
+                docLabelWrapper.style.alignItems = 'center';
+
+                const docHeaderText = document.createElement('h2');
+                docHeaderText.textContent = 'WildFly Documentation';
+                docHeaderText.style.margin = '0';
+                docHeaderText.style.fontSize = '1.2em';
+                docLabelWrapper.appendChild(docHeaderText);
+
+                docHeader.appendChild(docLabelWrapper);
+
+                const docArrow = document.createElement('span');
+                docArrow.className = 'dependencies-arrow';
+                docArrow.innerHTML = '&#9654;';
+                docHeader.appendChild(docArrow);
+                docSection.appendChild(docHeader);
+
+                const docList = document.createElement('ul');
+                docList.className = 'dependencies-list';
+                jsonData.documentation.forEach(docItem => {
+                    if (docItem.name && docItem.url) {
+                        const listItem = document.createElement('li');
+                        const link = document.createElement('a');
+                        link.href = docItem.url;
+                        link.textContent = docItem.name;
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                        listItem.appendChild(link);
+                        docList.appendChild(listItem);
+                    }
+                });
+                docSection.appendChild(docList);
+
+                docHeader.addEventListener('click', () => {
+                    docList.classList.toggle('visible');
+                    docArrow.classList.toggle('expanded');
+                });
+
+            } else {
+                docSection.style.display = 'none';
+            }
+
+            const featurePacksSection = document.getElementById('feature-packs-section');
+            featurePacksSection.innerHTML = '';
+            if (jsonData.featurePacks && Array.isArray(jsonData.featurePacks) && jsonData.featurePacks.length > 0) {
+                featurePacksSection.style.display = 'block';
+
+                const fpHeader = document.createElement('div');
+                fpHeader.className = 'dependencies-header';
+                fpHeader.style.cursor = 'pointer';
+
+                const fpLabelWrapper = document.createElement('span');
+                fpLabelWrapper.style.display = 'flex';
+                fpLabelWrapper.style.alignItems = 'center';
+
+                const fpHeaderText = document.createElement('h2');
+                fpHeaderText.textContent = 'WildFly Feature Packs';
+                fpHeaderText.style.margin = '0';
+                fpHeaderText.style.fontSize = '1.2em';
+                fpLabelWrapper.appendChild(fpHeaderText);
+
+                fpHeader.appendChild(fpLabelWrapper);
+
+                const fpArrow = document.createElement('span');
+                fpArrow.className = 'dependencies-arrow';
+                fpArrow.innerHTML = '&#9654;';
+                fpHeader.appendChild(fpArrow);
+                featurePacksSection.appendChild(fpHeader);
+
+                const fpContainer = document.createElement('div');
+                fpContainer.className = 'dependencies-list';
+                featurePacksSection.appendChild(fpContainer);
+
+                fpHeader.addEventListener('click', () => {
+                    fpContainer.classList.toggle('visible');
+                    fpArrow.classList.toggle('expanded');
+                });
+                i = 0;
+                jsonData.featurePacks.forEach(fp => {
+                    const fpDiv = document.createElement('div');
+                    fpDiv.className = 'category';
+                    fpDiv.id = `fp-${sanitizeForId(fp.mavenCoordinates)}`;
+                    fpDiv.style.padding = "0";
+                    fpDiv.style.margin = "10px 0";
+
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'functionality-header';
+                    headerDiv.id = `func-${sanitizeForId(fp.name)}`;
+
+                    const labelWrapper = document.createElement('span');
+                    labelWrapper.style.display = 'flex';
+                    labelWrapper.style.alignItems = 'center';
+
+                    const funcNameElement = document.createElement('span');
+                    funcNameElement.className = 'name';
+                    funcNameElement.textContent = fp.name;
+                    labelWrapper.appendChild(funcNameElement);
+                    headerDiv.appendChild(labelWrapper);
+
+                    const arrowSpan = document.createElement('span');
+                    arrowSpan.className = 'arrow';
+                    arrowSpan.innerHTML = '&#9654;';
+                    headerDiv.appendChild(arrowSpan);
+
+                    fpDiv.appendChild(headerDiv);
+
+                    const detailsDiv = document.createElement('div');
+                    detailsDiv.className = 'functionality-details';
+                    fpDiv.appendChild(detailsDiv);
+
+                    headerDiv.addEventListener('click', () => {
+                        detailsDiv.classList.toggle('visible');
+                        arrowSpan.classList.toggle('expanded');
+                    });
+
+                    if (fp.description && typeof fp.description === 'string' && fp.description.trim() !== '') {
+                        const descriptionP = document.createElement('p');
+                        descriptionP.className = 'category-description';
+                        const descriptionTextNode = document.createTextNode(fp.description);
+                        descriptionP.appendChild(descriptionTextNode);
+                        
+                        if (legendData.featurePackDescription) { 
+                             const descTooltipIcon = document.createElement('span');
+                             descTooltipIcon.className = 'tooltip-icon';
+                             descTooltipIcon.textContent = '?';
+                             descTooltipIcon.dataset.tooltipText = legendData.featurePackDescription;
+                             descTooltipIcon.addEventListener('click', showTooltip);
+                             descTooltipIcon.style.marginLeft = '5px';
+                             descriptionP.appendChild(descTooltipIcon);
+                        }
+                        detailsDiv.appendChild(descriptionP);
+                    }
+                    
+                    if (fp.projectURL && typeof fp.projectURL === 'string' && fp.projectURL.trim() !== '') {
+                        const urlContainer = document.createElement('div');
+                        urlContainer.style.marginTop = '10px';
+                        const urlLink = document.createElement('a');
+                        urlLink.href = fp.projectURL;
+                        urlLink.textContent = fp.projectURL;
+                        urlLink.target = '_blank';
+                        urlLink.rel = 'noopener noreferrer';
+                        
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Project URL:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['projectURL']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['projectURL'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(' '));
+                        fieldDiv.appendChild(urlLink);
+                        urlContainer.appendChild(fieldDiv);
+                        detailsDiv.appendChild(urlContainer);
+                    }
+
+                    if (fp.licenses && Array.isArray(fp.licenses) && fp.licenses.length > 0) {
+                        const licenseContainer = document.createElement('div');
+                        licenseContainer.style.marginTop = '10px';
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Licenses:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['licenses']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['licenses'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(` ${fp.licenses[0]}`));
+                        licenseContainer.appendChild(fieldDiv);
+                        detailsDiv.appendChild(licenseContainer);
+                    }
+
+                    if (fp.scmURL && typeof fp.scmURL === 'string' && fp.scmURL.trim() !== '') {
+                        const scmContainer = document.createElement('div');
+                        scmContainer.style.marginTop = '10px';
+                        const scmLink = document.createElement('a');
+                        scmLink.href = fp.scmURL;
+                        scmLink.textContent = fp.scmURL;
+                        scmLink.target = '_blank';
+                        scmLink.rel = 'noopener noreferrer';
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Source Code Management:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['scmURL']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['scmURL'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(' '));
+                        fieldDiv.appendChild(scmLink);
+                        scmContainer.appendChild(fieldDiv);
+                        detailsDiv.appendChild(scmContainer);
+                    }
+
+                    if (fp.modelReference && typeof fp.modelReference === 'string' && fp.modelReference.trim() !== '') {
+                        const modelRefContainer = document.createElement('div');
+                        modelRefContainer.style.marginTop = '10px';
+                        const modelRefLink = document.createElement('a');
+                        modelRefLink.href = fp.modelReference;
+                        modelRefLink.textContent = "model reference";
+                        modelRefLink.target = '_blank';
+                        modelRefLink.rel = 'noopener noreferrer';
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Model Reference:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['modelReference']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['modelReference'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(' '));
+                        fieldDiv.appendChild(modelRefLink);
+                        modelRefContainer.appendChild(fieldDiv);
+                        detailsDiv.appendChild(modelRefContainer);
+                    }
+                    
+                    if (fp.logMessagesReference && typeof fp.logMessagesReference === 'string' && fp.logMessagesReference.trim() !== '') {
+                        const logMessagesReferenceContainer = document.createElement('div');
+                        logMessagesReferenceContainer.style.marginTop = '10px';
+                        const logMessagesReferenceLink = document.createElement('a');
+                        logMessagesReferenceLink.href = fp.logMessagesReference;
+                        logMessagesReferenceLink.textContent = "codes and messages";
+                        logMessagesReferenceLink.target = '_blank';
+                        logMessagesReferenceLink.rel = 'noopener noreferrer';
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Log and Exception Message Code:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['logMessagesReference']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['logMessagesReference'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(' '));
+                        fieldDiv.appendChild(logMessagesReferenceLink);
+                        logMessagesReferenceContainer.appendChild(fieldDiv);
+                        detailsDiv.appendChild(logMessagesReferenceContainer);
+                    }
+
+                    if (fp.mavenCoordinates) {
+                        const coordsContainer = document.createElement('div');
+                        coordsContainer.style.marginTop = '10px';
+                        const strongLabel2 = document.createElement('strong');
+                        strongLabel2.textContent = 'Coordinates:';
+                        coordsContainer.appendChild(strongLabel2);
+                        const tabsContainer = document.createElement('div');
+                        coordsContainer.appendChild(tabsContainer);
+                        tabsContainer.className = 'tabs';
+                        const u = document.createElement('ul');
+                        u.className = 'tab-list';
+                        u.role = 'tablist';
+                        tabsContainer.appendChild(u);
+                        const li1 = document.createElement('li');
+                        u.appendChild(li1);
+                        const mavenLabel = document.createElement('div');
+                        mavenLabel.className = 'tab-label active';
+                        li1.appendChild(mavenLabel);
+                        const target = 'maven-tab' + i;
+                        const target2 = 'feature-location-tab' + i;
+                        mavenLabel.role = "tab";
+                        mavenLabel.ariaSelected = true;
+                        mavenLabel.ariaControls = target;
+                        mavenLabel.textContent = 'Maven Dependency';
+                        if (legendData.mavenCoordinates) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData.mavenCoordinates;
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            mavenLabel.appendChild(tooltipIcon);
+                        }
+
+                        const li2 = document.createElement('li');
+                        u.appendChild(li2);
+                        const fplLabel = document.createElement('div');
+                        fplLabel.className = 'tab-label';
+                        li2.appendChild(fplLabel);
+                        fplLabel.className = 'tab-label';
+                        fplLabel.role = "tab";
+                        fplLabel.ariaSelected = false;
+                        fplLabel.ariaControls = target2;
+                        fplLabel.textContent = 'Feature Pack Location';
+                        if (legendData.featurePackLocation) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData.featurePackLocation;
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fplLabel.appendChild(tooltipIcon);
+                        }
+
+                        const mavenTab = document.createElement('div');
+                        mavenTab.className = "tab-content active";
+                        mavenTab.role = "tabpanel";
+                        mavenTab.id = target;
+                        const preMaven = document.createElement('pre');
+                        preMaven.style.backgroundColor = '#f0f8ff';
+                        preMaven.style.border = '1px solid #cce';
+                        preMaven.style.borderRadius = '4px';
+                        preMaven.style.padding = '10px';
+                        const codeMaven = document.createElement('code');
+                        const parts = fp.mavenCoordinates.split(':');
+                        const groupId = parts[0] || '';
+                        const artifactId = parts[1] || '';
+                        const version = parts[2] || '';
+
+                        if (parts.length === 3) {
+                            const xmlString = 
+`<dependency>
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+    <version>${version}</version>
+</dependency>`;
+                            codeMaven.textContent = xmlString;
+                        } else {
+                            codeMaven.textContent = fp.mavenCoordinates; 
+                        }
+                        preMaven.appendChild(codeMaven);
+                        mavenTab.appendChild(preMaven);
+                        tabsContainer.appendChild(mavenTab);
+                        
+                        const fpLocationTab = document.createElement('div');
+                        fpLocationTab.className = "tab-content";
+                        fpLocationTab.role = "tabpanel";
+                        fpLocationTab.id = target2;
+                        const preFpLocation = document.createElement('pre');
+                        preFpLocation.style.backgroundColor = '#f0f8ff';
+                        preFpLocation.style.border = '1px solid #cce';
+                        preFpLocation.style.borderRadius = '4px';
+                        preFpLocation.style.padding = '10px';
+                        const codeFpLocation = document.createElement('code');
+                        const locationString = fp.mavenCoordinates || '';
+                        codeFpLocation.textContent = `<feature-pack>\n    <location>${locationString}</location>\n</feature-pack>`;
+                        preFpLocation.appendChild(codeFpLocation);
+                        fpLocationTab.appendChild(preFpLocation);
+                        tabsContainer.appendChild(fpLocationTab);
+                        detailsDiv.appendChild(coordsContainer);
+                        
+                        mavenLabel.addEventListener("click", function() { switchTab(mavenLabel, target, target2, fplLabel);  }, false);
+                        fplLabel.addEventListener("click", function() { switchTab(fplLabel, target2, target, mavenLabel);  }, false);
+                    }
+                    i = i + 1;
+                    if (fp.layers && Array.isArray(fp.layers) && fp.layers.length > 0) {
+                        const fpLayersContainer = document.createElement('div');
+                        fpLayersContainer.className = 'fp-layers-container';
+
+                        const fpLayersHeader = document.createElement('div');
+                        fpLayersHeader.className = 'dependencies-header';
+
+                        const fpLayersLabelWrapper = document.createElement('span');
+                        fpLayersLabelWrapper.style.display = 'flex';
+                        fpLayersLabelWrapper.style.alignItems = 'center';
+
+                        const fpLayersHeaderText = document.createElement('span');
+                        fpLayersHeaderText.textContent = 'Provided Layers';
+                        fpLayersLabelWrapper.appendChild(fpLayersHeaderText);
+
+                        if (legendData.featurePackLayers) { 
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData.featurePackLayers;
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fpLayersLabelWrapper.appendChild(tooltipIcon);
+                        }
+                        fpLayersHeader.appendChild(fpLayersLabelWrapper);
+
+                        const fpLayersArrow = document.createElement('span');
+                        fpLayersArrow.className = 'dependencies-arrow';
+                        fpLayersArrow.innerHTML = '&#9654;';
+                        fpLayersHeader.appendChild(fpLayersArrow);
+                        
+                        fpLayersContainer.appendChild(fpLayersHeader);
+
+                        const fpLayersList = document.createElement('ul');
+                        fpLayersList.className = 'dependencies-list'; 
+
+                        fp.layers.forEach(layerName => {
+                            const layerLi = document.createElement('li');
+                            const layerLink = document.createElement('a');
+                            let tid = `func-${sanitizeForId(layerName)}`; 
+                            if (fp.mavenCoordinates.includes("wildfly-cloud-galleon-pack")) {
+                              tid = `func-${sanitizeForId(fp.mavenCoordinates+'_'+layerName)}`;
+                            }
+                            const targetId = tid;
+                            layerLink.href = `#${targetId}`;
+                            layerLink.textContent = layerName;
+
+                            layerLink.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                const targetElement = document.getElementById(targetId);
+                                if (targetElement) {
+                                    const categoryDiv = targetElement.closest('.category');
+                                    if (categoryDiv) {
+                                        const categoryContent = categoryDiv.querySelector('.dependencies-list');
+                                        const categoryArrow = categoryDiv.querySelector('.dependencies-arrow');
+                                        if (categoryContent && !categoryContent.classList.contains('visible')) {
+                                            categoryContent.classList.add('visible');
+                                            if(categoryArrow) categoryArrow.classList.add('expanded');
+                                        }
+                                    }
+                                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    const targetDetails = targetElement.closest('li').querySelector('.functionality-details');
+                                    const targetArrow = targetElement.closest('li').querySelector('.arrow');
+                                    if (targetDetails && !targetDetails.classList.contains('visible')) {
+                                        targetDetails.classList.add('visible');
+                                        if(targetArrow) targetArrow.classList.add('expanded');
+                                    }
+                                    targetElement.style.transition = 'background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out';
+                                    targetElement.style.backgroundColor = '#e6f7ff';
+                                    targetElement.style.boxShadow = '0 0 10px rgba(26, 115, 232, 0.5)';
+                                    setTimeout(() => {
+                                        targetElement.style.backgroundColor = '';
+                                        targetElement.style.boxShadow = '';
+                                    }, 1500);
+                                } else {
+                                    console.warn(`Layer target #${targetId} not found.`);
+                                }
+                            });
+                            layerLi.appendChild(layerLink);
+                            fpLayersList.appendChild(layerLi);
+                        });
+                        
+                        fpLayersContainer.appendChild(fpLayersList);
+                        detailsDiv.appendChild(fpLayersContainer);
+
+                        fpLayersHeader.addEventListener('click', () => {
+                            fpLayersList.classList.toggle('visible');
+                            fpLayersArrow.classList.toggle('expanded');
+                        });
+                    }
+                    
+                    fpContainer.appendChild(fpDiv);
+                });
+            } else {
+                featurePacksSection.style.display = 'none';
+            }
+
+            const dataDisplay = document.getElementById('data-display');
+            dataDisplay.innerHTML = ''; 
+
+            if (!jsonData.categories || !Array.isArray(jsonData.categories)) {
+                dataDisplay.innerHTML = '<p style="color: red;">Error: Categories data is missing or not in expected format.</p>';
+                console.error("Categories data is missing or not an array:", jsonData);
+                return;
+            }
+
+            const orderedCategories = getSortedCategories(jsonData.categories);
+
+            orderedCategories.forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
+                categoryDiv.id = `category-${sanitizeForId(category.name)}`;
+
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'dependencies-header';
+                categoryHeader.style.cursor = 'pointer';
+
+                const categoryLabelWrapper = document.createElement('span');
+                categoryLabelWrapper.style.display = 'flex';
+                categoryLabelWrapper.style.alignItems = 'center';
+
+                const categoryHeaderText = document.createElement('h2');
+                if (category.name === 'Internal') {
+                    categoryHeaderText.textContent = 'Internal (layers that are not to be provisioned directly)';
+                } else {
+                    categoryHeaderText.textContent = category.name;
+                }
+                categoryHeaderText.style.margin = '0';
+                categoryHeaderText.style.fontSize = '1.2em';
+                categoryLabelWrapper.appendChild(categoryHeaderText);
+                categoryHeader.appendChild(categoryLabelWrapper);
+
+                const categoryArrow = document.createElement('span');
+                categoryArrow.className = 'dependencies-arrow';
+                categoryArrow.innerHTML = '&#9654;';
+                categoryHeader.appendChild(categoryArrow);
+                categoryDiv.appendChild(categoryHeader);
+
+                const categoryContent = document.createElement('div');
+                categoryContent.className = 'dependencies-list';
+                categoryDiv.appendChild(categoryContent);
+
+                categoryHeader.addEventListener('click', () => {
+                    categoryContent.classList.toggle('visible');
+                    categoryArrow.classList.toggle('expanded');
+                });
+
+                if (category.description) {
+                    const categoryDesc = document.createElement('p');
+                    categoryDesc.className = 'category-description';
+                    categoryDesc.textContent = category.description;
+                    categoryContent.appendChild(categoryDesc);
+                }
+
+                const functionalitiesUl = document.createElement('ul');
+                functionalitiesUl.className = 'functionalities';
+
+                category.functionalities.forEach(func => {
+                    const funcLi = document.createElement('li');
+                    funcLi.style.padding = "0";
+                    funcLi.style.margin = "10px 0";
+
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'functionality-header';
+                    if (func['feature-pack'].includes("wildfly-cloud-galleon-pack")) {
+                      headerDiv.id = `func-${sanitizeForId(func['feature-pack'] +'_'+func.name)}`; 
+                    } else {
+                      headerDiv.id = `func-${sanitizeForId(func.name)}`;
+                    }
+                    const labelWrapper = document.createElement('span'); 
+                    labelWrapper.style.display = 'flex'; 
+                    labelWrapper.style.alignItems = 'center';
+
+                    const funcNameElement = document.createElement('span'); 
+                    funcNameElement.className = 'name';
+                    funcNameElement.textContent = func.name; 
+                    labelWrapper.appendChild(funcNameElement); 
+                    headerDiv.appendChild(labelWrapper); 
+
+                    const arrowSpan = document.createElement('span');
+                    arrowSpan.className = 'arrow';
+                    arrowSpan.innerHTML = '&#9654;'; 
+                    headerDiv.appendChild(arrowSpan);
+
+                    funcLi.appendChild(headerDiv);
+
+                    const detailsDiv = document.createElement('div');
+                    detailsDiv.className = 'functionality-details';
+
+                    if (func.name) {
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Name:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['layer']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['layer'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(` ${func.name}`));
+                        detailsDiv.appendChild(fieldDiv);
+                    }
+
+                    const descFieldDiv = document.createElement('div');
+                    const descStrongLabel = document.createElement('strong');
+                    descStrongLabel.textContent = `Description:`;
+                    descFieldDiv.appendChild(descStrongLabel);
+                    if (legendData['description']) {
+                        const tooltipIcon = document.createElement('span');
+                        tooltipIcon.className = 'tooltip-icon';
+                        tooltipIcon.textContent = '?';
+                        tooltipIcon.dataset.tooltipText = legendData['description'];
+                        tooltipIcon.addEventListener('click', showTooltip);
+                        descFieldDiv.appendChild(tooltipIcon);
+                    }
+                    descFieldDiv.appendChild(document.createTextNode(` ${func.description}`));
+                    detailsDiv.appendChild(descFieldDiv);
+                    
+                    if (func.stability) {
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Stability:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['stability']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['stability'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(` ${func.stability}`));
+                        detailsDiv.appendChild(fieldDiv);
+                    }
+                    if (func.hasOwnProperty('glowDiscoverable')) {
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Glow Discoverable:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['glowDiscoverable']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['glowDiscoverable'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(` ${String(func.glowDiscoverable)}`));
+                        detailsDiv.appendChild(fieldDiv);
+                    }
+                    if (func.hasOwnProperty('glowAddOn')) {
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Glow Add-On:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['glowAddOn']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['glowAddOn'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(` ${func.glowAddOn}`));
+                        detailsDiv.appendChild(fieldDiv);
+                    }
+                    if (func['feature-pack']) {
+                        const fpValue = func['feature-pack'];
+                        const linkElement = document.createElement('a');
+                        const targetId = `fp-${sanitizeForId(fpValue)}`;
+                        linkElement.href = `#${targetId}`;
+                        linkElement.textContent = fpValue;
+                        linkElement.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const featurePacksSection = document.getElementById('feature-packs-section');
+                            const fpContainer = featurePacksSection.querySelector('.dependencies-list');
+                            const fpArrow = featurePacksSection.querySelector('.dependencies-arrow');
+                            if (fpContainer && !fpContainer.classList.contains('visible')) {
+                                fpContainer.classList.add('visible');
+                                fpArrow.classList.add('expanded');
+                            }
+
+                            const targetElement = document.getElementById(targetId);
+                            if (targetElement) {
+                                const headerDiv = targetElement.querySelector('.functionality-header');
+                                const detailsDiv = targetElement.querySelector('.functionality-details');
+                                const arrowSpan = targetElement.querySelector('.arrow');
+                                if (headerDiv && detailsDiv && !detailsDiv.classList.contains('visible')) {
+                                    detailsDiv.classList.add('visible');
+                                    arrowSpan.classList.add('expanded');
+                                }
+                                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                targetElement.style.transition = 'background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out';
+                                targetElement.style.backgroundColor = '#e6f7ff';
+                                targetElement.style.boxShadow = '0 0 12px rgba(26, 115, 232, 0.6)';
+                                setTimeout(() => {
+                                    targetElement.style.backgroundColor = '';
+                                    targetElement.style.boxShadow = '';
+                                }, 1500);
+                            } else {
+                                console.warn(`Feature pack target #${targetId} not found.`);
+                            }
+                        });
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Feature Pack:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['feature-pack']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['feature-pack'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(' '));
+                        fieldDiv.appendChild(linkElement);
+                        detailsDiv.appendChild(fieldDiv);
+                    }
+                    if (func.note) {
+                        const fieldDiv = document.createElement('div');
+                        const strongLabel = document.createElement('strong');
+                        strongLabel.textContent = `Note:`;
+                        fieldDiv.appendChild(strongLabel);
+                        if (legendData['note']) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData['note'];
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            fieldDiv.appendChild(tooltipIcon);
+                        }
+                        fieldDiv.appendChild(document.createTextNode(` ${func.note}`));
+                        detailsDiv.appendChild(fieldDiv);
+                    }
+
+                    if (func.dependencies && func.dependencies.length > 0) {
+                        const dependenciesContainer = document.createElement('div');
+                        dependenciesContainer.className = 'dependencies-container'; 
+
+                        const depHeader = document.createElement('div');
+                        depHeader.className = 'dependencies-header';
+                        
+                        const depLabelWrapper = document.createElement('span');
+                        depLabelWrapper.style.display = 'flex';
+                        depLabelWrapper.style.alignItems = 'center';
+
+                        const depHeaderText = document.createElement('span');
+                        depHeaderText.textContent = 'Layer Dependencies';
+                        depLabelWrapper.appendChild(depHeaderText); 
+
+                        if (legendData.dependencies) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData.dependencies;
+                            tooltipIcon.addEventListener('click', showTooltip); 
+                            depLabelWrapper.appendChild(tooltipIcon);
+                        }
+                        depHeader.appendChild(depLabelWrapper);
+
+                        const depArrow = document.createElement('span');
+                        depArrow.className = 'dependencies-arrow';
+                        depArrow.innerHTML = '&#9654;'; 
+                        depHeader.appendChild(depArrow);
+                        
+                        dependenciesContainer.appendChild(depHeader);
+
+                        const depList = document.createElement('ul');
+                        depList.className = 'dependencies-list'; 
+
+                        func.dependencies.forEach(depObj => {
+                            const depLayerName = depObj.name; 
+                            const depLi = document.createElement('li');
+                            const depLink = document.createElement('a');
+                            depLink.href = `#func-${depLayerName}`; 
+                            depLink.textContent = depLayerName;
+                            depLi.appendChild(depLink); 
+                            
+                            if (depObj.optional) {
+                                const optionalSpan = document.createElement('span');
+                                optionalSpan.textContent = ' (optional)';
+                                optionalSpan.style.fontStyle = 'italic';
+                                optionalSpan.style.color = '#5f6368';
+                                optionalSpan.style.marginLeft = '4px';
+                                depLi.appendChild(optionalSpan); 
+                            }
+
+                            depLink.addEventListener('click', (e) => {
+                                e.preventDefault(); 
+                                const targetElement = document.getElementById(`func-${depLayerName}`);
+                                if (targetElement) {
+                                    const categoryDiv = targetElement.closest('.category');
+                                    if (categoryDiv) {
+                                        const categoryContent = categoryDiv.querySelector('.dependencies-list');
+                                        const categoryArrow = categoryDiv.querySelector('.dependencies-arrow');
+                                        if (categoryContent && !categoryContent.classList.contains('visible')) {
+                                            categoryContent.classList.add('visible');
+                                            if(categoryArrow) categoryArrow.classList.add('expanded');
+                                        }
+                                    }
+                                    
+                                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    const targetDetails = targetElement.nextElementSibling;
+                                    const targetArrow = targetElement.querySelector('.arrow');
+                                    if (targetDetails && targetDetails.classList.contains('functionality-details') && !targetDetails.classList.contains('visible')) {
+                                        targetDetails.classList.add('visible');
+                                        if(targetArrow) targetArrow.classList.add('expanded');
+                                    }
+                                    targetElement.style.transition = 'background-color 0.1s ease-in-out';
+                                    targetElement.style.backgroundColor = '#e6f7ff'; 
+                                    setTimeout(() => {
+                                        targetElement.style.backgroundColor = ''; 
+                                    }, 1000);
+                                } else {
+                                    console.warn(`Dependency target #func-${depLayerName} not found.`);
+                                }
+                            });
+                            depList.appendChild(depLi);
+                        });
+                        dependenciesContainer.appendChild(depList);
+                        detailsDiv.appendChild(dependenciesContainer);
+
+                        depHeader.addEventListener('click', () => {
+                            depList.classList.toggle('visible');
+                            depArrow.classList.toggle('expanded');
+                        });
+                    }
+
+                    if (func.managementModel && Object.keys(func.managementModel).length > 0) {
+                        const mgmtModelContainer = document.createElement('div');
+                        mgmtModelContainer.className = 'management-model-container'; 
+
+                        const mgmtHeader = document.createElement('div');
+                        mgmtHeader.className = 'dependencies-header'; 
+                        mgmtHeader.style.backgroundColor = '#f0f8ff'; 
+
+                        const mgmtLabelWrapper = document.createElement('span');
+                        mgmtLabelWrapper.style.display = 'flex';
+                        mgmtLabelWrapper.style.alignItems = 'center';
+
+                        const mgmtHeaderText = document.createElement('span');
+                        mgmtHeaderText.textContent = 'Management Model';
+                        mgmtLabelWrapper.appendChild(mgmtHeaderText);
+
+                        if (legendData.managementModel) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData.managementModel;
+                            tooltipIcon.addEventListener('click', showTooltip); 
+                            mgmtLabelWrapper.appendChild(tooltipIcon);
+                        }
+                        mgmtHeader.appendChild(mgmtLabelWrapper);
+
+                        const mgmtArrow = document.createElement('span');
+                        mgmtArrow.className = 'dependencies-arrow'; 
+                        mgmtArrow.innerHTML = '&#9654;';
+                        mgmtHeader.appendChild(mgmtArrow);
+                        
+                        mgmtModelContainer.appendChild(mgmtHeader);
+
+                        const mgmtContentDiv = document.createElement('div');
+                        mgmtContentDiv.className = 'dependencies-list'; 
+                        mgmtContentDiv.style.paddingLeft = '0px'; 
+
+                        mgmtContentDiv.innerHTML = ''; 
+                        mgmtContentDiv.style.fontFamily = 'Consolas, "Courier New", monospace';
+                        mgmtContentDiv.style.backgroundColor = '#f5f5f5';
+                        mgmtContentDiv.style.padding = '10px';
+                        mgmtContentDiv.style.borderRadius = '4px';
+                        mgmtContentDiv.style.border = '1px solid #ddd';
+                        mgmtContentDiv.style.whiteSpace = 'pre-wrap';
+                        mgmtContentDiv.style.wordBreak = 'break-all';
+                        
+                        mgmtContentDiv.innerHTML = renderJsonRecursive(func.managementModel);
+                        // Attach listeners to newly created tooltip icons within this section
+                        mgmtContentDiv.querySelectorAll('.tooltip-icon').forEach(icon => {
+                            if (!icon.listenerAttached) {
+                                icon.addEventListener('click', showTooltip);
+                                icon.listenerAttached = true;
+                            }
+                        });
+                        
+                        mgmtModelContainer.appendChild(mgmtContentDiv);
+                        detailsDiv.appendChild(mgmtModelContainer);
+
+                        mgmtHeader.addEventListener('click', () => {
+                            mgmtContentDiv.classList.toggle('visible');
+                            mgmtArrow.classList.toggle('expanded');
+                        });
+                    }
+                    
+                    if (func.glowRules && func.glowRules.length > 0) {
+                        const glowRulesContainer = document.createElement('div');
+                        glowRulesContainer.className = 'glow-rules-container';
+
+                        const glowHeader = document.createElement('div');
+                        glowHeader.className = 'dependencies-header'; 
+                        glowHeader.style.backgroundColor = '#fff0f5'; 
+
+                        const glowLabelWrapper = document.createElement('span');
+                        glowLabelWrapper.style.display = 'flex';
+                        glowLabelWrapper.style.alignItems = 'center';
+
+                        const glowHeaderText = document.createElement('span');
+                        glowHeaderText.textContent = 'Glow Rules';
+                        glowLabelWrapper.appendChild(glowHeaderText);
+
+                        if (legendData.glowRules) {
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData.glowRules;
+                            tooltipIcon.addEventListener('click', showTooltip); 
+                            glowLabelWrapper.appendChild(tooltipIcon);
+                        }
+                        glowHeader.appendChild(glowLabelWrapper);
+
+                        const glowArrow = document.createElement('span');
+                        glowArrow.className = 'dependencies-arrow'; 
+                        glowArrow.innerHTML = '&#9654;';
+                        glowHeader.appendChild(glowArrow);
+
+                        glowRulesContainer.appendChild(glowHeader);
+
+                        const glowContentDiv = document.createElement('div');
+                        glowContentDiv.className = 'dependencies-list'; 
+                        glowContentDiv.style.paddingLeft = '0px';
+
+                        func.glowRules.forEach(rule => {
+                            const ruleDiv = document.createElement('div');
+                            ruleDiv.style.padding = '2px 0';
+                            ruleDiv.style.fontFamily = 'Consolas, "Courier New", monospace';
+                            ruleDiv.style.fontSize = '0.9em';
+
+                            const nameStrong = document.createElement('strong');
+                            nameStrong.textContent = `"${rule.name}": `;
+                            nameStrong.style.color = '#990055';
+                            ruleDiv.appendChild(nameStrong);
+
+                            if (rule.ruleDescription) {
+                                const tooltipIcon = document.createElement('span');
+                                tooltipIcon.className = 'tooltip-icon';
+                                tooltipIcon.textContent = '?';
+                                tooltipIcon.dataset.tooltipText = rule.ruleDescription;
+                                tooltipIcon.addEventListener('click', showTooltip); 
+                                ruleDiv.appendChild(tooltipIcon);
+                            }
+
+                            ruleDiv.appendChild(document.createTextNode(' ')); 
+
+                            const valueSpan = document.createElement('span');
+                            valueSpan.textContent = `"${String(rule.value).replace(/</g, '<').replace(/>/g, '>')}"`;
+                            valueSpan.style.color = '#008000';
+                            ruleDiv.appendChild(valueSpan);
+
+                            if (rule.valueDescription) {
+                                const tooltipIcon = document.createElement('span');
+                                tooltipIcon.className = 'tooltip-icon';
+                                tooltipIcon.textContent = '?';
+                                tooltipIcon.dataset.tooltipText = rule.valueDescription;
+                                tooltipIcon.addEventListener('click', showTooltip); 
+                                ruleDiv.appendChild(tooltipIcon);
+                            }
+                            
+                            glowContentDiv.appendChild(ruleDiv);
+                        });
+
+                        glowContentDiv.style.fontFamily = 'Consolas, "Courier New", monospace';
+                        glowContentDiv.style.backgroundColor = '#f5f5f5';
+                        glowContentDiv.style.padding = '10px';
+                        glowContentDiv.style.borderRadius = '4px';
+                        glowContentDiv.style.border = '1px solid #ddd';
+                        glowContentDiv.style.whiteSpace = 'pre-wrap'; 
+                        glowContentDiv.style.wordBreak = 'break-all';
+
+                        glowRulesContainer.appendChild(glowContentDiv);
+                        detailsDiv.appendChild(glowRulesContainer);
+
+                        glowHeader.addEventListener('click', () => {
+                            glowContentDiv.classList.toggle('visible');
+                            glowArrow.classList.toggle('expanded');
+                        });
+                    }
+
+                    // Add Packages section
+                    if (func.packages && Array.isArray(func.packages) && func.packages.length > 0) {
+                        const packagesContainer = document.createElement('div');
+                        packagesContainer.className = 'packages-container'; // Optional: for specific styling if needed
+
+                        const pkgHeader = document.createElement('div');
+                        pkgHeader.className = 'dependencies-header'; // Reuse styling
+                        pkgHeader.style.backgroundColor = '#e6e6fa'; // Lavender - new color for distinction
+
+                        const pkgLabelWrapper = document.createElement('span');
+                        pkgLabelWrapper.style.display = 'flex';
+                        pkgLabelWrapper.style.alignItems = 'center';
+
+                        const pkgHeaderText = document.createElement('span');
+                        pkgHeaderText.textContent = 'Packages';
+                        pkgLabelWrapper.appendChild(pkgHeaderText);
+
+                        if (legendData.packages) { // Assuming 'packages' might be in legend
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData.packages;
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            pkgLabelWrapper.appendChild(tooltipIcon);
+                        }
+                        pkgHeader.appendChild(pkgLabelWrapper);
+
+                        const pkgArrow = document.createElement('span');
+                        pkgArrow.className = 'dependencies-arrow';
+                        pkgArrow.innerHTML = '&#9654;';
+                        pkgHeader.appendChild(pkgArrow);
+                        
+                        packagesContainer.appendChild(pkgHeader);
+
+                        const pkgList = document.createElement('ul');
+                        pkgList.className = 'dependencies-list'; // Reuse styling for list
+                        pkgList.style.listStyleType = 'none'; // Typically packages are not bulleted like dependencies
+
+                        func.packages.forEach(pkgName => {
+                            const pkgLi = document.createElement('li');
+                            pkgLi.textContent = pkgName;
+                            pkgLi.style.fontFamily = 'Consolas, "Courier New", monospace'; // Monospace for package names
+                            pkgLi.style.fontSize = '0.9em';
+                            pkgList.appendChild(pkgLi);
+                        });
+                        packagesContainer.appendChild(pkgList);
+                        detailsDiv.appendChild(packagesContainer);
+
+                        pkgHeader.addEventListener('click', () => {
+                            pkgList.classList.toggle('visible');
+                            pkgArrow.classList.toggle('expanded');
+                        });
+                    }
+
+                    if (func.hasOwnProperty('configurations')) {
+                        const layerConfigContainer = document.createElement('div');
+                        layerConfigContainer.className = 'layer-configuration-container';
+
+                        const layerConfigHeader = document.createElement('div');
+                        layerConfigHeader.className = 'dependencies-header'; 
+                        layerConfigHeader.style.backgroundColor = '#fffacd'; 
+
+                        const layerConfigLabelWrapper = document.createElement('span');
+                        layerConfigLabelWrapper.style.display = 'flex';
+                        layerConfigLabelWrapper.style.alignItems = 'center';
+
+                        const layerConfigHeaderText = document.createElement('span');
+                        layerConfigHeaderText.textContent = 'Configuration';
+                        layerConfigLabelWrapper.appendChild(layerConfigHeaderText);
+
+                        if (legendData.configurations) { 
+                            const tooltipIcon = document.createElement('span');
+                            tooltipIcon.className = 'tooltip-icon';
+                            tooltipIcon.textContent = '?';
+                            tooltipIcon.dataset.tooltipText = legendData.configurations;
+                            tooltipIcon.addEventListener('click', showTooltip);
+                            layerConfigLabelWrapper.appendChild(tooltipIcon);
+                        }
+                        layerConfigHeader.appendChild(layerConfigLabelWrapper);
+
+                        const layerConfigArrow = document.createElement('span');
+                        layerConfigArrow.className = 'dependencies-arrow';
+                        layerConfigArrow.innerHTML = '&#9654;';
+                        layerConfigHeader.appendChild(layerConfigArrow);
+                        
+                        layerConfigContainer.appendChild(layerConfigHeader);
+
+                        const layerConfigContentDiv = document.createElement('div');
+                        layerConfigContentDiv.className = 'dependencies-list'; 
+                        layerConfigContentDiv.style.paddingLeft = '0px';
+                        
+                        if (func.configurations && typeof func.configurations === 'object' && Object.keys(func.configurations).length > 0) {
+                            layerConfigContentDiv.innerHTML = renderJsonRecursive(func.configurations);
+                        } else if (func.configurations && typeof func.configurations === 'object' && Object.keys(func.configurations).length === 0) {
+                            layerConfigContentDiv.innerHTML = '<span style="color: #777; font-style: italic;">(Configuration is empty)</span>';
+                        } else {
+                            layerConfigContentDiv.innerHTML = '<span style="color: #777; font-style: italic;">(No configuration data or invalid format)</span>';
+                        }
+                        
+                        layerConfigContentDiv.style.fontFamily = 'Consolas, "Courier New", monospace';
+                        layerConfigContentDiv.style.backgroundColor = '#f5f5dc'; 
+                        layerConfigContentDiv.style.padding = '10px';
+                        layerConfigContentDiv.style.borderRadius = '4px';
+                        layerConfigContentDiv.style.border = '1px solid #d2b48c'; 
+                        layerConfigContentDiv.style.whiteSpace = 'pre-wrap';
+                        layerConfigContentDiv.style.wordBreak = 'break-all';
+                        
+                        // Attach listeners to newly created tooltip icons within this section
+                        layerConfigContentDiv.querySelectorAll('.tooltip-icon').forEach(icon => {
+                            if (!icon.listenerAttached) {
+                                icon.addEventListener('click', showTooltip);
+                                icon.listenerAttached = true;
+                            }
+                        });
+                        
+                        layerConfigContainer.appendChild(layerConfigContentDiv);
+                        detailsDiv.appendChild(layerConfigContainer);
+
+                        layerConfigHeader.addEventListener('click', () => {
+                            layerConfigContentDiv.classList.toggle('visible');
+                            layerConfigArrow.classList.toggle('expanded');
+                        });
+                    }
+
+                    funcLi.appendChild(detailsDiv);
+
+                    headerDiv.addEventListener('click', () => {
+                        detailsDiv.classList.toggle('visible');
+                        arrowSpan.classList.toggle('expanded');
+                    });
+
+                    functionalitiesUl.appendChild(funcLi);
+                });
+
+                categoryContent.appendChild(functionalitiesUl);
+                dataDisplay.appendChild(categoryDiv);
+            });
+        }
+
+        const defaultJsonUrl = 'https://wildfly-extras.github.io/wildfly-catalog/39.0.0.Beta1/default/wildfly-catalog.json';
+
+        function loadCatalogData(url) {
+            const dataDisplay = document.getElementById('data-display');
+            dataDisplay.innerHTML = '<p>Loading catalog data...</p>'; 
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} while fetching ${url}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    originalJsonData = data; 
+                    displayData(originalJsonData); 
+
+                    if (!document.getElementById('searchInput').listenerAttached) {
+                         setupSearchListener();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching or parsing JSON:', error);
+                    dataDisplay.innerHTML = `<p style="color: red;">Error loading catalog data from ${url}: ${error.message}. Check console for details.</p>`;
+                    originalJsonData = null; 
+                    displayData({ categories: [], legend: {}, documentation: [], featurePacks: [] }); 
+                });
+        }
+
+        window.onload = () => {
+            const jsonUrlInput = document.getElementById('jsonUrlInput');
+            jsonUrlInput.value = defaultJsonUrl; 
+            loadCatalogData(defaultJsonUrl); 
+
+            const loadJsonButton = document.getElementById('loadJsonButton');
+            loadJsonButton.addEventListener('click', () => {
+                const newUrl = jsonUrlInput.value.trim();
+                if (newUrl) {
+                    loadCatalogData(newUrl);
+                } else {
+                    alert("Please enter a valid JSON URL.");
+                }
+            });
+        };
+
+        function setupSearchListener() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput.listenerAttached) return;
+
+            searchInput.listenerAttached = true; 
+            if (!searchInput || !originalJsonData) return;
+
+            const stabilitySelect = document.getElementById('stabilitySelect');
+
+            const performSearch = () => {
+                if (!originalJsonData) { 
+                    displayData({ categories: [], legend: {}, documentation: [], featurePacks: [] }); 
+                    return;
+                }
+
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedStabilityValue = (stabilitySelect && stabilitySelect.value) ? stabilitySelect.value : "experimental";
+
+                if (searchTerm === '' && selectedStabilityValue.toLowerCase() === 'experimental') {
+                    displayData(originalJsonData);
+                    return;
+                }
+
+                const filteredCategories = originalJsonData.categories.map(category => {
+                    const functionalities = category.functionalities.filter(func => {
+                        let termMatches = searchTerm === '';
+
+                        if (searchTerm !== '') {
+                            const searchFieldsCheckboxes = document.querySelectorAll('.search-field-checkbox');
+                            let selectedFields = [];
+                            searchFieldsCheckboxes.forEach(checkbox => {
+                                if (checkbox.checked) {
+                                    selectedFields.push(checkbox.value);
+                                }
+                            });
+
+                            termMatches = false;
+                            if (selectedFields.includes('layerName')) {
+                                if (func.name && func.name.toLowerCase().includes(searchTerm)) termMatches = true;
+                            }
+                            if (!termMatches && selectedFields.includes('description')) {
+                                if (category.name && category.name.toLowerCase().includes(searchTerm)) termMatches = true;
+                                else if (func.description && func.description.toLowerCase().includes(searchTerm)) termMatches = true;
+                                else if (func.note && func.note.toLowerCase().includes(searchTerm)) termMatches = true;
+                            }
+                            if (!termMatches && selectedFields.includes('addOn')) {
+                                if (func.glowAddOn && typeof func.glowAddOn === 'string' && func.glowAddOn.toLowerCase().includes(searchTerm)) termMatches = true;
+                            }
+                            if (!termMatches && selectedFields.includes('featurePack')) {
+                                if (func['feature-pack'] && func['feature-pack'].toLowerCase().includes(searchTerm)) termMatches = true;
+                            }
+                            if (!termMatches && selectedFields.includes('api')) {
+                                if (func.glowRules && Array.isArray(func.glowRules)) {
+                                    if (func.glowRules.some(rule => rule.value && rule.value.toLowerCase().includes(searchTerm))) termMatches = true;
+                                }
+                            }
+                        }
+
+                        let stabilityMatches = false;
+                        const funcStability = func.stability ? func.stability.toLowerCase() : 'default';
+
+                        switch (selectedStabilityValue.toLowerCase()) {
+                            case 'experimental':
+                                stabilityMatches = true;
+                                break;
+                            case 'preview':
+                                stabilityMatches = ['preview', 'community', 'default'].includes(funcStability);
+                                break;
+                            case 'community':
+                                stabilityMatches = ['community', 'default'].includes(funcStability);
+                                break;
+                            case 'default':
+                                stabilityMatches = (funcStability === 'default');
+                                break;
+                            default:
+                                stabilityMatches = true;
+                        }
+                        
+                        return termMatches && stabilityMatches;
+                    });
+
+                    if (functionalities.length > 0) {
+                        return { ...category, functionalities };
+                    }
+                    return null;
+                }).filter(category => category !== null);
+
+                const filteredData = {
+                    ...originalJsonData,
+                    categories: filteredCategories
+                };
+                displayData(filteredData);
+            };
+
+            searchInput.addEventListener('input', performSearch);
+            stabilitySelect.addEventListener('change', performSearch);
+        }
+    </script>
+</body>
+</html>

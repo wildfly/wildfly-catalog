@@ -1,0 +1,62 @@
+{
+    "subsystem.microprofile-graphql-client-smallrye" : {
+        "name" : "subsystem.microprofile-graphql-client-smallrye",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "subsystem",
+            "op-params" : ""
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "microprofile-graphql-client-smallrye",
+                "feature-id" : true
+            },
+            {
+                "name" : "extension",
+                "default" : "org.wildfly.extension.microprofile.graphql-client-smallrye"
+            }
+        ],
+        "provides" : ["org.wildfly.microprofile.graphql.client"],
+        "refs" : [{
+            "feature" : "extension",
+            "include" : true
+        }],
+        "requires" : [
+            {"name" : "org.wildfly.microprofile.config"},
+            {"name" : "org.wildfly.weld"}
+        ],
+        "stability" : "default",
+        "packages" : [{"package" : "org.wildfly.extension.microprofile.graphql-client-smallrye"}]
+    },
+    "subsystem.microprofile-graphql-smallrye" : {
+        "name" : "subsystem.microprofile-graphql-smallrye",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "subsystem",
+            "op-params" : ""
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "microprofile-graphql-smallrye",
+                "feature-id" : true
+            },
+            {
+                "name" : "extension",
+                "default" : "org.wildfly.extension.microprofile.graphql-smallrye"
+            }
+        ],
+        "provides" : ["org.wildfly.microprofile.graphql"],
+        "refs" : [{
+            "feature" : "extension",
+            "include" : true
+        }],
+        "requires" : [
+            {"name" : "org.wildfly.microprofile.config"},
+            {"name" : "org.wildfly.weld"}
+        ],
+        "stability" : "default",
+        "packages" : [{"package" : "org.wildfly.extension.microprofile.graphql-smallrye"}]
+    }
+}

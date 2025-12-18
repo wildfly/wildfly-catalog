@@ -1,0 +1,1699 @@
+{
+    "subsystem.ai" : {
+        "name" : "subsystem.ai",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "subsystem",
+            "op-params" : ""
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "extension",
+                "default" : "org.wildfly.extension.ai"
+            }
+        ],
+        "refs" : [{
+            "feature" : "extension",
+            "include" : true
+        }],
+        "stability" : "default",
+        "packages" : [{"package" : "org.wildfly.extension.ai"}]
+    },
+    "subsystem.ai.chat-memory" : {
+        "name" : "subsystem.ai.chat-memory",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,chat-memory",
+            "op-params" : "size,type,use-http-session"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "chat-memory",
+                "feature-id" : true
+            },
+            {
+                "name" : "size",
+                "stability" : "default"
+            },
+            {
+                "name" : "type",
+                "stability" : "default"
+            },
+            {
+                "name" : "use-http-session",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.chatmemory.$chat-memory"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.chroma-embedding-store" : {
+        "name" : "subsystem.ai.chroma-embedding-store",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,chroma-embedding-store",
+            "op-params" : "api-version,base-url,collection-name,connect-timeout,database-name,log-requests,log-responses,tenant-name"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "chroma-embedding-store",
+                "feature-id" : true
+            },
+            {
+                "name" : "api-version",
+                "stability" : "default"
+            },
+            {
+                "name" : "base-url",
+                "stability" : "default"
+            },
+            {
+                "name" : "collection-name",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "database-name",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "tenant-name",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.embedding.store.$chroma-embedding-store"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "packages" : [{"package" : "dev.langchain4j.chroma"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.embedding-store-content-retriever" : {
+        "name" : "subsystem.ai.embedding-store-content-retriever",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,embedding-store-content-retriever",
+            "op-params" : "embedding-model,embedding-store,max-results,min-score"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "embedding-store-content-retriever",
+                "feature-id" : true
+            },
+            {
+                "name" : "embedding-model",
+                "stability" : "default"
+            },
+            {
+                "name" : "embedding-store",
+                "stability" : "default"
+            },
+            {
+                "name" : "max-results",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "min-score",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.rag.retriever.$embedding-store-content-retriever"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "requires" : [
+            {
+                "optional" : false,
+                "name" : "org.wildfly.ai.embedding.model.$embedding-model"
+            },
+            {
+                "optional" : false,
+                "name" : "org.wildfly.ai.embedding.store.$embedding-store"
+            }
+        ],
+        "stability" : "default"
+    },
+    "subsystem.ai.gemini-chat-model" : {
+        "name" : "subsystem.ai.gemini-chat-model",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,gemini-chat-model",
+            "op-params" : "allowed-code-execution,api-key,civic-integrity,connect-timeout,dangerous-content,enable-enhanced-civic-answers,frequency-penalty,harassment,hate-speech,include-code-execution-output,include-thoughts,log-probs,log-requests,log-responses,max-output-token,model-name,presence-penalty,response-format,response-log-probs,return-thinking,seed,sexually-explicit,stop-sequences,streaming,temperature,thinking-budget,top-k,top-p"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "gemini-chat-model",
+                "feature-id" : true
+            },
+            {
+                "name" : "allowed-code-execution",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "api-key",
+                "stability" : "default"
+            },
+            {
+                "name" : "civic-integrity",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "dangerous-content",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "enable-enhanced-civic-answers",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "frequency-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "harassment",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "hate-speech",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "include-code-execution-output",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "include-thoughts",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-probs",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "max-output-token",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "model-name",
+                "stability" : "default"
+            },
+            {
+                "name" : "presence-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "response-format",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "response-log-probs",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "return-thinking",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "seed",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "sexually-explicit",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "stop-sequences",
+                "nillable" : true,
+                "type" : "List<String>",
+                "stability" : "default"
+            },
+            {
+                "name" : "streaming",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "temperature",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "thinking-budget",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "top-k",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "top-p",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.chatmodel.$gemini-chat-model"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "packages" : [{"package" : "dev.langchain4j.gemini"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.github-chat-model" : {
+        "name" : "subsystem.ai.github-chat-model",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,github-chat-model",
+            "op-params" : "api-key,connect-timeout,custom-headers,endpoint,frequency-penalty,log-requests-responses,max-retries,max-token,model-name,presence-penalty,response-format,seed,service-version,streaming,temperature,top-p,user-agent-suffix"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "github-chat-model",
+                "feature-id" : true
+            },
+            {
+                "name" : "api-key",
+                "stability" : "default"
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "custom-headers",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "endpoint",
+                "stability" : "default"
+            },
+            {
+                "name" : "frequency-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "max-retries",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "max-token",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "model-name",
+                "stability" : "default"
+            },
+            {
+                "name" : "presence-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "response-format",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "seed",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "service-version",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "streaming",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "temperature",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "top-p",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "user-agent-suffix",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.chatmodel.$github-chat-model"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "packages" : [
+            {"package" : "dev.langchain4j.github"},
+            {"package" : "com.azure"}
+        ],
+        "stability" : "default"
+    },
+    "subsystem.ai.in-memory-embedding-model" : {
+        "name" : "subsystem.ai.in-memory-embedding-model",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,in-memory-embedding-model",
+            "op-params" : "embedding-class,module"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "in-memory-embedding-model",
+                "feature-id" : true
+            },
+            {
+                "name" : "embedding-class",
+                "stability" : "default"
+            },
+            {
+                "name" : "module",
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.embedding.model.$in-memory-embedding-model"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.in-memory-embedding-store" : {
+        "name" : "subsystem.ai.in-memory-embedding-store",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,in-memory-embedding-store",
+            "op-params" : "path,relative-to"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "in-memory-embedding-store",
+                "feature-id" : true
+            },
+            {
+                "name" : "path",
+                "stability" : "default"
+            },
+            {
+                "name" : "relative-to",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.embedding.store.$in-memory-embedding-store"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "requires" : [{
+            "optional" : true,
+            "name" : "org.wildfly.management.path.$relative-to"
+        }],
+        "stability" : "default"
+    },
+    "subsystem.ai.mcp-client-sse" : {
+        "name" : "subsystem.ai.mcp-client-sse",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,mcp-client-sse",
+            "op-params" : "connect-timeout,log-requests,log-responses,socket-binding,sse-path,ssl-enabled"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "mcp-client-sse",
+                "feature-id" : true
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "socket-binding",
+                "stability" : "default"
+            },
+            {
+                "name" : "sse-path",
+                "stability" : "default"
+            },
+            {
+                "name" : "ssl-enabled",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.mcp.client.$mcp-client-sse"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "requires" : [{
+            "optional" : false,
+            "name" : "org.wildfly.network.outbound-socket-binding.$socket-binding"
+        }],
+        "stability" : "default"
+    },
+    "subsystem.ai.mcp-client-stdio" : {
+        "name" : "subsystem.ai.mcp-client-stdio",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,mcp-client-stdio",
+            "op-params" : "args,cmd"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "mcp-client-stdio",
+                "feature-id" : true
+            },
+            {
+                "name" : "args",
+                "type" : "List<String>",
+                "stability" : "default"
+            },
+            {
+                "name" : "cmd",
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.mcp.client.$mcp-client-stdio"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.mcp-client-stream" : {
+        "name" : "subsystem.ai.mcp-client-stream",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,mcp-client-stream",
+            "op-params" : "connect-timeout,log-requests,log-responses,socket-binding,ssl-enabled,stream-path"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "mcp-client-stream",
+                "feature-id" : true
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "socket-binding",
+                "stability" : "default"
+            },
+            {
+                "name" : "ssl-enabled",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "stream-path",
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.mcp.client.$mcp-client-stream"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "requires" : [{
+            "optional" : false,
+            "name" : "org.wildfly.network.outbound-socket-binding.$socket-binding"
+        }],
+        "stability" : "default"
+    },
+    "subsystem.ai.mcp-tool-provider" : {
+        "name" : "subsystem.ai.mcp-tool-provider",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,mcp-tool-provider",
+            "op-params" : "fail-if-one-server-fails,mcp-clients"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "mcp-tool-provider",
+                "feature-id" : true
+            },
+            {
+                "name" : "fail-if-one-server-fails",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "mcp-clients",
+                "type" : "List<String>",
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.tool-provider.$mcp-tool-provider"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "requires" : [{
+            "optional" : false,
+            "name" : "org.wildfly.ai.mcp.client.$mcp-clients"
+        }],
+        "packages" : [{"package" : "dev.langchain4j.mcp-client"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.mistral-ai-chat-model" : {
+        "name" : "subsystem.ai.mistral-ai-chat-model",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,mistral-ai-chat-model",
+            "op-params" : "api-key,base-url,connect-timeout,frequency-penalty,log-requests,log-responses,max-retries,max-token,model-name,presence-penalty,random-seed,response-format,safe-prompt,stop-sequences,streaming,temperature,top-p"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "mistral-ai-chat-model",
+                "feature-id" : true
+            },
+            {
+                "name" : "api-key",
+                "stability" : "default"
+            },
+            {
+                "name" : "base-url",
+                "stability" : "default"
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "frequency-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "max-retries",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "max-token",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "model-name",
+                "stability" : "default"
+            },
+            {
+                "name" : "presence-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "random-seed",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "response-format",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "safe-prompt",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "stop-sequences",
+                "nillable" : true,
+                "type" : "List<String>",
+                "stability" : "default"
+            },
+            {
+                "name" : "streaming",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "temperature",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "top-p",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.chatmodel.$mistral-ai-chat-model"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "packages" : [{"package" : "dev.langchain4j.mistral-ai"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.neo4j-content-retriever" : {
+        "name" : "subsystem.ai.neo4j-content-retriever",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,neo4j-content-retriever",
+            "op-params" : "bolt-url,chat-language-model,credential-reference,prompt-template,username"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "neo4j-content-retriever",
+                "feature-id" : true
+            },
+            {
+                "name" : "bolt-url",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "chat-language-model",
+                "stability" : "default"
+            },
+            {
+                "name" : "credential-reference",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "prompt-template",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "username",
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.rag.retriever.$neo4j-content-retriever"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "requires" : [{
+            "optional" : false,
+            "name" : "org.wildfly.ai.chatmodel.$chat-language-model"
+        }],
+        "packages" : [{"package" : "dev.langchain4j.neo4j"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.neo4j-content-retriever.credential-reference" : {
+        "name" : "subsystem.ai.neo4j-content-retriever.credential-reference",
+        "annotation" : {
+            "name" : "write-attribute",
+            "complex-attribute" : "credential-reference",
+            "addr-params" : "host,subsystem,neo4j-content-retriever",
+            "op-params" : "store,alias,type,clear-text"
+        },
+        "refs" : [{"feature" : "subsystem.ai.neo4j-content-retriever"}],
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "neo4j-content-retriever",
+                "feature-id" : true
+            },
+            {
+                "name" : "store",
+                "nillable" : true
+            },
+            {
+                "name" : "alias",
+                "nillable" : true
+            },
+            {
+                "name" : "type",
+                "nillable" : true
+            },
+            {
+                "name" : "clear-text",
+                "nillable" : true
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "requires" : [{
+            "optional" : true,
+            "name" : "org.wildfly.security.credential-store.$store"
+        }]
+    },
+    "subsystem.ai.neo4j-embedding-store" : {
+        "name" : "subsystem.ai.neo4j-embedding-store",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,neo4j-embedding-store",
+            "op-params" : "bolt-url,credential-reference,database-name,dimension,embedding-property,id-property,index-name,label,metadata-prefix,retrieval-query,text-property,username"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "neo4j-embedding-store",
+                "feature-id" : true
+            },
+            {
+                "name" : "bolt-url",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "credential-reference",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "database-name",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "dimension",
+                "stability" : "default"
+            },
+            {
+                "name" : "embedding-property",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "id-property",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "index-name",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "label",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "metadata-prefix",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "retrieval-query",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "text-property",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "username",
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.embedding.store.$neo4j-embedding-store"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "packages" : [{"package" : "dev.langchain4j.neo4j"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.neo4j-embedding-store.credential-reference" : {
+        "name" : "subsystem.ai.neo4j-embedding-store.credential-reference",
+        "annotation" : {
+            "name" : "write-attribute",
+            "complex-attribute" : "credential-reference",
+            "addr-params" : "host,subsystem,neo4j-embedding-store",
+            "op-params" : "store,alias,type,clear-text"
+        },
+        "refs" : [{"feature" : "subsystem.ai.neo4j-embedding-store"}],
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "neo4j-embedding-store",
+                "feature-id" : true
+            },
+            {
+                "name" : "store",
+                "nillable" : true
+            },
+            {
+                "name" : "alias",
+                "nillable" : true
+            },
+            {
+                "name" : "type",
+                "nillable" : true
+            },
+            {
+                "name" : "clear-text",
+                "nillable" : true
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "requires" : [{
+            "optional" : true,
+            "name" : "org.wildfly.security.credential-store.$store"
+        }]
+    },
+    "subsystem.ai.ollama-chat-model" : {
+        "name" : "subsystem.ai.ollama-chat-model",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,ollama-chat-model",
+            "op-params" : "base-url,connect-timeout,log-requests,log-responses,max-retries,model-name,num-predict,repeat-penalty,response-format,seed,stop-sequences,streaming,temperature,top-k,top-p"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "ollama-chat-model",
+                "feature-id" : true
+            },
+            {
+                "name" : "base-url",
+                "stability" : "default"
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "max-retries",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "model-name",
+                "stability" : "default"
+            },
+            {
+                "name" : "num-predict",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "repeat-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "response-format",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "seed",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "stop-sequences",
+                "nillable" : true,
+                "type" : "List<String>",
+                "stability" : "default"
+            },
+            {
+                "name" : "streaming",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "temperature",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "top-k",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "top-p",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.chatmodel.$ollama-chat-model"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "packages" : [{"package" : "dev.langchain4j.ollama"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.ollama-embedding-model" : {
+        "name" : "subsystem.ai.ollama-embedding-model",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,ollama-embedding-model",
+            "op-params" : "base-url,connect-timeout,log-requests,log-responses,model-name"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "ollama-embedding-model",
+                "feature-id" : true
+            },
+            {
+                "name" : "base-url",
+                "stability" : "default"
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "model-name",
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.embedding.model.$ollama-embedding-model"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.openai-chat-model" : {
+        "name" : "subsystem.ai.openai-chat-model",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,openai-chat-model",
+            "op-params" : "api-key,base-url,connect-timeout,frequency-penalty,log-requests,log-responses,max-token,model-name,organization-id,presence-penalty,response-format,seed,streaming,temperature,top-p"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "openai-chat-model",
+                "feature-id" : true
+            },
+            {
+                "name" : "api-key",
+                "stability" : "default"
+            },
+            {
+                "name" : "base-url",
+                "stability" : "default"
+            },
+            {
+                "name" : "connect-timeout",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "frequency-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "max-token",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "model-name",
+                "stability" : "default"
+            },
+            {
+                "name" : "organization-id",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "presence-penalty",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "response-format",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "seed",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "streaming",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "temperature",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "top-p",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.chatmodel.$openai-chat-model"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "packages" : [{"package" : "dev.langchain4j.openai"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.weaviate-embedding-store" : {
+        "name" : "subsystem.ai.weaviate-embedding-store",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,weaviate-embedding-store",
+            "op-params" : "avoid-dups,consistency-level,metadata,object-class,socket-binding,ssl-enabled"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "weaviate-embedding-store",
+                "feature-id" : true
+            },
+            {
+                "name" : "avoid-dups",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "consistency-level",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "metadata",
+                "nillable" : true,
+                "type" : "List<String>",
+                "stability" : "default"
+            },
+            {
+                "name" : "object-class",
+                "stability" : "default"
+            },
+            {
+                "name" : "socket-binding",
+                "stability" : "default"
+            },
+            {
+                "name" : "ssl-enabled",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.embedding.store.$weaviate-embedding-store"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "requires" : [{
+            "optional" : false,
+            "name" : "org.wildfly.network.outbound-socket-binding.$socket-binding"
+        }],
+        "packages" : [{"package" : "dev.langchain4j.weaviate"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.web-search-content-retriever" : {
+        "name" : "subsystem.ai.web-search-content-retriever",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,web-search-content-retriever",
+            "op-params" : "google,max-results,tavily"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "web-search-content-retriever",
+                "feature-id" : true
+            },
+            {
+                "name" : "google",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "max-results",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "tavily",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.rag.retriever.$web-search-content-retriever"],
+        "refs" : [{"feature" : "subsystem.ai"}],
+        "packages" : [{"package" : "dev.langchain4j.web-search-engines"}],
+        "stability" : "default"
+    },
+    "subsystem.ai.web-search-content-retriever.google" : {
+        "name" : "subsystem.ai.web-search-content-retriever.google",
+        "annotation" : {
+            "name" : "write-attribute",
+            "complex-attribute" : "google",
+            "addr-params" : "host,subsystem,web-search-content-retriever",
+            "op-params" : "api-key,connect-timeout,custom-search-id,include-images,log-requests,log-responses,max-retries,site-restrict"
+        },
+        "refs" : [{"feature" : "subsystem.ai.web-search-content-retriever"}],
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "web-search-content-retriever",
+                "feature-id" : true
+            },
+            {"name" : "api-key"},
+            {
+                "name" : "connect-timeout",
+                "nillable" : true
+            },
+            {
+                "name" : "custom-search-id",
+                "nillable" : true
+            },
+            {
+                "name" : "include-images",
+                "nillable" : true
+            },
+            {
+                "name" : "log-requests",
+                "nillable" : true
+            },
+            {
+                "name" : "log-responses",
+                "nillable" : true
+            },
+            {
+                "name" : "max-retries",
+                "nillable" : true
+            },
+            {
+                "name" : "site-restrict",
+                "nillable" : true
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ]
+    },
+    "subsystem.ai.web-search-content-retriever.tavily" : {
+        "name" : "subsystem.ai.web-search-content-retriever.tavily",
+        "annotation" : {
+            "name" : "write-attribute",
+            "complex-attribute" : "tavily",
+            "addr-params" : "host,subsystem,web-search-content-retriever",
+            "op-params" : "api-key,base-url,connect-timeout,exclude-domains,include-answer,include-domains,include-raw-content,search-depth"
+        },
+        "refs" : [{"feature" : "subsystem.ai.web-search-content-retriever"}],
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "ai",
+                "feature-id" : true
+            },
+            {
+                "name" : "web-search-content-retriever",
+                "feature-id" : true
+            },
+            {"name" : "api-key"},
+            {"name" : "base-url"},
+            {
+                "name" : "connect-timeout",
+                "nillable" : true
+            },
+            {
+                "name" : "exclude-domains",
+                "nillable" : true,
+                "type" : "List<String>"
+            },
+            {
+                "name" : "include-answer",
+                "nillable" : true
+            },
+            {
+                "name" : "include-domains",
+                "nillable" : true,
+                "type" : "List<String>"
+            },
+            {
+                "name" : "include-raw-content",
+                "nillable" : true
+            },
+            {
+                "name" : "search-depth",
+                "nillable" : true
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ]
+    },
+    "subsystem.mcp" : {
+        "name" : "subsystem.mcp",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "subsystem",
+            "op-params" : ""
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "mcp",
+                "feature-id" : true
+            },
+            {
+                "name" : "extension",
+                "default" : "org.wildfly.extension.mcp"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.mcp.server"],
+        "refs" : [{
+            "feature" : "extension",
+            "include" : true
+        }],
+        "stability" : "default",
+        "packages" : [{"package" : "org.wildfly.extension.mcp"}]
+    },
+    "subsystem.mcp.mcp-server" : {
+        "name" : "subsystem.mcp.mcp-server",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,mcp-server",
+            "op-params" : "messages-path,sse-path,streamable-path"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "mcp",
+                "feature-id" : true
+            },
+            {
+                "name" : "mcp-server",
+                "feature-id" : true
+            },
+            {
+                "name" : "messages-path",
+                "stability" : "default"
+            },
+            {
+                "name" : "sse-path",
+                "stability" : "default"
+            },
+            {
+                "name" : "streamable-path",
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.mcp.server.configuration"],
+        "refs" : [{"feature" : "subsystem.mcp"}],
+        "stability" : "default"
+    },
+    "subsystem.wasm" : {
+        "name" : "subsystem.wasm",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "subsystem",
+            "op-params" : ""
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "wasm",
+                "feature-id" : true
+            },
+            {
+                "name" : "extension",
+                "default" : "org.wildfly.extension.wasm"
+            }
+        ],
+        "refs" : [{
+            "feature" : "extension",
+            "include" : true
+        }],
+        "stability" : "default",
+        "packages" : [{"package" : "org.wildfly.extension.wasm"}]
+    },
+    "subsystem.wasm.wasm-tool" : {
+        "name" : "subsystem.wasm.wasm-tool",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "host,subsystem,wasm-tool",
+            "op-params" : "allowed-hosts,max-memory-contraint,min-memory-contraint,path,relative-to,use-aot"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "wasm",
+                "feature-id" : true
+            },
+            {
+                "name" : "wasm-tool",
+                "feature-id" : true
+            },
+            {
+                "name" : "allowed-hosts",
+                "nillable" : true,
+                "type" : "List<String>",
+                "stability" : "default"
+            },
+            {
+                "name" : "max-memory-contraint",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "min-memory-contraint",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "path",
+                "stability" : "default"
+            },
+            {
+                "name" : "relative-to",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "use-aot",
+                "nillable" : true,
+                "stability" : "default"
+            },
+            {
+                "name" : "host",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["org.wildfly.ai.mcp.server.wasm.tool.$wasm-tool"],
+        "refs" : [{"feature" : "subsystem.wasm"}],
+        "requires" : [{
+            "optional" : true,
+            "name" : "org.wildfly.management.path.$relative-to"
+        }],
+        "stability" : "default"
+    }
+}
