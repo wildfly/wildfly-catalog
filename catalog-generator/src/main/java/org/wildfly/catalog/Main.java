@@ -71,7 +71,6 @@ public class Main {
         try (InputStream in = new URL(rulesURL).openStream()) {
             glowRulesDescriptions.load(in);
         }
-        Map<String, Map<String, JsonNode>> categories = new TreeMap<>();
         String baseMetadataUrl = node.get("baseMetadataURL").asText();
         JsonNode variantsList = mapper.readTree(new URI(baseMetadataUrl + "variants.json").toURL());
         List<Variant> variants = new ArrayList<>();
@@ -83,6 +82,7 @@ public class Main {
         variantNodes.insert(0, defaultVariant);
         Iterator<JsonNode> variantsIt = variantNodes.elements();
         while (variantsIt.hasNext()) {
+            Map<String, Map<String, JsonNode>> categories = new TreeMap<>();
             JsonNode variantNode = variantsIt.next();
             String variantDir = variantNode.get("directory").asText();
             String variantDescription = variantNode.get("description").asText();
