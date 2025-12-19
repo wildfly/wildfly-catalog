@@ -82,6 +82,7 @@ public class Main {
         variantNodes.insert(0, defaultVariant);
         Iterator<JsonNode> variantsIt = variantNodes.elements();
         while (variantsIt.hasNext()) {
+            int fpOrder = 0;
             Map<String, Map<String, JsonNode>> categories = new TreeMap<>();
             JsonNode variantNode = variantsIt.next();
             String variantDir = variantNode.get("directory").asText();
@@ -110,7 +111,8 @@ public class Main {
                 String artifactId = coords[1];
                 String version = coords[2];
                 Path docFile = resolveMavenArtifact(resolver, groupId, artifactId, version, "doc", "zip");
-                String directoryName = (coords[0] + '_' + artifactId);
+                String directoryName = fpOrder + "_" + (coords[0] + '_' + artifactId);
+                fpOrder+=1;
                 Path fpDirectory = featurePacksTargetDirectory.resolve(directoryName);
                 unzip(docFile, fpDirectory);
                 Path metadataFile = fpDirectory.resolve("doc/META-INF/metadata.json");
