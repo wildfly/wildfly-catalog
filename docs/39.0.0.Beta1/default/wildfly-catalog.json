@@ -8696,7 +8696,7 @@
         },
         "server-root" : {
           "/" : {
-            "_address" : "featurePacks/4_org.wildfly.extras.graphql_wildfly-microprofile-graphql-feature-pack/doc/reference/index.html"
+            "_address" : "featurePacks/6_org.wildfly.generative-ai_wildfly-ai-feature-pack/doc/reference/index.html"
           }
         },
         "socket-binding-group" : {

@@ -6269,7 +6269,7 @@
         },
         "server-root" : {
           "/" : {
-            "_address" : "featurePacks/0_org.wildfly_wildfly-preview-feature-pack/doc/reference/index.html"
+            "_address" : "featurePacks/2_org.wildfly.extras.grpc_wildfly-grpc-preview-feature-pack/doc/reference/index.html"
           }
         },
         "socket-binding-group" : {
