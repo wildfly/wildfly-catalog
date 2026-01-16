@@ -12,9 +12,16 @@ If the WildFly version to release is not already present in the [versions.txt](.
 
 ## Deploy the catalog
 
+* `git checkout main`
 * `git pull --rebase upstream main`
 * `git tag v_<date of the day>` For example `v_20251014`
-* `git push  v_<date of the day>` This will generate the catalog.
+* `git push upstream v_<date of the day>` This will generate the catalog.
 * `git pull --rebase upstream v_<date of the day>`
 * `git push upstream main` This will start the catalog deployment.
 * DONE
+
+## Remove the latest beta release
+
+* In case a Beta release is present in docs/index.html
+* Remove the entry (for example remove: `<li><a href="39.0.0.Beta1/index.html">39.0.0.Beta1</a></li>`);
+* `git add docs/index.html;git commit -m "Remove latest Beta";git push upstream main`
