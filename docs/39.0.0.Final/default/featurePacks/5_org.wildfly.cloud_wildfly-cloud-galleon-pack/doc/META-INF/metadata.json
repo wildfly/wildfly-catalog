@@ -1,0 +1,2120 @@
+{
+  "groupId" : "org.wildfly.cloud",
+  "artifactId" : "wildfly-cloud-galleon-pack",
+  "version" : "8.1.0.Final",
+  "name" : "WildFly Galleon feature-pack for the Cloud",
+  "description" : "This feature-pack adjusts the WildFly layers to run on the cloud.",
+  "licenses" : [ "Apache License, Version 2.0" ],
+  "url" : "https://github.com/wildfly/wildfly-cloud-galleon-pack",
+  "scm-url" : "https://github.com/wildfly/wildfly-cloud-galleon-pack",
+  "copyright" : null,
+  "layers" : [ {
+    "name" : "webservices",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "webservices" : {
+          "_address" : "/subsystem=webservices",
+          "attributes" : [ {
+            "name" : "modify-wsdl-address",
+            "value" : "true",
+            "_address" : "/subsystem=webservices@@@modify-wsdl-address"
+          }, {
+            "name" : "wsdl-host",
+            "value" : "jbossws.undefined.host",
+            "_address" : "/subsystem=webservices@@@wsdl-host"
+          } ]
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Jakarta XML Web Services, adjusted for the cloud"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.jboss.as.webservices" ]
+  }, {
+    "name" : "mail",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "socket-binding-group" : {
+        "standard-sockets" : {
+          "_address" : "/socket-binding-group=*",
+          "remote-destination-outbound-socket-binding" : {
+            "mail-smtp" : {
+              "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+              "attributes" : [ {
+                "name" : "host",
+                "value" : "${env.OPENSHIFT_SMTP_HOST,jboss.mail.server.host:localhost}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Jakarta Mail, adjusted for the cloud."
+    } ],
+    "configurations" : [ {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host",
+      "attribute" : "host",
+      "system-properties" : [ "jboss.mail.server.host" ],
+      "environment-variables" : [ "OPENSHIFT_SMTP_HOST" ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "undertow",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "socket-binding-group" : {
+        "standard-sockets" : {
+          "_address" : "/socket-binding-group=*",
+          "socket-binding" : {
+            "http" : {
+              "_address" : "/socket-binding-group=*/socket-binding=*",
+              "attributes" : [ {
+                "name" : "interface",
+                "value" : "bindall",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@interface"
+              } ]
+            },
+            "https" : {
+              "_address" : "/socket-binding-group=*/socket-binding=*",
+              "attributes" : [ {
+                "name" : "interface",
+                "value" : "bindall",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@interface"
+              } ]
+            }
+          }
+        }
+      },
+      "subsystem" : {
+        "undertow" : {
+          "_address" : "/subsystem=undertow",
+          "server" : {
+            "default-server" : {
+              "_address" : "/subsystem=undertow/server=*",
+              "http-listener" : {
+                "default" : {
+                  "_address" : "/subsystem=undertow/server=*/http-listener=*",
+                  "attributes" : [ {
+                    "name" : "proxy-address-forwarding",
+                    "value" : "true",
+                    "_address" : "/subsystem=undertow/server=*/http-listener=*@@@proxy-address-forwarding"
+                  } ]
+                }
+              }
+            }
+          },
+          "servlet-container" : {
+            "default" : {
+              "_address" : "/subsystem=undertow/servlet-container=*",
+              "setting" : {
+                "affinity-cookie" : {
+                  "_address" : "/subsystem=undertow/servlet-container=*/setting=affinity-cookie",
+                  "attributes" : [ {
+                    "name" : "name",
+                    "value" : "INGRESSCOOKIE",
+                    "_address" : "/subsystem=undertow/servlet-container=*/setting=affinity-cookie@@@name"
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/access-log-valve/module.yaml,https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/filters/module.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "WildFly undertow subsystem, adjusted for the cloud"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.wildfly.extension.undertow" ]
+  }, {
+    "name" : "resource-adapters",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/resource-adapters/module.yaml"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "messaging-activemq",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "socket-binding-group" : {
+        "standard-sockets" : {
+          "_address" : "/socket-binding-group=*",
+          "remote-destination-outbound-socket-binding" : {
+            "http-messaging" : {
+              "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+              "attributes" : [ {
+                "name" : "host",
+                "value" : "${jboss.messaging.host:localhost}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host"
+              }, {
+                "name" : "port",
+                "value" : "${jboss.http.port:8080}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for connections to a remote Jakarta Messaging broker, adjusted for the cloud"
+    } ],
+    "configurations" : [ {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host",
+      "attribute" : "host",
+      "system-properties" : [ "jboss.messaging.host" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port",
+      "attribute" : "port",
+      "system-properties" : [ "jboss.http.port" ],
+      "environment-variables" : [ ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "keycloak-client-saml",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.hidden-if-org.wildfly.rule.not-expected-file-keycloak",
+      "value" : "/WEB-INF/keycloak.json"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "transactions",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "transactions" : {
+          "_address" : "/subsystem=transactions",
+          "attributes" : [ {
+            "name" : "node-identifier",
+            "value" : "${jboss.tx.node.id:1}",
+            "_address" : "/subsystem=transactions@@@node-identifier"
+          }, {
+            "name" : "recovery-listener",
+            "value" : "true",
+            "_address" : "/subsystem=transactions@@@recovery-listener"
+          } ]
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "WildFly transactions subsystem, adjusted for the cloud"
+    } ],
+    "configurations" : [ {
+      "_address" : "/subsystem=transactions@@@node-identifier",
+      "attribute" : "node-identifier",
+      "system-properties" : [ "jboss.tx.node.id" ],
+      "environment-variables" : [ ]
+    } ],
+    "packages" : [ "org.jboss.as.transactions" ]
+  }, {
+    "name" : "elytron",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/elytron/module.yaml"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "web-clustering",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "infinispan" : {
+          "_address" : "/subsystem=infinispan",
+          "cache-container" : {
+            "web" : {
+              "_address" : "/subsystem=infinispan/cache-container=*",
+              "attributes" : [ {
+                "name" : "default-cache",
+                "value" : "sessions",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@default-cache"
+              } ],
+              "distributed-cache" : {
+                "sessions" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration@@@interval"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "jgroups" : {
+          "_address" : "/subsystem=jgroups",
+          "channel" : {
+            "ee" : {
+              "_address" : "/subsystem=jgroups/channel=*",
+              "attributes" : [ {
+                "name" : "stack",
+                "value" : "tcp",
+                "_address" : "/subsystem=jgroups/channel=*@@@stack"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/jgroups/module.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for distributable web applications. Configures a non-local Infinispan-based container web cache for data session handling suitable to clustering environments, adjusted for the cloud."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.jboss.as.clustering.infinispan", "org.wildfly.extension.clustering.server" ]
+  }, {
+    "name" : "base-server",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "interface" : {
+        "bindall" : {
+          "_address" : "/interface=*",
+          "attributes" : [ {
+            "name" : "inet-address",
+            "value" : "${jboss.bind.address.bindall:0.0.0.0}",
+            "_address" : "/interface=*@@@inet-address"
+          } ]
+        }
+      },
+      "socket-binding-group" : {
+        "standard-sockets" : {
+          "_address" : "/socket-binding-group=*",
+          "attributes" : [ {
+            "name" : "port-offset",
+            "value" : "0",
+            "_address" : "/socket-binding-group=*@@@port-offset"
+          } ]
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/port-offset/module.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "WildFly base server, adjusted for the cloud"
+    } ],
+    "configurations" : [ {
+      "_address" : "/interface=*@@@inet-address",
+      "attribute" : "inet-address",
+      "system-properties" : [ "jboss.bind.address.bindall" ],
+      "environment-variables" : [ ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "elytron-oidc-client",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "core-service" : {
+        "management" : {
+          "_address" : "/core-service=management",
+          "management-interface" : {
+            "http-interface" : {
+              "_address" : "/core-service=management/management-interface=http-interface",
+              "attributes" : [ {
+                "name" : "console-enabled",
+                "value" : "false",
+                "_address" : "/core-service=management/management-interface=http-interface@@@console-enabled"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/oidc/module.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for securing deployment with OIDC, adjusted for the cloud"
+    }, {
+      "name" : "org.wildfly.rule.no-configuration-if-org.wildfly.rule.expected-file-oidc",
+      "value" : "/WEB-INF/oidc.json"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.jboss.as.domain-http-error-context" ]
+  }, {
+    "name" : "deployment-scanner",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/deployment-scanner/module.yaml"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "datasources",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/datasources/module.yaml"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "keycloak-saml",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/keycloak/2.0/module.yaml"
+    }, {
+      "name" : "org.wildfly.rule.no-configuration-if-org.wildfly.rule.expected-file-keycloak",
+      "value" : "/WEB-INF/keycloak.json"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "cloud-remote-activemq",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.kind",
+      "value" : "metadata-only"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:messaging-activemq"
+    }, {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "messaging,cloud-remote-activemq"
+    }, {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/messaging/2.0/module.yaml"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Configure connection to a remote broker using MQ_SERVICE_PREFIX_MAPPING env variable."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "management",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "core-service" : {
+        "management" : {
+          "_address" : "/core-service=management",
+          "management-interface" : {
+            "http-interface" : {
+              "_address" : "/core-service=management/management-interface=http-interface",
+              "attributes" : [ {
+                "name" : "console-enabled",
+                "value" : "false",
+                "_address" : "/core-service=management/management-interface=http-interface@@@console-enabled"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/admin/2.0/module.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "WildFly Management, adjusted for the cloud"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.jboss.as.domain-http-error-context" ]
+  }, {
+    "name" : "ejb-dist-cache",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "jgroups" : {
+          "_address" : "/subsystem=jgroups",
+          "channel" : {
+            "ee" : {
+              "_address" : "/subsystem=jgroups/channel=*",
+              "attributes" : [ {
+                "name" : "stack",
+                "value" : "tcp",
+                "_address" : "/subsystem=jgroups/channel=*@@@stack"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/jgroups/module.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Infinispan-based distributed cache for stateful session beans, adjusted for the cloud"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "microprofile-config",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : { },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/mp-config/module.yaml"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "jms-activemq",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "socket-binding-group" : {
+        "standard-sockets" : {
+          "_address" : "/socket-binding-group=*",
+          "remote-destination-outbound-socket-binding" : {
+            "http-messaging" : {
+              "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+              "attributes" : [ {
+                "name" : "host",
+                "value" : "${jboss.messaging.host:localhost}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host"
+              }, {
+                "name" : "port",
+                "value" : "${jboss.http.port:8080}",
+                "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ ],
+    "configurations" : [ {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@host",
+      "attribute" : "host",
+      "system-properties" : [ "jboss.messaging.host" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/socket-binding-group=*/remote-destination-outbound-socket-binding=*@@@port",
+      "attribute" : "port",
+      "system-properties" : [ "jboss.http.port" ],
+      "environment-variables" : [ ]
+    } ],
+    "packages" : [ ]
+  }, {
+    "name" : "logging",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "logging" : {
+          "_address" : "/subsystem=logging",
+          "console-handler" : {
+            "CONSOLE" : {
+              "_address" : "/subsystem=logging/console-handler=*"
+            }
+          },
+          "json-formatter" : {
+            "OPENSHIFT" : {
+              "_address" : "/subsystem=logging/json-formatter=*",
+              "attributes" : [ {
+                "name" : "exception-output-type",
+                "value" : "formatted",
+                "_address" : "/subsystem=logging/json-formatter=*@@@exception-output-type"
+              }, {
+                "name" : "key-overrides",
+                "value" : "{ timestamp=@timestamp }",
+                "_address" : "/subsystem=logging/json-formatter=*@@@key-overrides"
+              }, {
+                "name" : "meta-data",
+                "value" : "{@version=1}",
+                "_address" : "/subsystem=logging/json-formatter=*@@@meta-data"
+              } ]
+            }
+          },
+          "root-logger" : {
+            "ROOT" : {
+              "_address" : "/subsystem=logging/root-logger=ROOT",
+              "attributes" : [ {
+                "name" : "handlers",
+                "value" : "[CONSOLE]",
+                "_address" : "/subsystem=logging/root-logger=ROOT@@@handlers"
+              }, {
+                "name" : "level",
+                "value" : "INFO",
+                "_address" : "/subsystem=logging/root-logger=ROOT@@@level"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/json-logging/module.yaml,https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/logger-category/module.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "WildFly Logging subsystem, adjusted for the cloud"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ ]
+  }, {
+    "name" : "jpa",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "infinispan" : {
+          "_address" : "/subsystem=infinispan",
+          "cache-container" : {
+            "hibernate" : {
+              "_address" : "/subsystem=infinispan/cache-container=*",
+              "attributes" : [ {
+                "name" : "default-cache",
+                "value" : "local-query",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@default-cache"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for JPA (using the latest WildFly supported Hibernate release), adjusted for the cloud"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.jboss.as.clustering.infinispan", "org.wildfly.extension.clustering.server" ]
+  }, {
+    "name" : "cloud-default-config",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "batch-jberet",
+      "optional" : false
+    }, {
+      "name" : "web-server",
+      "optional" : false
+    }, {
+      "name" : "datasources",
+      "optional" : false
+    }, {
+      "name" : "management",
+      "optional" : false
+    }, {
+      "name" : "jmx-remoting",
+      "optional" : false
+    }, {
+      "name" : "logging",
+      "optional" : false
+    }, {
+      "name" : "request-controller",
+      "optional" : false
+    }, {
+      "name" : "security-manager",
+      "optional" : false
+    }, {
+      "name" : "jaxrs",
+      "optional" : false
+    }, {
+      "name" : "bean-validation",
+      "optional" : false
+    }, {
+      "name" : "cdi",
+      "optional" : false
+    }, {
+      "name" : "ee-security",
+      "optional" : false
+    }, {
+      "name" : "jms-activemq",
+      "optional" : false
+    }, {
+      "name" : "resource-adapters",
+      "optional" : false
+    }, {
+      "name" : "elytron-oidc-client",
+      "optional" : false
+    }, {
+      "name" : "h2-driver",
+      "optional" : false
+    }, {
+      "name" : "health",
+      "optional" : false
+    }, {
+      "name" : "jdr",
+      "optional" : false
+    }, {
+      "name" : "jsf",
+      "optional" : false
+    }, {
+      "name" : "mail",
+      "optional" : false
+    }, {
+      "name" : "metrics",
+      "optional" : false
+    }, {
+      "name" : "microprofile-jwt",
+      "optional" : false
+    }, {
+      "name" : "pojo",
+      "optional" : false
+    }, {
+      "name" : "remoting",
+      "optional" : false
+    }, {
+      "name" : "sar",
+      "optional" : false
+    }, {
+      "name" : "web-clustering",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "interface" : {
+        "private" : {
+          "_address" : "/interface=*",
+          "attributes" : [ {
+            "name" : "inet-address",
+            "value" : "${jboss.bind.address.private:127.0.0.1}",
+            "_address" : "/interface=*@@@inet-address"
+          } ]
+        }
+      },
+      "socket-binding-group" : {
+        "standard-sockets" : {
+          "_address" : "/socket-binding-group=*",
+          "socket-binding" : {
+            "jgroups-mping" : {
+              "_address" : "/socket-binding-group=*/socket-binding=*",
+              "attributes" : [ {
+                "name" : "interface",
+                "value" : "private",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@interface"
+              }, {
+                "name" : "multicast-address",
+                "value" : "${jboss.default.multicast.address:230.0.0.4}",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@multicast-address"
+              }, {
+                "name" : "multicast-port",
+                "value" : "45700",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@multicast-port"
+              } ]
+            },
+            "jgroups-tcp" : {
+              "_address" : "/socket-binding-group=*/socket-binding=*",
+              "attributes" : [ {
+                "name" : "interface",
+                "value" : "private",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@interface"
+              }, {
+                "name" : "port",
+                "value" : "7600",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@port"
+              } ]
+            },
+            "jgroups-udp" : {
+              "_address" : "/socket-binding-group=*/socket-binding=*",
+              "attributes" : [ {
+                "name" : "interface",
+                "value" : "private",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@interface"
+              }, {
+                "name" : "multicast-address",
+                "value" : "${jboss.default.multicast.address:230.0.0.4}",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@multicast-address"
+              }, {
+                "name" : "multicast-port",
+                "value" : "45688",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@multicast-port"
+              }, {
+                "name" : "port",
+                "value" : "55200",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@port"
+              } ]
+            },
+            "jgroups-udp-fd" : {
+              "_address" : "/socket-binding-group=*/socket-binding=*",
+              "attributes" : [ {
+                "name" : "interface",
+                "value" : "private",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@interface"
+              }, {
+                "name" : "port",
+                "value" : "54200",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@port"
+              } ]
+            },
+            "modcluster" : {
+              "_address" : "/socket-binding-group=*/socket-binding=*",
+              "attributes" : [ {
+                "name" : "multicast-address",
+                "value" : "${jboss.modcluster.multicast.address:224.0.1.105}",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@multicast-address"
+              }, {
+                "name" : "multicast-port",
+                "value" : "23364",
+                "_address" : "/socket-binding-group=*/socket-binding=*@@@multicast-port"
+              } ]
+            }
+          }
+        }
+      },
+      "subsystem" : {
+        "datasources" : {
+          "_address" : "/subsystem=datasources",
+          "data-source" : {
+            "ExampleDS" : {
+              "_address" : "/subsystem=datasources/data-source=*",
+              "attributes" : [ {
+                "name" : "connection-url",
+                "value" : "\"jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE\"",
+                "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+              }, {
+                "name" : "driver-name",
+                "value" : "h2",
+                "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+              }, {
+                "name" : "enabled",
+                "value" : "true",
+                "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+              }, {
+                "name" : "jndi-name",
+                "value" : "java:jboss/datasources/${env.EXAMPLE_DATASOURCE,env.OPENSHIFT_EXAMPLE_DATASOURCE:ExampleDS}",
+                "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+              }, {
+                "name" : "password",
+                "value" : "sa",
+                "_address" : "/subsystem=datasources/data-source=*@@@password"
+              }, {
+                "name" : "statistics-enabled",
+                "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+                "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+              }, {
+                "name" : "use-java-context",
+                "value" : "true",
+                "_address" : "/subsystem=datasources/data-source=*@@@use-java-context"
+              }, {
+                "name" : "user-name",
+                "value" : "sa",
+                "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+              } ]
+            }
+          }
+        },
+        "discovery" : {
+          "_address" : "/subsystem=discovery"
+        },
+        "distributable-ejb" : {
+          "_address" : "/subsystem=distributable-ejb",
+          "attributes" : [ {
+            "name" : "default-bean-management",
+            "value" : "default",
+            "_address" : "/subsystem=distributable-ejb@@@default-bean-management"
+          } ],
+          "client-mappings-registry" : {
+            "infinispan" : {
+              "_address" : "/subsystem=distributable-ejb/client-mappings-registry=infinispan",
+              "attributes" : [ {
+                "name" : "cache",
+                "value" : "client-mappings",
+                "_address" : "/subsystem=distributable-ejb/client-mappings-registry=infinispan@@@cache"
+              }, {
+                "name" : "cache-container",
+                "value" : "ejb",
+                "_address" : "/subsystem=distributable-ejb/client-mappings-registry=infinispan@@@cache-container"
+              } ]
+            }
+          },
+          "infinispan-bean-management" : {
+            "default" : {
+              "_address" : "/subsystem=distributable-ejb/infinispan-bean-management=*",
+              "attributes" : [ {
+                "name" : "cache-container",
+                "value" : "ejb",
+                "_address" : "/subsystem=distributable-ejb/infinispan-bean-management=*@@@cache-container"
+              }, {
+                "name" : "max-active-beans",
+                "value" : "10000",
+                "_address" : "/subsystem=distributable-ejb/infinispan-bean-management=*@@@max-active-beans"
+              } ]
+            }
+          },
+          "infinispan-timer-management" : {
+            "persistent" : {
+              "_address" : "/subsystem=distributable-ejb/infinispan-timer-management=*",
+              "attributes" : [ {
+                "name" : "cache",
+                "value" : "persistent",
+                "_address" : "/subsystem=distributable-ejb/infinispan-timer-management=*@@@cache"
+              }, {
+                "name" : "cache-container",
+                "value" : "ejb",
+                "_address" : "/subsystem=distributable-ejb/infinispan-timer-management=*@@@cache-container"
+              }, {
+                "name" : "max-active-timers",
+                "value" : "10000",
+                "_address" : "/subsystem=distributable-ejb/infinispan-timer-management=*@@@max-active-timers"
+              } ]
+            },
+            "transient" : {
+              "_address" : "/subsystem=distributable-ejb/infinispan-timer-management=*",
+              "attributes" : [ {
+                "name" : "cache",
+                "value" : "transient",
+                "_address" : "/subsystem=distributable-ejb/infinispan-timer-management=*@@@cache"
+              }, {
+                "name" : "cache-container",
+                "value" : "ejb",
+                "_address" : "/subsystem=distributable-ejb/infinispan-timer-management=*@@@cache-container"
+              }, {
+                "name" : "max-active-timers",
+                "value" : "10000",
+                "_address" : "/subsystem=distributable-ejb/infinispan-timer-management=*@@@max-active-timers"
+              } ]
+            }
+          }
+        },
+        "distributable-web" : {
+          "_address" : "/subsystem=distributable-web",
+          "attributes" : [ {
+            "name" : "default-session-management",
+            "value" : "default",
+            "_address" : "/subsystem=distributable-web@@@default-session-management"
+          }, {
+            "name" : "default-single-sign-on-management",
+            "value" : "default",
+            "_address" : "/subsystem=distributable-web@@@default-single-sign-on-management"
+          } ],
+          "infinispan-session-management" : {
+            "default" : {
+              "_address" : "/subsystem=distributable-web/infinispan-session-management=*",
+              "attributes" : [ {
+                "name" : "cache-container",
+                "value" : "web",
+                "_address" : "/subsystem=distributable-web/infinispan-session-management=*@@@cache-container"
+              }, {
+                "name" : "granularity",
+                "value" : "SESSION",
+                "_address" : "/subsystem=distributable-web/infinispan-session-management=*@@@granularity"
+              } ],
+              "affinity" : {
+                "primary-owner" : {
+                  "_address" : "/subsystem=distributable-web/infinispan-session-management=*/affinity=primary-owner"
+                }
+              }
+            }
+          },
+          "infinispan-single-sign-on-management" : {
+            "default" : {
+              "_address" : "/subsystem=distributable-web/infinispan-single-sign-on-management=*",
+              "attributes" : [ {
+                "name" : "cache",
+                "value" : "sso",
+                "_address" : "/subsystem=distributable-web/infinispan-single-sign-on-management=*@@@cache"
+              }, {
+                "name" : "cache-container",
+                "value" : "web",
+                "_address" : "/subsystem=distributable-web/infinispan-single-sign-on-management=*@@@cache-container"
+              } ]
+            }
+          },
+          "routing" : {
+            "infinispan" : {
+              "_address" : "/subsystem=distributable-web/routing=infinispan",
+              "attributes" : [ {
+                "name" : "cache",
+                "value" : "routing",
+                "_address" : "/subsystem=distributable-web/routing=infinispan@@@cache"
+              }, {
+                "name" : "cache-container",
+                "value" : "web",
+                "_address" : "/subsystem=distributable-web/routing=infinispan@@@cache-container"
+              } ]
+            }
+          }
+        },
+        "ee" : {
+          "_address" : "/subsystem=ee",
+          "attributes" : [ {
+            "name" : "spec-descriptor-property-replacement",
+            "value" : "true",
+            "_address" : "/subsystem=ee@@@spec-descriptor-property-replacement"
+          } ],
+          "service" : {
+            "default-bindings" : {
+              "_address" : "/subsystem=ee/service=default-bindings",
+              "attributes" : [ {
+                "name" : "datasource",
+                "value" : "java:jboss/datasources/${env.DEFAULT_DATASOURCE,\\ env.OPENSHIFT_DEFAULT_DATASOURCE,env.EXAMPLE_DATASOURCE,env.OPENSHIFT_EXAMPLE_DATASOURCE:ExampleDS}",
+                "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+              } ]
+            }
+          }
+        },
+        "ejb3" : {
+          "_address" : "/subsystem=ejb3",
+          "attributes" : [ {
+            "name" : "default-mdb-instance-pool",
+            "value" : "mdb-strict-max-pool",
+            "_address" : "/subsystem=ejb3@@@default-mdb-instance-pool"
+          }, {
+            "name" : "default-missing-method-permissions-deny-access",
+            "value" : "true",
+            "_address" : "/subsystem=ejb3@@@default-missing-method-permissions-deny-access"
+          }, {
+            "name" : "default-resource-adapter-name",
+            "value" : "${ejb.resource-adapter-name:activemq-ra.rar}",
+            "_address" : "/subsystem=ejb3@@@default-resource-adapter-name"
+          }, {
+            "name" : "default-security-domain",
+            "value" : "other",
+            "_address" : "/subsystem=ejb3@@@default-security-domain"
+          }, {
+            "name" : "default-sfsb-cache",
+            "value" : "distributable",
+            "_address" : "/subsystem=ejb3@@@default-sfsb-cache"
+          }, {
+            "name" : "default-sfsb-passivation-disabled-cache",
+            "value" : "simple",
+            "_address" : "/subsystem=ejb3@@@default-sfsb-passivation-disabled-cache"
+          }, {
+            "name" : "default-singleton-bean-access-timeout",
+            "value" : "5000",
+            "_address" : "/subsystem=ejb3@@@default-singleton-bean-access-timeout"
+          }, {
+            "name" : "default-slsb-instance-pool",
+            "value" : "slsb-strict-max-pool",
+            "_address" : "/subsystem=ejb3@@@default-slsb-instance-pool"
+          }, {
+            "name" : "default-stateful-bean-access-timeout",
+            "value" : "5000",
+            "_address" : "/subsystem=ejb3@@@default-stateful-bean-access-timeout"
+          }, {
+            "name" : "log-system-exceptions",
+            "value" : "true",
+            "_address" : "/subsystem=ejb3@@@log-system-exceptions"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.ejb3.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=ejb3@@@statistics-enabled"
+          } ],
+          "application-security-domain" : {
+            "other" : {
+              "_address" : "/subsystem=ejb3/application-security-domain=*",
+              "attributes" : [ {
+                "name" : "security-domain",
+                "value" : "ApplicationDomain",
+                "_address" : "/subsystem=ejb3/application-security-domain=*@@@security-domain"
+              } ]
+            }
+          },
+          "distributable-cache" : {
+            "distributable" : {
+              "_address" : "/subsystem=ejb3/distributable-cache=*"
+            }
+          },
+          "service" : {
+            "async" : {
+              "_address" : "/subsystem=ejb3/service=async",
+              "attributes" : [ {
+                "name" : "thread-pool-name",
+                "value" : "default",
+                "_address" : "/subsystem=ejb3/service=async@@@thread-pool-name"
+              } ]
+            },
+            "remote" : {
+              "_address" : "/subsystem=ejb3/service=remote",
+              "attributes" : [ {
+                "name" : "connectors",
+                "value" : "[http-remoting-connector]",
+                "_address" : "/subsystem=ejb3/service=remote@@@connectors"
+              }, {
+                "name" : "thread-pool-name",
+                "value" : "default",
+                "_address" : "/subsystem=ejb3/service=remote@@@thread-pool-name"
+              } ],
+              "channel-creation-options" : {
+                "MAX_OUTBOUND_MESSAGES" : {
+                  "_address" : "/subsystem=ejb3/service=remote/channel-creation-options=*",
+                  "attributes" : [ {
+                    "name" : "type",
+                    "value" : "remoting",
+                    "_address" : "/subsystem=ejb3/service=remote/channel-creation-options=*@@@type"
+                  }, {
+                    "name" : "value",
+                    "value" : "1234",
+                    "_address" : "/subsystem=ejb3/service=remote/channel-creation-options=*@@@value"
+                  } ]
+                }
+              }
+            }
+          },
+          "simple-cache" : {
+            "simple" : {
+              "_address" : "/subsystem=ejb3/simple-cache=*"
+            }
+          },
+          "strict-max-bean-instance-pool" : {
+            "mdb-strict-max-pool" : {
+              "_address" : "/subsystem=ejb3/strict-max-bean-instance-pool=*",
+              "attributes" : [ {
+                "name" : "derive-size",
+                "value" : "from-cpu-count",
+                "_address" : "/subsystem=ejb3/strict-max-bean-instance-pool=*@@@derive-size"
+              }, {
+                "name" : "timeout",
+                "value" : "5",
+                "_address" : "/subsystem=ejb3/strict-max-bean-instance-pool=*@@@timeout"
+              }, {
+                "name" : "timeout-unit",
+                "value" : "MINUTES",
+                "_address" : "/subsystem=ejb3/strict-max-bean-instance-pool=*@@@timeout-unit"
+              } ]
+            },
+            "slsb-strict-max-pool" : {
+              "_address" : "/subsystem=ejb3/strict-max-bean-instance-pool=*",
+              "attributes" : [ {
+                "name" : "derive-size",
+                "value" : "from-worker-pools",
+                "_address" : "/subsystem=ejb3/strict-max-bean-instance-pool=*@@@derive-size"
+              }, {
+                "name" : "timeout",
+                "value" : "5",
+                "_address" : "/subsystem=ejb3/strict-max-bean-instance-pool=*@@@timeout"
+              }, {
+                "name" : "timeout-unit",
+                "value" : "MINUTES",
+                "_address" : "/subsystem=ejb3/strict-max-bean-instance-pool=*@@@timeout-unit"
+              } ]
+            }
+          },
+          "thread-pool" : {
+            "default" : {
+              "_address" : "/subsystem=ejb3/thread-pool=*",
+              "attributes" : [ {
+                "name" : "keepalive-time",
+                "value" : "{ unit=SECONDS, time=60 }",
+                "_address" : "/subsystem=ejb3/thread-pool=*@@@keepalive-time"
+              }, {
+                "name" : "max-threads",
+                "value" : "10",
+                "_address" : "/subsystem=ejb3/thread-pool=*@@@max-threads"
+              } ]
+            }
+          }
+        },
+        "elytron" : {
+          "_address" : "/subsystem=elytron",
+          "http-authentication-factory" : {
+            "application-http-authentication" : {
+              "_address" : "/subsystem=elytron/http-authentication-factory=*",
+              "attributes" : [ {
+                "name" : "http-server-mechanism-factory",
+                "value" : "global",
+                "_address" : "/subsystem=elytron/http-authentication-factory=*@@@http-server-mechanism-factory"
+              }, {
+                "name" : "mechanism-configurations",
+                "value" : "[{mechanism-name=BASIC,mechanism-realm-configurations=[{realm-name=ApplicationRealm}]}]",
+                "_address" : "/subsystem=elytron/http-authentication-factory=*@@@mechanism-configurations"
+              }, {
+                "name" : "security-domain",
+                "value" : "ApplicationDomain",
+                "_address" : "/subsystem=elytron/http-authentication-factory=*@@@security-domain"
+              } ]
+            }
+          },
+          "permission-set" : {
+            "default-permissions" : {
+              "_address" : "/subsystem=elytron/permission-set=*",
+              "attributes" : [ {
+                "name" : "permissions",
+                "value" : "{ module=org.jboss.ejb-client, class-name=org.jboss.ejb.client.RemoteEJBPermission }",
+                "_address" : "/subsystem=elytron/permission-set=*@@@permissions"
+              } ]
+            }
+          }
+        },
+        "infinispan" : {
+          "_address" : "/subsystem=infinispan",
+          "cache-container" : {
+            "ejb" : {
+              "_address" : "/subsystem=infinispan/cache-container=*",
+              "attributes" : [ {
+                "name" : "aliases",
+                "value" : "[sfsb]",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@aliases"
+              }, {
+                "name" : "default-cache",
+                "value" : "dist",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@default-cache"
+              }, {
+                "name" : "marshaller",
+                "value" : "PROTOSTREAM",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@marshaller"
+              }, {
+                "name" : "modules",
+                "value" : "[org.wildfly.clustering.ejb.infinispan]",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@modules"
+              } ],
+              "distributed-cache" : {
+                "dist" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration@@@interval"
+                      } ]
+                    },
+                    "locking" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=locking",
+                      "attributes" : [ {
+                        "name" : "isolation",
+                        "value" : "REPEATABLE_READ",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=locking@@@isolation"
+                      } ]
+                    },
+                    "transaction" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=transaction",
+                      "attributes" : [ {
+                        "name" : "mode",
+                        "value" : "BATCH",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=transaction@@@mode"
+                      } ]
+                    }
+                  },
+                  "store" : {
+                    "file" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/store=file",
+                      "attributes" : [ {
+                        "name" : "passivation",
+                        "value" : "true",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/store=file@@@passivation"
+                      }, {
+                        "name" : "purge",
+                        "value" : "true",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/store=file@@@purge"
+                      } ]
+                    }
+                  }
+                },
+                "persistent" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration@@@interval"
+                      } ]
+                    },
+                    "locking" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=locking",
+                      "attributes" : [ {
+                        "name" : "isolation",
+                        "value" : "REPEATABLE_READ",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=locking@@@isolation"
+                      } ]
+                    },
+                    "transaction" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=transaction",
+                      "attributes" : [ {
+                        "name" : "mode",
+                        "value" : "BATCH",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=transaction@@@mode"
+                      } ]
+                    }
+                  },
+                  "store" : {
+                    "file" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/store=file",
+                      "attributes" : [ {
+                        "name" : "passivation",
+                        "value" : "true",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/store=file@@@passivation"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "local-cache" : {
+                "transient" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=expiration@@@interval"
+                      } ]
+                    },
+                    "locking" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=locking",
+                      "attributes" : [ {
+                        "name" : "isolation",
+                        "value" : "REPEATABLE_READ",
+                        "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=locking@@@isolation"
+                      } ]
+                    },
+                    "transaction" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=transaction",
+                      "attributes" : [ {
+                        "name" : "mode",
+                        "value" : "BATCH",
+                        "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=transaction@@@mode"
+                      } ]
+                    }
+                  },
+                  "store" : {
+                    "file" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/store=file",
+                      "attributes" : [ {
+                        "name" : "passivation",
+                        "value" : "true",
+                        "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/store=file@@@passivation"
+                      }, {
+                        "name" : "purge",
+                        "value" : "true",
+                        "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/store=file@@@purge"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "replicated-cache" : {
+                "client-mappings" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration@@@interval"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "transport" : {
+                "jgroups" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/transport=jgroups",
+                  "attributes" : [ {
+                    "name" : "lock-timeout",
+                    "value" : "60000",
+                    "_address" : "/subsystem=infinispan/cache-container=*/transport=jgroups@@@lock-timeout"
+                  } ]
+                }
+              }
+            },
+            "hibernate" : {
+              "_address" : "/subsystem=infinispan/cache-container=*",
+              "attributes" : [ {
+                "name" : "default-cache",
+                "value" : "local-query",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@default-cache"
+              }, {
+                "name" : "marshaller",
+                "value" : "JBOSS",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@marshaller"
+              }, {
+                "name" : "modules",
+                "value" : "[org.infinispan.hibernate-cache]",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@modules"
+              } ],
+              "invalidation-cache" : {
+                "entity" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/invalidation-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/invalidation-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "max-idle",
+                        "value" : "100000",
+                        "_address" : "/subsystem=infinispan/cache-container=*/invalidation-cache=*/component=expiration@@@max-idle"
+                      } ]
+                    }
+                  },
+                  "memory" : {
+                    "heap" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/invalidation-cache=*/memory=heap",
+                      "attributes" : [ {
+                        "name" : "size",
+                        "value" : "10000",
+                        "_address" : "/subsystem=infinispan/cache-container=*/invalidation-cache=*/memory=heap@@@size"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "local-cache" : {
+                "local-query" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "max-idle",
+                        "value" : "100000",
+                        "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=expiration@@@max-idle"
+                      } ]
+                    }
+                  },
+                  "memory" : {
+                    "heap" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/memory=heap",
+                      "attributes" : [ {
+                        "name" : "size",
+                        "value" : "10000",
+                        "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/memory=heap@@@size"
+                      } ]
+                    }
+                  }
+                },
+                "pending-puts" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "max-idle",
+                        "value" : "60000",
+                        "_address" : "/subsystem=infinispan/cache-container=*/local-cache=*/component=expiration@@@max-idle"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "replicated-cache" : {
+                "timestamps" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration@@@interval"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "transport" : {
+                "jgroups" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/transport=jgroups",
+                  "attributes" : [ {
+                    "name" : "lock-timeout",
+                    "value" : "60000",
+                    "_address" : "/subsystem=infinispan/cache-container=*/transport=jgroups@@@lock-timeout"
+                  } ]
+                }
+              }
+            },
+            "server" : {
+              "_address" : "/subsystem=infinispan/cache-container=*",
+              "attributes" : [ {
+                "name" : "aliases",
+                "value" : "[singleton, cluster]",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@aliases"
+              }, {
+                "name" : "default-cache",
+                "value" : "default",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@default-cache"
+              }, {
+                "name" : "marshaller",
+                "value" : "PROTOSTREAM",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@marshaller"
+              }, {
+                "name" : "modules",
+                "value" : "[org.wildfly.clustering.singleton.server]",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@modules"
+              } ],
+              "replicated-cache" : {
+                "default" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration@@@interval"
+                      } ]
+                    },
+                    "transaction" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=transaction",
+                      "attributes" : [ {
+                        "name" : "mode",
+                        "value" : "BATCH",
+                        "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=transaction@@@mode"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "transport" : {
+                "jgroups" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/transport=jgroups",
+                  "attributes" : [ {
+                    "name" : "lock-timeout",
+                    "value" : "60000",
+                    "_address" : "/subsystem=infinispan/cache-container=*/transport=jgroups@@@lock-timeout"
+                  } ]
+                }
+              }
+            },
+            "web" : {
+              "_address" : "/subsystem=infinispan/cache-container=*",
+              "attributes" : [ {
+                "name" : "default-cache",
+                "value" : "sessions",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@default-cache"
+              }, {
+                "name" : "marshaller",
+                "value" : "PROTOSTREAM",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@marshaller"
+              }, {
+                "name" : "modules",
+                "value" : "[org.wildfly.clustering.session.infinispan.embedded]",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@modules"
+              } ],
+              "distributed-cache" : {
+                "dist" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration@@@interval"
+                      } ]
+                    },
+                    "locking" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=locking",
+                      "attributes" : [ {
+                        "name" : "isolation",
+                        "value" : "REPEATABLE_READ",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=locking@@@isolation"
+                      } ]
+                    },
+                    "transaction" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=transaction",
+                      "attributes" : [ {
+                        "name" : "mode",
+                        "value" : "BATCH",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=transaction@@@mode"
+                      } ]
+                    }
+                  },
+                  "store" : {
+                    "file" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/store=file",
+                      "attributes" : [ {
+                        "name" : "passivation",
+                        "value" : "true",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/store=file@@@passivation"
+                      }, {
+                        "name" : "purge",
+                        "value" : "true",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/store=file@@@purge"
+                      } ]
+                    }
+                  }
+                },
+                "sessions" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/distributed-cache=*/component=expiration@@@interval"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "replicated-cache" : {
+                "routing" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration@@@interval"
+                      } ]
+                    }
+                  }
+                },
+                "sso" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*",
+                  "component" : {
+                    "expiration" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration",
+                      "attributes" : [ {
+                        "name" : "interval",
+                        "value" : "0",
+                        "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=expiration@@@interval"
+                      } ]
+                    },
+                    "locking" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=locking",
+                      "attributes" : [ {
+                        "name" : "isolation",
+                        "value" : "REPEATABLE_READ",
+                        "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=locking@@@isolation"
+                      } ]
+                    },
+                    "transaction" : {
+                      "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=transaction",
+                      "attributes" : [ {
+                        "name" : "mode",
+                        "value" : "BATCH",
+                        "_address" : "/subsystem=infinispan/cache-container=*/replicated-cache=*/component=transaction@@@mode"
+                      } ]
+                    }
+                  }
+                }
+              },
+              "transport" : {
+                "jgroups" : {
+                  "_address" : "/subsystem=infinispan/cache-container=*/transport=jgroups",
+                  "attributes" : [ {
+                    "name" : "lock-timeout",
+                    "value" : "60000",
+                    "_address" : "/subsystem=infinispan/cache-container=*/transport=jgroups@@@lock-timeout"
+                  } ]
+                }
+              }
+            }
+          }
+        },
+        "jgroups" : {
+          "_address" : "/subsystem=jgroups",
+          "attributes" : [ {
+            "name" : "default-channel",
+            "value" : "ee",
+            "_address" : "/subsystem=jgroups@@@default-channel"
+          } ],
+          "stack" : {
+            "tcp" : {
+              "_address" : "/subsystem=jgroups/stack=*",
+              "protocol" : {
+                "FD_ALL3" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "FRAG4" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "MERGE3" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "MFC" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "RED" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "UFC" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "UNICAST3" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "VERIFY_SUSPECT2" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "pbcast.GMS" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "pbcast.NAKACK2" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "pbcast.STABLE" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                }
+              },
+              "transport" : {
+                "TCP" : {
+                  "_address" : "/subsystem=jgroups/stack=*/transport=*",
+                  "attributes" : [ {
+                    "name" : "socket-binding",
+                    "value" : "jgroups-tcp",
+                    "_address" : "/subsystem=jgroups/stack=*/transport=*@@@socket-binding"
+                  } ]
+                }
+              }
+            },
+            "udp" : {
+              "_address" : "/subsystem=jgroups/stack=*",
+              "protocol" : {
+                "FD_ALL3" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "FD_SOCK2" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=FD_SOCK2",
+                  "attributes" : [ {
+                    "name" : "socket-binding",
+                    "value" : "jgroups-udp-fd",
+                    "_address" : "/subsystem=jgroups/stack=*/protocol=FD_SOCK2@@@socket-binding"
+                  } ]
+                },
+                "FRAG4" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "MERGE3" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "MFC" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "RED" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "UFC" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "UNICAST3" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "VERIFY_SUSPECT2" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "pbcast.GMS" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "pbcast.NAKACK2" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                },
+                "pbcast.STABLE" : {
+                  "_address" : "/subsystem=jgroups/stack=*/protocol=*"
+                }
+              },
+              "transport" : {
+                "UDP" : {
+                  "_address" : "/subsystem=jgroups/stack=*/transport=*",
+                  "attributes" : [ {
+                    "name" : "socket-binding",
+                    "value" : "jgroups-udp",
+                    "_address" : "/subsystem=jgroups/stack=*/transport=*@@@socket-binding"
+                  } ]
+                }
+              }
+            }
+          }
+        },
+        "jpa" : {
+          "_address" : "/subsystem=jpa",
+          "attributes" : [ {
+            "name" : "default-extended-persistence-inheritance",
+            "value" : "DEEP",
+            "_address" : "/subsystem=jpa@@@default-extended-persistence-inheritance"
+          } ]
+        },
+        "naming" : {
+          "_address" : "/subsystem=naming",
+          "service" : {
+            "remote-naming" : {
+              "_address" : "/subsystem=naming/service=remote-naming"
+            }
+          }
+        },
+        "singleton" : {
+          "_address" : "/subsystem=singleton",
+          "attributes" : [ {
+            "name" : "default",
+            "value" : "default",
+            "_address" : "/subsystem=singleton@@@default"
+          } ],
+          "singleton-policy" : {
+            "default" : {
+              "_address" : "/subsystem=singleton/singleton-policy=*",
+              "attributes" : [ {
+                "name" : "cache-container",
+                "value" : "server",
+                "_address" : "/subsystem=singleton/singleton-policy=*@@@cache-container"
+              } ],
+              "election-policy" : {
+                "simple" : {
+                  "_address" : "/subsystem=singleton/singleton-policy=*/election-policy=simple"
+                }
+              }
+            }
+          }
+        },
+        "undertow" : {
+          "_address" : "/subsystem=undertow",
+          "attributes" : [ {
+            "name" : "default-security-domain",
+            "value" : "other",
+            "_address" : "/subsystem=undertow@@@default-security-domain"
+          } ],
+          "application-security-domain" : {
+            "other" : {
+              "_address" : "/subsystem=undertow/application-security-domain=*",
+              "attributes" : [ {
+                "name" : "security-domain",
+                "value" : "ApplicationDomain",
+                "_address" : "/subsystem=undertow/application-security-domain=*@@@security-domain"
+              } ]
+            }
+          },
+          "configuration" : {
+            "handler" : {
+              "_address" : "/subsystem=undertow/configuration=handler",
+              "file" : {
+                "welcome-content" : {
+                  "_address" : "/subsystem=undertow/configuration=handler/file=*",
+                  "attributes" : [ {
+                    "name" : "path",
+                    "value" : "${jboss.home.dir}/welcome-content",
+                    "_address" : "/subsystem=undertow/configuration=handler/file=*@@@path"
+                  } ]
+                }
+              }
+            }
+          },
+          "server" : {
+            "default-server" : {
+              "_address" : "/subsystem=undertow/server=*",
+              "host" : {
+                "default-host" : {
+                  "_address" : "/subsystem=undertow/server=*/host=*",
+                  "attributes" : [ {
+                    "name" : "alias",
+                    "value" : "[localhost]",
+                    "_address" : "/subsystem=undertow/server=*/host=*@@@alias"
+                  } ],
+                  "location" : {
+                    "/" : {
+                      "_address" : "/subsystem=undertow/server=*/host=*/location=*",
+                      "attributes" : [ {
+                        "name" : "handler",
+                        "value" : "welcome-content",
+                        "_address" : "/subsystem=undertow/server=*/host=*/location=*@@@handler"
+                      } ]
+                    }
+                  },
+                  "setting" : {
+                    "http-invoker" : {
+                      "_address" : "/subsystem=undertow/server=*/host=*/setting=http-invoker",
+                      "attributes" : [ {
+                        "name" : "http-authentication-factory",
+                        "value" : "application-http-authentication",
+                        "_address" : "/subsystem=undertow/server=*/host=*/setting=http-invoker@@@http-authentication-factory"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "webservices" : {
+          "_address" : "/subsystem=webservices",
+          "attributes" : [ {
+            "name" : "modify-wsdl-address",
+            "value" : "true",
+            "_address" : "/subsystem=webservices@@@modify-wsdl-address"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.webservices.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=webservices@@@statistics-enabled"
+          }, {
+            "name" : "wsdl-host",
+            "value" : "jbossws.undefined.host",
+            "_address" : "/subsystem=webservices@@@wsdl-host"
+          } ],
+          "client-config" : {
+            "Standard-Client-Config" : {
+              "_address" : "/subsystem=webservices/client-config=*"
+            }
+          },
+          "endpoint-config" : {
+            "Recording-Endpoint-Config" : {
+              "_address" : "/subsystem=webservices/endpoint-config=*",
+              "pre-handler-chain" : {
+                "recording-handlers" : {
+                  "_address" : "/subsystem=webservices/endpoint-config=*/pre-handler-chain=*",
+                  "attributes" : [ {
+                    "name" : "protocol-bindings",
+                    "value" : "##SOAP11_HTTP ##SOAP11_HTTP_MTOM ##SOAP12_HTTP ##SOAP12_HTTP_MTOM",
+                    "_address" : "/subsystem=webservices/endpoint-config=*/pre-handler-chain=*@@@protocol-bindings"
+                  } ],
+                  "handler" : {
+                    "RecordingHandler" : {
+                      "_address" : "/subsystem=webservices/endpoint-config=*/pre-handler-chain=*/handler=*",
+                      "attributes" : [ {
+                        "name" : "class",
+                        "value" : "org.jboss.ws.common.invocation.RecordingServerHandler",
+                        "_address" : "/subsystem=webservices/endpoint-config=*/pre-handler-chain=*/handler=*@@@class"
+                      } ]
+                    }
+                  }
+                }
+              }
+            },
+            "Standard-Endpoint-Config" : {
+              "_address" : "/subsystem=webservices/endpoint-config=*"
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "A default configuration for the cloud. Note that all JBoss Modules modules are provisioned."
+    } ],
+    "configurations" : [ {
+      "_address" : "/interface=*@@@inet-address",
+      "attribute" : "inet-address",
+      "system-properties" : [ "jboss.bind.address.private" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/socket-binding-group=*/socket-binding=*@@@multicast-address",
+      "attribute" : "multicast-address",
+      "system-properties" : [ "jboss.default.multicast.address", "jboss.modcluster.multicast.address" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@jndi-name",
+      "attribute" : "jndi-name",
+      "system-properties" : [ ],
+      "environment-variables" : [ "EXAMPLE_DATASOURCE", "OPENSHIFT_EXAMPLE_DATASOURCE" ]
+    }, {
+      "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.datasources.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=ee/service=default-bindings@@@datasource",
+      "attribute" : "datasource",
+      "system-properties" : [ "\\env.OPENSHIFT_DEFAULT_DATASOURCE" ],
+      "environment-variables" : [ "DEFAULT_DATASOURCE", "EXAMPLE_DATASOURCE", "OPENSHIFT_EXAMPLE_DATASOURCE" ]
+    }, {
+      "_address" : "/subsystem=ejb3@@@default-resource-adapter-name",
+      "attribute" : "default-resource-adapter-name",
+      "system-properties" : [ "ejb.resource-adapter-name" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=ejb3@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.ejb3.statistics-enabled", "wildfly.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=undertow/configuration=handler/file=*@@@path",
+      "attribute" : "path",
+      "system-properties" : [ "jboss.home.dir" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=webservices@@@statistics-enabled",
+      "attribute" : "statistics-enabled",
+      "system-properties" : [ "wildfly.statistics-enabled", "wildfly.webservices.statistics-enabled" ],
+      "environment-variables" : [ ]
+    }, {
+      "_address" : "/subsystem=webservices@@@wsdl-host",
+      "attribute" : "wsdl-host",
+      "system-properties" : [ "jboss.bind.address" ],
+      "environment-variables" : [ ]
+    } ],
+    "packages" : [ "jakarta.json.api", "modules.all", "org.glassfish.javax.el", "org.hibernate", "org.hibernate.envers", "org.hibernate.search.mapper.orm", "org.jboss.as.clustering.infinispan", "org.jboss.as.clustering.jgroups", "org.jboss.as.ee", "org.jboss.as.ejb3", "org.jboss.as.jpa", "org.jboss.as.naming", "org.jboss.as.webservices", "org.jboss.invocation", "org.jboss.remoting", "org.wildfly.extension.clustering.ejb", "org.wildfly.extension.clustering.server", "org.wildfly.extension.clustering.singleton", "org.wildfly.extension.clustering.web", "org.wildfly.extension.discovery", "org.wildfly.extension.undertow", "org.wildfly.naming" ]
+  }, {
+    "name" : "jpa-distributed",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "infinispan" : {
+          "_address" : "/subsystem=infinispan",
+          "cache-container" : {
+            "hibernate" : {
+              "_address" : "/subsystem=infinispan/cache-container=*",
+              "attributes" : [ {
+                "name" : "default-cache",
+                "value" : "local-query",
+                "_address" : "/subsystem=infinispan/cache-container=*@@@default-cache"
+              } ]
+            }
+          }
+        },
+        "jgroups" : {
+          "_address" : "/subsystem=jgroups",
+          "channel" : {
+            "ee" : {
+              "_address" : "/subsystem=jgroups/channel=*",
+              "attributes" : [ {
+                "name" : "stack",
+                "value" : "tcp",
+                "_address" : "/subsystem=jgroups/channel=*@@@stack"
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.configuration",
+      "value" : "https://raw.githubusercontent.com/wildfly/wildfly-cekit-modules/main/jboss/container/wildfly/launch/jgroups/module.yaml"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for JPA with a distributed second level cache, adjusted for the cloud"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.jboss.as.clustering.infinispan", "org.wildfly.extension.clustering.server" ]
+  }, {
+    "name" : "embedded-activemq",
+    "stability" : "default",
+    "dependencies" : [ ],
+    "managementModel" : {
+      "subsystem" : {
+        "messaging-activemq" : {
+          "_address" : "/subsystem=messaging-activemq",
+          "server" : {
+            "default" : {
+              "_address" : "/subsystem=messaging-activemq/server=*",
+              "connection-factory" : {
+                "RemoteConnectionFactory" : {
+                  "_address" : "/subsystem=messaging-activemq/server=*/connection-factory=*",
+                  "attributes" : [ {
+                    "name" : "reconnect-attempts",
+                    "value" : "-1",
+                    "_address" : "/subsystem=messaging-activemq/server=*/connection-factory=*@@@reconnect-attempts"
+                  } ]
+                }
+              },
+              "http-connector" : {
+                "http-connector" : {
+                  "_address" : "/subsystem=messaging-activemq/server=*/http-connector=*",
+                  "attributes" : [ {
+                    "name" : "endpoint",
+                    "value" : "http-acceptor",
+                    "_address" : "/subsystem=messaging-activemq/server=*/http-connector=*@@@endpoint"
+                  }, {
+                    "name" : "socket-binding",
+                    "value" : "http-messaging",
+                    "_address" : "/subsystem=messaging-activemq/server=*/http-connector=*@@@socket-binding"
+                  } ]
+                },
+                "http-connector-throughput" : {
+                  "_address" : "/subsystem=messaging-activemq/server=*/http-connector=*",
+                  "attributes" : [ {
+                    "name" : "endpoint",
+                    "value" : "http-acceptor-throughput",
+                    "_address" : "/subsystem=messaging-activemq/server=*/http-connector=*@@@endpoint"
+                  }, {
+                    "name" : "params",
+                    "value" : "{batch-delay=50}",
+                    "_address" : "/subsystem=messaging-activemq/server=*/http-connector=*@@@params"
+                  }, {
+                    "name" : "socket-binding",
+                    "value" : "http-messaging",
+                    "_address" : "/subsystem=messaging-activemq/server=*/http-connector=*@@@socket-binding"
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.category",
+      "value" : "Cloud"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for an embedded Apache Activemq Artemis Jakarta Messaging broker, adjusted for the cloud"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.apache.activemq.artemis", "org.apache.activemq.artemis.journal", "org.wildfly.extension.messaging-activemq" ]
+  } ]
+}

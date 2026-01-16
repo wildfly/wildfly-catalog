@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Log Message Reference</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <h1>Log and Exception Message Code Reference</h1>
+
+  <h2 id="SRGQL">SRGQL&nbsp;<a href="#SRGQL" class="anchor-link">§</a></h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Code</th>
+      <th>Level</th>
+      <th>Return Type</th>
+      <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr id="SRGQL010000">
+        <td><a href="#SRGQL010000">SRGQL010000</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Schema is null, or it has no operations. Not bootstrapping SmallRye GraphQL</td>
+      </tr>
+      <tr id="SRGQL010001">
+        <td><a href="#SRGQL010001">SRGQL010001</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>No GraphQL methods found. Try annotating your methods with @Query or @Mutation</td>
+      </tr>
+      <tr id="SRGQL010002">
+        <td><a href="#SRGQL010002">SRGQL010002</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Operation [%s] also exist as a batch operation - ignoring the non-batch operation</td>
+      </tr>
+      <tr id="SRGQL011000">
+        <td><a href="#SRGQL011000">SRGQL011000</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>We got a String as input for Variables, not sure what to do with that [%s]</td>
+      </tr>
+      <tr id="SRGQL011001">
+        <td><a href="#SRGQL011001">SRGQL011001</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Retrieved from cache: %s</td>
+      </tr>
+      <tr id="SRGQL011002">
+        <td><a href="#SRGQL011002">SRGQL011002</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Added to cache: %s</td>
+      </tr>
+      <tr id="SRGQL011003">
+        <td><a href="#SRGQL011003">SRGQL011003</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Cannot use the no-arg constructor to build instances of type %s</td>
+      </tr>
+      <tr id="SRGQL011004">
+        <td><a href="#SRGQL011004">SRGQL011004</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Returning argument as is, because we did not know how to handle it [%s] on method [%s]</td>
+      </tr>
+      <tr id="SRGQL011005">
+        <td><a href="#SRGQL011005">SRGQL011005</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Payload In [%s]</td>
+      </tr>
+      <tr id="SRGQL011006">
+        <td><a href="#SRGQL011006">SRGQL011006</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Payload Out [%s]</td>
+      </tr>
+      <tr id="SRGQL012000">
+        <td><a href="#SRGQL012000">SRGQL012000</a></td>
+        <td>ERROR</td>
+        <td>void</td>
+        <td>Data Fetching Error</td>
+      </tr>
+      <tr id="SRGQL013001">
+        <td><a href="#SRGQL013001">SRGQL013001</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Using %s lookup service for metrics</td>
+      </tr>
+      <tr id="SRGQL013002">
+        <td><a href="#SRGQL013002">SRGQL013002</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Using %s lookup service for tracing</td>
+      </tr>
+      <tr id="SRGQL013003">
+        <td><a href="#SRGQL013003">SRGQL013003</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Using %s service for object lookups</td>
+      </tr>
+      <tr id="SRGQL013004">
+        <td><a href="#SRGQL013004">SRGQL013004</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Using %s service for class loading</td>
+      </tr>
+      <tr id="SRGQL014000">
+        <td><a href="#SRGQL014000">SRGQL014000</a></td>
+        <td>ERROR</td>
+        <td>void</td>
+        <td>Unable to transform data</td>
+      </tr>
+      <tr id="SRGQL015000">
+        <td><a href="#SRGQL015000">SRGQL015000</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Using %s service for context propagation</td>
+      </tr>
+      <tr id="SRGQL016000">
+        <td><a href="#SRGQL016000">SRGQL016000</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Enable GraphQL Federation</td>
+      </tr>
+      <tr id="SRGQL020000">
+        <td><a href="#SRGQL020000">SRGQL020000</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Loaded index from [%s]</td>
+      </tr>
+      <tr id="SRGQL020001">
+        <td><a href="#SRGQL020001">SRGQL020001</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>No jandex index available, let's generate one...</td>
+      </tr>
+      <tr id="SRGQL020002">
+        <td><a href="#SRGQL020002">SRGQL020002</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Processing file [%s]</td>
+      </tr>
+      <tr id="SRGQL020003">
+        <td><a href="#SRGQL020003">SRGQL020003</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Cannot process file [%s]</td>
+      </tr>
+      <tr id="SRGQL020004">
+        <td><a href="#SRGQL020004">SRGQL020004</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Cannot create URL from a JAR/WAR file included in the classpath</td>
+      </tr>
+      <tr id="SRGQL020005">
+        <td><a href="#SRGQL020005">SRGQL020005</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Ignoring url [%s] as it's not a jar, war or folder</td>
+      </tr>
+      <tr id="SRGQL020006">
+        <td><a href="#SRGQL020006">SRGQL020006</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Could not process url [%s] while indexing files</td>
+      </tr>
+      <tr id="SRGQL020007">
+        <td><a href="#SRGQL020007">SRGQL020007</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>SmallRye GraphQL initialized</td>
+      </tr>
+      <tr id="SRGQL020008">
+        <td><a href="#SRGQL020008">SRGQL020008</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>SmallRye GraphQL destroyed</td>
+      </tr>
+      <tr id="SRGQL021000">
+        <td><a href="#SRGQL021000">SRGQL021000</a></td>
+        <td>ERROR</td>
+        <td>void</td>
+        <td>IO Exception occurred</td>
+      </tr>
+      <tr id="SRGQL021001">
+        <td><a href="#SRGQL021001">SRGQL021001</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>JSON input: %s</td>
+      </tr>
+      <tr id="SRGQL021002">
+        <td><a href="#SRGQL021002">SRGQL021002</a></td>
+        <td>DEBUG</td>
+        <td>void</td>
+        <td>Unable to log reader %s</td>
+      </tr>
+      <tr id="SRGQL030000">
+        <td><a href="#SRGQL030000">SRGQL030000</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Received response containing no data</td>
+      </tr>
+      <tr id="SRGQL030001">
+        <td><a href="#SRGQL030001">SRGQL030001</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>The runtime did not set the `apis` field in `GraphQLClientsConfiguration`, so the bean is unable to locate configurations of typesafe clients</td>
+      </tr>
+      <tr id="SRGQL030002">
+        <td><a href="#SRGQL030002">SRGQL030002</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Unsupported path segment type %s (expecting only String or Number), ignoring</td>
+      </tr>
+      <tr id="SRGQL030003">
+        <td><a href="#SRGQL030003">SRGQL030003</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Unsupported extension type %s, ignoring</td>
+      </tr>
+    </tbody>
+  </table>
+  <h2 id="WFLYGRAPHQL">WFLYGRAPHQL&nbsp;<a href="#WFLYGRAPHQL" class="anchor-link">§</a></h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Code</th>
+      <th>Level</th>
+      <th>Return Type</th>
+      <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr id="WFLYGRAPHQL0001">
+        <td><a href="#WFLYGRAPHQL0001">WFLYGRAPHQL0001</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Activating Eclipse MicroProfile GraphQL Subsystem</td>
+      </tr>
+      <tr id="WFLYGRAPHQL0002">
+        <td><a href="#WFLYGRAPHQL0002">WFLYGRAPHQL0002</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Activating GraphQL for deployment %s</td>
+      </tr>
+      <tr id="WFLYGRAPHQL0003">
+        <td><a href="#WFLYGRAPHQL0003">WFLYGRAPHQL0003</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Found %s queries and %s mutations in the API</td>
+      </tr>
+      <tr id="WFLYGRAPHQL0004">
+        <td><a href="#WFLYGRAPHQL0004">WFLYGRAPHQL0004</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Could not update %s because the contents are not as expected</td>
+      </tr>
+      <tr id="WFLYGRAPHQL0100">
+        <td><a href="#WFLYGRAPHQL0100">WFLYGRAPHQL0100</a></td>
+        <td></td>
+        <td>org.jboss.as.server.deployment.DeploymentUnitProcessingException</td>
+        <td>Multiple GraphQLApi annotations were found</td>
+      </tr>
+    </tbody>
+  </table>
+  <h2 id="WFLYGRAPHQLCLIENT">WFLYGRAPHQLCLIENT&nbsp;<a href="#WFLYGRAPHQLCLIENT" class="anchor-link">§</a></h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Code</th>
+      <th>Level</th>
+      <th>Return Type</th>
+      <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr id="WFLYGRAPHQLCLIENT00001">
+        <td><a href="#WFLYGRAPHQLCLIENT00001">WFLYGRAPHQLCLIENT00001</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Activating Eclipse MicroProfile GraphQL Client Subsystem</td>
+      </tr>
+      <tr id="WFLYGRAPHQLCLIENT00002">
+        <td><a href="#WFLYGRAPHQLCLIENT00002">WFLYGRAPHQLCLIENT00002</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Activating GraphQL Client for deployment %s</td>
+      </tr>
+      <tr id="WFLYGRAPHQLCLIENT00003">
+        <td><a href="#WFLYGRAPHQLCLIENT00003">WFLYGRAPHQLCLIENT00003</a></td>
+        <td>INFO</td>
+        <td>void</td>
+        <td>Found %s queries and %s mutations in the API</td>
+      </tr>
+      <tr id="WFLYGRAPHQLCLIENT00004">
+        <td><a href="#WFLYGRAPHQLCLIENT00004">WFLYGRAPHQLCLIENT00004</a></td>
+        <td>WARN</td>
+        <td>void</td>
+        <td>Could not update %s because the contents are not as expected</td>
+      </tr>
+      <tr id="WFLYGRAPHQLCLIENT00100">
+        <td><a href="#WFLYGRAPHQLCLIENT00100">WFLYGRAPHQLCLIENT00100</a></td>
+        <td></td>
+        <td>org.jboss.as.server.deployment.DeploymentUnitProcessingException</td>
+        <td>Multiple GraphQLClientApi annotations were found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

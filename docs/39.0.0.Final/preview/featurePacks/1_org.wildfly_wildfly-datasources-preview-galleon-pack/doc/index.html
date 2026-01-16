@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Documentation for Drivers and datasources for WildFly EE9</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <script src="scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1>Documentation for Drivers and datasources for WildFly EE9</h1>
+  <p>Drivers and datasources for WildFly EE9</p>
+  <h2 id="coords">Coordinates&nbsp;<a href="#coords" class="anchor-link">§</a></h2>
+  <div class="tabs">
+    <ul class="tab-list" role="tablist">
+      <li><button class="tab-button active" onclick="switchTab(event, 'maven-tab')" role="tab" aria-selected="true" aria-controls="maven-tab">Maven Dependency</button></li>
+      <li><button class="tab-button" onclick="switchTab(event, 'feature-pack-tab')" role="tab" aria-selected="false" aria-controls="feature-pack-tab">Feature Pack Location</button></li>
+    </ul>
+
+    <div id="maven-tab" class="tab-content active" role="tabpanel">
+      <div class="code-block-container">
+        <pre>
+            <code id="maven-dependency" class="language-xml">
+&lt;dependency>
+  &lt;groupId>org.wildfly&lt;/groupId>
+  &lt;artifactId>wildfly-datasources-preview-galleon-pack&lt;/artifactId>
+  &lt;version>11.2.0.Final&lt;/version>
+&lt;/dependency>
+            </code>
+        </pre>
+        <button class="copy-btn" onclick="copyToClipboard('maven-dependency')" title="Copy to clipboard">📋</button>
+      </div>
+    </div>
+
+    <div id="feature-pack-tab" class="tab-content" role="tabpanel">
+      <div class="code-block-container">
+        <pre>
+            <code id="feature-pack-location" class="language-xml">
+&lt;feature-pack>
+    &lt;location>org.wildfly:wildfly-datasources-preview-galleon-pack:11.2.0.Final&lt;/location>
+&lt;/feature-pack>
+            </code>
+        </pre>
+        <button class="copy-btn" onclick="copyToClipboard('feature-pack-location')" title="Copy to clipboard">📋</button>
+      </div>
+    </div>
+  </div>
+
+
+  <h2 id="layers">Provided Layers&nbsp;<a href="#layers" class="anchor-link">§</a></h2>
+  <div class="table-of-contents">
+    <ul>
+      <li><a href="#layer-db2-datasource">db2-datasource</a></li>
+      <li><a href="#layer-db2-default-datasource">db2-default-datasource</a></li>
+      <li><a href="#layer-db2-driver">db2-driver</a></li>
+      <li><a href="#layer-h2database-datasource">h2database-datasource</a></li>
+      <li><a href="#layer-h2database-default-datasource">h2database-default-datasource</a></li>
+      <li><a href="#layer-h2database-driver">h2database-driver</a></li>
+      <li><a href="#layer-mariadb-datasource">mariadb-datasource</a></li>
+      <li><a href="#layer-mariadb-default-datasource">mariadb-default-datasource</a></li>
+      <li><a href="#layer-mariadb-driver">mariadb-driver</a></li>
+      <li><a href="#layer-mssqlserver-datasource">mssqlserver-datasource</a></li>
+      <li><a href="#layer-mssqlserver-default-datasource">mssqlserver-default-datasource</a></li>
+      <li><a href="#layer-mssqlserver-driver">mssqlserver-driver</a></li>
+      <li><a href="#layer-mysql-datasource">mysql-datasource</a></li>
+      <li><a href="#layer-mysql-default-datasource">mysql-default-datasource</a></li>
+      <li><a href="#layer-mysql-driver">mysql-driver</a></li>
+      <li><a href="#layer-oracle-datasource">oracle-datasource</a></li>
+      <li><a href="#layer-oracle-default-datasource">oracle-default-datasource</a></li>
+      <li><a href="#layer-oracle-driver">oracle-driver</a></li>
+      <li><a href="#layer-postgresql-datasource">postgresql-datasource</a></li>
+      <li><a href="#layer-postgresql-default-datasource">postgresql-default-datasource</a></li>
+      <li><a href="#layer-postgresql-driver">postgresql-driver</a></li>
+    </ul>
+  </div>
+  <h3 id="layer-db2-datasource">db2-datasource&nbsp;<a href="#layer-db2-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "data-source" : {
+        "DB2DS" : {
+          "_address" : "/subsystem=datasources/data-source=*",
+          "attributes" : [ {
+            "name" : "background-validation",
+            "value" : "${org.wildfly.datasources.db2.background-validation,env.DB2_BACKGROUND_VALIDATION:false}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+          }, {
+            "name" : "background-validation-millis",
+            "value" : "${org.wildfly.datasources.db2.background-validation-millis,env.DB2_BACKGROUND_VALIDATION_MILLIS:10000}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+          }, {
+            "name" : "connection-url",
+            "value" : "${org.wildfly.datasources.db2.connection-url,env.DB2_URL:jdbc:db2://${org.wildfly.datasources.db2.host,env.DB2_SERVICE_HOST,env.OPENSHIFT_DB2_DB_HOST,env.DB2_HOST:localhost}:${org.wildfly.datasources.db2.port,env.DB2_SERVICE_PORT,env.OPENSHIFT_DB2_DB_PORT,env.DB2_PORT:50000}/${org.wildfly.datasources.db2.database,env.DB2_DATABASE,env.OPENSHIFT_DB2_DB_NAME}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+          }, {
+            "name" : "driver-name",
+            "value" : "db2",
+            "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+          }, {
+            "name" : "enabled",
+            "value" : "${org.wildfly.datasources.db2.enabled, env.DB2_ENABLED:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+          }, {
+            "name" : "exception-sorter-class-name",
+            "value" : "${org.wildfly.datasources.db2.exception-sorter-class-name, env.DB2_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.db2.DB2ExceptionSorter}",
+            "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+          }, {
+            "name" : "flush-strategy",
+            "value" : "${org.wildfly.datasources.db2.flush-strategy,env.DB2_FLUSH_STRATEGY:FailingConnectionOnly}",
+            "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+          }, {
+            "name" : "idle-timeout-minutes",
+            "value" : "${org.wildfly.datasources.db2.idle-timeout-minutes,env.DB2_IDLE_TIMEOUT_MINUTES:30}",
+            "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+          }, {
+            "name" : "jndi-name",
+            "value" : "${org.wildfly.datasources.db2.jndi-name,env.DB2_JNDI:java:jboss/datasources/${org.wildfly.datasources.db2.datasource, env.DB2_DATASOURCE,env.OPENSHIFT_DB2_DATASOURCE:DB2DS}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+          }, {
+            "name" : "jta",
+            "value" : "${org.wildfly.datasources.db2.jta,env.DB2_JTA:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jta"
+          }, {
+            "name" : "max-pool-size",
+            "value" : "${org.wildfly.datasources.db2.max-pool-size,env.DB2_MAX_POOL_SIZE:20}",
+            "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+          }, {
+            "name" : "min-pool-size",
+            "value" : "${org.wildfly.datasources.db2.min-pool-size,env.DB2_MIN_POOL_SIZE:0}",
+            "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+          }, {
+            "name" : "password",
+            "value" : "${org.wildfly.datasources.db2.password,env.DB2_PASSWORD,env.OPENSHIFT_DB2_DB_PASSWORD}",
+            "_address" : "/subsystem=datasources/data-source=*@@@password"
+          }, {
+            "name" : "stale-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.db2.stale-connection-checker-class-name,env.DB2_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+          }, {
+            "name" : "transaction-isolation",
+            "value" : "${org.wildfly.datasources.db2.transaction-isolation,env.DB2_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+            "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+          }, {
+            "name" : "user-name",
+            "value" : "${org.wildfly.datasources.db2.user-name,env.DB2_USER,env.OPENSHIFT_DB2_DB_USERNAME}",
+            "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+          }, {
+            "name" : "valid-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.db2.valid-connection-checker-class-name,env.DB2_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.db2.DB2ValidConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+          }, {
+            "name" : "validate-on-match",
+            "value" : "${org.wildfly.datasources.db2.validate-on-match,env.DB2_VALIDATE_ON_MATCH:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-db2-driver">db2-driver</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,db2</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-unbound-datasources&nbsp;=&nbsp;JNDI env,DB2_JNDI=##ITEM##</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/db2/env.yaml</li>
+  </ul>
+  <h3 id="layer-db2-default-datasource">db2-default-datasource&nbsp;<a href="#layer-db2-default-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ee" : {
+      "_address" : "/subsystem=ee",
+      "service" : {
+        "default-bindings" : {
+          "_address" : "/subsystem=ee/service=default-bindings",
+          "attributes" : [ {
+            "name" : "datasource",
+            "value" : "${org.wildfly.datasources.db2.jndi-name,env.DB2_JNDI:java:jboss/datasources/${org.wildfly.datasources.db2.datasource, env.DB2_DATASOURCE,env.OPENSHIFT_DB2_DATASOURCE:DB2DS}}",
+            "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-db2-datasource">db2-datasource</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,db2:default</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-no-default-datasource&nbsp;=&nbsp;</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/db2/env.yaml</li>
+  </ul>
+  <h3 id="layer-db2-driver">db2-driver&nbsp;<a href="#layer-db2-driver" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "jdbc-driver" : {
+        "db2" : {
+          "_address" : "/subsystem=datasources/jdbc-driver=*",
+          "attributes" : [ {
+            "name" : "driver-module-name",
+            "value" : "com.ibm.db2",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+          }, {
+            "name" : "driver-xa-datasource-class-name",
+            "value" : "com.ibm.db2.jcc.DB2XADataSource",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.annotation.field.value-className&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,className=com.ibm.db2.jcc.*</li>
+    <li>org.wildfly.rule.annotation.field.value-url&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,url=jdbc:db2:*</li>
+    <li>org.wildfly.rule.xml-path&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,db2</li>
+    <li>org.wildfly.rule.xml-path-xa&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,db2</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>com.ibm.db2</li>
+    <li>org.jboss.as.connector</li>
+  </ul>
+  <h3 id="layer-h2database-datasource">h2database-datasource&nbsp;<a href="#layer-h2database-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "data-source" : {
+        "H2DatabaseDS" : {
+          "_address" : "/subsystem=datasources/data-source=*",
+          "attributes" : [ {
+            "name" : "background-validation",
+            "value" : "${org.wildfly.datasources.h2database.background-validation,env.H2DATABASE_BACKGROUND_VALIDATION:false}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+          }, {
+            "name" : "background-validation-millis",
+            "value" : "${org.wildfly.datasources.h2database.background-validation-millis,env.H2DATABASE_BACKGROUND_VALIDATION_MILLIS:10000}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+          }, {
+            "name" : "connection-url",
+            "value" : "${org.wildfly.datasources.h2database.connection-url,env.H2DATABASE_URL,env.OPENSHIFT_H2DATABASE_URL:jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}",
+            "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+          }, {
+            "name" : "driver-name",
+            "value" : "h2database",
+            "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+          }, {
+            "name" : "enabled",
+            "value" : "${org.wildfly.datasources.h2database.enabled, env.H2DATABASE_ENABLED:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+          }, {
+            "name" : "exception-sorter-class-name",
+            "value" : "${org.wildfly.datasources.h2database.exception-sorter-class-name,env.H2DATABASE_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullExceptionSorter}",
+            "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+          }, {
+            "name" : "flush-strategy",
+            "value" : "${org.wildfly.datasources.h2database.flush-strategy,env.H2DATABASE_FLUSH_STRATEGY:FailingConnectionOnly}",
+            "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+          }, {
+            "name" : "idle-timeout-minutes",
+            "value" : "${org.wildfly.datasources.h2database.idle-timeout-minutes,env.H2DATABASE_IDLE_TIMEOUT_MINUTES:30}",
+            "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+          }, {
+            "name" : "jndi-name",
+            "value" : "${org.wildfly.datasources.h2database.jndi-name,env.H2DATABASE_JNDI:java:jboss/datasources/${org.wildfly.datasources.h2database.datasource, env.H2DATABASE_DATASOURCE,env.OPENSHIFT_H2DATABASE_DATASOURCE:H2DatabaseDS}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+          }, {
+            "name" : "jta",
+            "value" : "${org.wildfly.datasources.h2database.jta,env.H2DATABASE_JTA:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jta"
+          }, {
+            "name" : "max-pool-size",
+            "value" : "${org.wildfly.datasources.h2database.max-pool-size,env.H2DATABASE_MAX_POOL_SIZE:20}",
+            "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+          }, {
+            "name" : "min-pool-size",
+            "value" : "${org.wildfly.datasources.h2database.min-pool-size,env.H2DATABASE_MIN_POOL_SIZE:0}",
+            "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+          }, {
+            "name" : "password",
+            "value" : "${org.wildfly.datasources.h2database.password,env.H2DATABASE_PASSWORD,env.OPENSHIFT_H2DATABASE_DB_PASSWORD:sa}",
+            "_address" : "/subsystem=datasources/data-source=*@@@password"
+          }, {
+            "name" : "stale-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.h2database.stale-connection-checker-class-name,env.H2DATABASE_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+          }, {
+            "name" : "transaction-isolation",
+            "value" : "${org.wildfly.datasources.h2database.transaction-isolation,env.H2DATABASE_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+            "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+          }, {
+            "name" : "user-name",
+            "value" : "${org.wildfly.datasources.h2database.user-name,env.H2DATABASE_USER,env.OPENSHIFT_H2DATABASE_DB_USERNAME:sa}",
+            "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+          }, {
+            "name" : "valid-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.h2database.valid-connection-checker-class-name,env.H2DATABASE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullValidConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+          }, {
+            "name" : "validate-on-match",
+            "value" : "${org.wildfly.datasources.h2database.validate-on-match,env.H2DATABASE_VALIDATE_ON_MATCH:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-h2database-driver">h2database-driver</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h3 id="layer-h2database-default-datasource">h2database-default-datasource&nbsp;<a href="#layer-h2database-default-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ee" : {
+      "_address" : "/subsystem=ee",
+      "service" : {
+        "default-bindings" : {
+          "_address" : "/subsystem=ee/service=default-bindings",
+          "attributes" : [ {
+            "name" : "datasource",
+            "value" : "java:jboss/datasources/${env.H2DATABASE_DATASOURCE:H2DatabaseDS}",
+            "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <a href="#layer-h2database-datasource">h2database-datasource</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h3 id="layer-h2database-driver">h2database-driver&nbsp;<a href="#layer-h2database-driver" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "jdbc-driver" : {
+        "h2database" : {
+          "_address" : "/subsystem=datasources/jdbc-driver=*",
+          "attributes" : [ {
+            "name" : "driver-module-name",
+            "value" : "com.h2database.h2database",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+          }, {
+            "name" : "driver-xa-datasource-class-name",
+            "value" : "org.h2.jdbcx.JdbcDataSource",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>com.h2database.h2database</li>
+    <li>org.jboss.as.connector</li>
+  </ul>
+  <h3 id="layer-mariadb-datasource">mariadb-datasource&nbsp;<a href="#layer-mariadb-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "data-source" : {
+        "MariaDBDS" : {
+          "_address" : "/subsystem=datasources/data-source=*",
+          "attributes" : [ {
+            "name" : "background-validation",
+            "value" : "${org.wildfly.datasources.mariadb.background-validation,env.MARIADB_BACKGROUND_VALIDATION:false}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+          }, {
+            "name" : "background-validation-millis",
+            "value" : "${org.wildfly.datasources.mariadb.background-validation-millis,env.MARIADB_BACKGROUND_VALIDATION_MILLIS:10000}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+          }, {
+            "name" : "connection-url",
+            "value" : "${org.wildfly.datasources.mariadb.connection-url,env.MARIADB_URL:jdbc:mariadb://${org.wildfly.datasources.mariadb.host,env.MARIADB_SERVICE_HOST,env.MARIADB_HOST:localhost}:${org.wildfly.datasources.mariadb.port,env.MARIADB_SERVICE_PORT,env.MARIADB_PORT:3306}/${org.wildfly.datasources.mariadb.database,env.MARIADB_DATABASE}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+          }, {
+            "name" : "driver-name",
+            "value" : "mariadb",
+            "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+          }, {
+            "name" : "enabled",
+            "value" : "${org.wildfly.datasources.mariadb.enabled,env.MARIADB_ENABLED:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+          }, {
+            "name" : "exception-sorter-class-name",
+            "value" : "${org.wildfly.datasources.mariadb.exception-sorter-class-name,env.MARIADB_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter}",
+            "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+          }, {
+            "name" : "flush-strategy",
+            "value" : "${org.wildfly.datasources.mariadb.flush-strategy,env.MARIADB_FLUSH_STRATEGY:FailingConnectionOnly}",
+            "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+          }, {
+            "name" : "idle-timeout-minutes",
+            "value" : "${org.wildfly.datasources.mariadb.idle-timeout-minutes,env.MARIADB_IDLE_TIMEOUT_MINUTES:30}",
+            "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+          }, {
+            "name" : "jndi-name",
+            "value" : "${org.wildfly.datasources.mariadb.jndi-name,env.MARIADB_JNDI:java:jboss/datasources/${org.wildfly.datasources.mariadb.datasource,env.MARIADB_DATASOURCE:MariaDBDS}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+          }, {
+            "name" : "jta",
+            "value" : "${org.wildfly.datasources.mariadb.jta,env.MARIADB_JTA:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jta"
+          }, {
+            "name" : "max-pool-size",
+            "value" : "${org.wildfly.datasources.mariadb.max-pool-size,env.MARIADB_MAX_POOL_SIZE:20}",
+            "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+          }, {
+            "name" : "min-pool-size",
+            "value" : "${org.wildfly.datasources.mariadb.min-pool-size,env.MARIADB_MIN_POOL_SIZE:0}",
+            "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+          }, {
+            "name" : "password",
+            "value" : "${org.wildfly.datasources.mariadb.password,env.MARIADB_PASSWORD}",
+            "_address" : "/subsystem=datasources/data-source=*@@@password"
+          }, {
+            "name" : "stale-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.mariadb.stale-connection-checker-class-name,env.MARIADB_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+          }, {
+            "name" : "transaction-isolation",
+            "value" : "${org.wildfly.datasources.mariadb.transaction-isolation,env.MARIADB_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+            "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+          }, {
+            "name" : "user-name",
+            "value" : "${org.wildfly.datasources.mariadb.user-name,env.MARIADB_USER}",
+            "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+          }, {
+            "name" : "valid-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.mariadb.valid-connection-checker-class-name,env.MARIADB_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+          }, {
+            "name" : "validate-on-match",
+            "value" : "${org.wildfly.datasources.mariadb.validate-on-match,env.MARIADB_VALIDATE_ON_MATCH:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-mariadb-driver">mariadb-driver</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,mariadb</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-unbound-datasources&nbsp;=&nbsp;JNDI env,MARIADB_JNDI=##ITEM##</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mariadb/env.yaml</li>
+  </ul>
+  <h3 id="layer-mariadb-default-datasource">mariadb-default-datasource&nbsp;<a href="#layer-mariadb-default-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ee" : {
+      "_address" : "/subsystem=ee",
+      "service" : {
+        "default-bindings" : {
+          "_address" : "/subsystem=ee/service=default-bindings",
+          "attributes" : [ {
+            "name" : "datasource",
+            "value" : "java:jboss/datasources/${env.MARIADB_DATASOURCE:MariaDBDS}",
+            "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-mariadb-datasource">mariadb-datasource</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,mariadb:default</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-no-default-datasource&nbsp;=&nbsp;</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mariadb/env.yaml</li>
+  </ul>
+  <h3 id="layer-mariadb-driver">mariadb-driver&nbsp;<a href="#layer-mariadb-driver" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "jdbc-driver" : {
+        "mariadb" : {
+          "_address" : "/subsystem=datasources/jdbc-driver=*",
+          "attributes" : [ {
+            "name" : "driver-module-name",
+            "value" : "org.mariadb.jdbc",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+          }, {
+            "name" : "driver-xa-datasource-class-name",
+            "value" : "org.mariadb.jdbc.MariaDbDataSource",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.annotation.field.value-className&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,className=org.mariadb.*</li>
+    <li>org.wildfly.rule.annotation.field.value-url&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,url=jdbc:mariadb:*</li>
+    <li>org.wildfly.rule.xml-path&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,mariadb</li>
+    <li>org.wildfly.rule.xml-path-xa&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,mariadb</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.jboss.as.connector</li>
+    <li>org.mariadb.jdbc</li>
+  </ul>
+  <h3 id="layer-mssqlserver-datasource">mssqlserver-datasource&nbsp;<a href="#layer-mssqlserver-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "data-source" : {
+        "MSSQLServerDS" : {
+          "_address" : "/subsystem=datasources/data-source=*",
+          "attributes" : [ {
+            "name" : "background-validation",
+            "value" : "${org.wildfly.datasources.mssqlserver.background-validation,env.MSSQLSERVER_BACKGROUND_VALIDATION:false}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+          }, {
+            "name" : "background-validation-millis",
+            "value" : "${org.wildfly.datasources.mssqlserver.background-validation-millis,env.MSSQLSERVER_BACKGROUND_VALIDATION_MILLIS:10000}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+          }, {
+            "name" : "connection-url",
+            "value" : "${org.wildfly.datasources.mssqlserver.connection-url,env.MSSQLSERVER_URL:jdbc:sqlserver://${org.wildfly.datasources.mssqlserver.host,env.MSSQLSERVER_SERVICE_HOST,env.MSSQLSERVER_HOST:localhost}:${org.wildfly.datasources.mssqlserver.port,env.MSSQLSERVER_SERVICE_PORT,env.MSSQLSERVER_PORT:1433};DatabaseName\\=${org.wildfly.datasources.mssqlserver.database,env.MSSQLSERVER_DATABASE}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+          }, {
+            "name" : "driver-name",
+            "value" : "mssqlserver",
+            "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+          }, {
+            "name" : "enabled",
+            "value" : "${org.wildfly.datasources.mssqlserver.enabled, env.MSSQLSERVER_ENABLED:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+          }, {
+            "name" : "exception-sorter-class-name",
+            "value" : "${org.wildfly.datasources.mssqlserver.exception-sorter-class-name, env.MSSQLSERVER_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.mssql.MSSQLExceptionSorter}",
+            "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+          }, {
+            "name" : "flush-strategy",
+            "value" : "${org.wildfly.datasources.mssqlserver.flush-strategy,env.MSSQLSERVER_FLUSH_STRATEGY:FailingConnectionOnly}",
+            "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+          }, {
+            "name" : "idle-timeout-minutes",
+            "value" : "${org.wildfly.datasources.mssqlserver.idle-timeout-minutes,env.MSSQLSERVER_IDLE_TIMEOUT_MINUTES:30}",
+            "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+          }, {
+            "name" : "jndi-name",
+            "value" : "${org.wildfly.datasources.mssqlserver.jndi-name,env.MSSQLSERVER_JNDI:java:jboss/datasources/${org.wildfly.datasources.mssqlserver.datasource, env.MSSQLSERVER_DATASOURCE:MSSQLServerDS}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+          }, {
+            "name" : "jta",
+            "value" : "${org.wildfly.datasources.mssqlserver.jta,env.MSSQLSERVER_JTA:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jta"
+          }, {
+            "name" : "max-pool-size",
+            "value" : "${org.wildfly.datasources.mssqlserver.max-pool-size,env.MSSQLSERVER_MAX_POOL_SIZE:20}",
+            "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+          }, {
+            "name" : "min-pool-size",
+            "value" : "${org.wildfly.datasources.mssqlserver.min-pool-size,env.MSSQLSERVER_MIN_POOL_SIZE:0}",
+            "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+          }, {
+            "name" : "password",
+            "value" : "${org.wildfly.datasources.mssqlserver.password,env.MSSQLSERVER_PASSWORD}",
+            "_address" : "/subsystem=datasources/data-source=*@@@password"
+          }, {
+            "name" : "stale-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.mssqlserver.stale-connection-checker-class-name,env.MSSQLSERVER_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+          }, {
+            "name" : "transaction-isolation",
+            "value" : "${org.wildfly.datasources.mssqlserver.transaction-isolation,env.MSSQLSERVER_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+            "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+          }, {
+            "name" : "user-name",
+            "value" : "${org.wildfly.datasources.mssqlserver.user-name,env.MSSQLSERVER_USER}",
+            "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+          }, {
+            "name" : "valid-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.mssqlserver.valid-connection-checker-class-name,env.MSSQLSERVER_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.mssql.MSSQLValidConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+          }, {
+            "name" : "validate-on-match",
+            "value" : "${org.wildfly.datasources.mssqlserver.validate-on-match,env.MSSQLSERVER_VALIDATE_ON_MATCH:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-mssqlserver-driver">mssqlserver-driver</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,mssqlserver</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-unbound-datasources&nbsp;=&nbsp;JNDI env,MSSQLSERVER_JNDI=##ITEM##</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mssqlserver/env.yaml</li>
+  </ul>
+  <h3 id="layer-mssqlserver-default-datasource">mssqlserver-default-datasource&nbsp;<a href="#layer-mssqlserver-default-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ee" : {
+      "_address" : "/subsystem=ee",
+      "service" : {
+        "default-bindings" : {
+          "_address" : "/subsystem=ee/service=default-bindings",
+          "attributes" : [ {
+            "name" : "datasource",
+            "value" : "java:jboss/datasources/${env.MSSQLSERVER_DATASOURCE:MSSQLServerDS}",
+            "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-mssqlserver-datasource">mssqlserver-datasource</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,mssqlserver:default</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-no-default-datasource&nbsp;=&nbsp;</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mssqlserver/env.yaml</li>
+  </ul>
+  <h3 id="layer-mssqlserver-driver">mssqlserver-driver&nbsp;<a href="#layer-mssqlserver-driver" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "jdbc-driver" : {
+        "mssqlserver" : {
+          "_address" : "/subsystem=datasources/jdbc-driver=*",
+          "attributes" : [ {
+            "name" : "driver-module-name",
+            "value" : "com.microsoft.sqlserver",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+          }, {
+            "name" : "driver-xa-datasource-class-name",
+            "value" : "com.microsoft.sqlserver.jdbc.SQLServerXADataSource",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.annotation.field.value-className&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,className=com.microsoft.*</li>
+    <li>org.wildfly.rule.annotation.field.value-url&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,url=jdbc:sqlserver:*</li>
+    <li>org.wildfly.rule.xml-path&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,mssqlserver</li>
+    <li>org.wildfly.rule.xml-path-xa&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,mssqlserver</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>com.microsoft.sqlserver</li>
+    <li>org.jboss.as.connector</li>
+  </ul>
+  <h3 id="layer-mysql-datasource">mysql-datasource&nbsp;<a href="#layer-mysql-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "data-source" : {
+        "MySQLDS" : {
+          "_address" : "/subsystem=datasources/data-source=*",
+          "attributes" : [ {
+            "name" : "background-validation",
+            "value" : "${org.wildfly.datasources.mysql.background-validation,env.MYSQL_BACKGROUND_VALIDATION:false}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+          }, {
+            "name" : "background-validation-millis",
+            "value" : "${org.wildfly.datasources.mysql.background-validation-millis,env.MYSQL_BACKGROUND_VALIDATION_MILLIS:10000}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+          }, {
+            "name" : "connection-url",
+            "value" : "${org.wildfly.datasources.mysql.connection-url,env.MYSQL_URL:jdbc:mysql://${org.wildfly.datasources.mysql.host,env.MYSQL_SERVICE_HOST,env.OPENSHIFT_MYSQL_DB_HOST,env.MYSQL_HOST:localhost}:${org.wildfly.datasources.mysql.port,env.MYSQL_SERVICE_PORT,env.OPENSHIFT_MYSQL_DB_PORT,env.MYSQL_PORT:3306}/${org.wildfly.datasources.mysql.database,env.MYSQL_DATABASE,env.OPENSHIFT_MYSQL_DB_NAME}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+          }, {
+            "name" : "driver-name",
+            "value" : "mysql",
+            "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+          }, {
+            "name" : "enabled",
+            "value" : "${org.wildfly.datasources.mysql.enabled, env.MYSQL_ENABLED:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+          }, {
+            "name" : "exception-sorter-class-name",
+            "value" : "${org.wildfly.datasources.mysql.exception-sorter-class-name, env.MYSQL_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter}",
+            "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+          }, {
+            "name" : "flush-strategy",
+            "value" : "${org.wildfly.datasources.mysql.flush-strategy,env.MYSQL_FLUSH_STRATEGY:FailingConnectionOnly}",
+            "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+          }, {
+            "name" : "idle-timeout-minutes",
+            "value" : "${org.wildfly.datasources.mysql.idle-timeout-minutes,env.MYSQL_IDLE_TIMEOUT_MINUTES:30}",
+            "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+          }, {
+            "name" : "jndi-name",
+            "value" : "${org.wildfly.datasources.mysql.jndi-name,env.MYSQL_JNDI:java:jboss/datasources/${org.wildfly.datasources.mysql.datasource,env.OPENSHIFT_MYSQL_DATASOURCE,env.MYSQL_DATASOURCE:MySQLDS}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+          }, {
+            "name" : "jta",
+            "value" : "${org.wildfly.datasources.mysql.jta,env.MYSQL_JTA:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jta"
+          }, {
+            "name" : "max-pool-size",
+            "value" : "${org.wildfly.datasources.mysql.max-pool-size,env.MYSQL_MAX_POOL_SIZE:20}",
+            "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+          }, {
+            "name" : "min-pool-size",
+            "value" : "${org.wildfly.datasources.mysql.min-pool-size,env.MYSQL_MIN_POOL_SIZE:0}",
+            "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+          }, {
+            "name" : "password",
+            "value" : "${org.wildfly.datasources.mysql.password,env.MYSQL_PASSWORD,env.OPENSHIFT_MYSQL_DB_PASSWORD}",
+            "_address" : "/subsystem=datasources/data-source=*@@@password"
+          }, {
+            "name" : "stale-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.mysql.stale-connection-checker-class-name,env.MYSQL_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+          }, {
+            "name" : "transaction-isolation",
+            "value" : "${org.wildfly.datasources.mysql.transaction-isolation,env.MYSQL_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+            "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+          }, {
+            "name" : "user-name",
+            "value" : "${org.wildfly.datasources.mysql.user-name,env.MYSQL_USER,env.OPENSHIFT_MYSQL_DB_USERNAME}",
+            "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+          }, {
+            "name" : "valid-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.mysql.valid-connection-checker-class-name,env.MYSQL_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+          }, {
+            "name" : "validate-on-match",
+            "value" : "${org.wildfly.datasources.mysql.validate-on-match,env.MYSQL_VALIDATE_ON_MATCH:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-mysql-driver">mysql-driver</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,mysql</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-unbound-datasources&nbsp;=&nbsp;JNDI env,MYSQL_JNDI=##ITEM##</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mysql/env.yaml</li>
+  </ul>
+  <h3 id="layer-mysql-default-datasource">mysql-default-datasource&nbsp;<a href="#layer-mysql-default-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ee" : {
+      "_address" : "/subsystem=ee",
+      "service" : {
+        "default-bindings" : {
+          "_address" : "/subsystem=ee/service=default-bindings",
+          "attributes" : [ {
+            "name" : "datasource",
+            "value" : "java:jboss/datasources/${env.OPENSHIFT_MYSQL_DATASOURCE,env.MYSQL_DATASOURCE:MySQLDS}",
+            "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-mysql-datasource">mysql-datasource</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,mysql:default</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-no-default-datasource&nbsp;=&nbsp;</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/mysql/env.yaml</li>
+  </ul>
+  <h3 id="layer-mysql-driver">mysql-driver&nbsp;<a href="#layer-mysql-driver" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "jdbc-driver" : {
+        "mysql" : {
+          "_address" : "/subsystem=datasources/jdbc-driver=*",
+          "attributes" : [ {
+            "name" : "driver-module-name",
+            "value" : "com.mysql.jdbc",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+          }, {
+            "name" : "driver-xa-datasource-class-name",
+            "value" : "com.mysql.cj.jdbc.MysqlXADataSource",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.annotation.field.value-className&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,className=com.mysql.*</li>
+    <li>org.wildfly.rule.annotation.field.value-url&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,url=jdbc:mysql:*</li>
+    <li>org.wildfly.rule.xml-path&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,mysql</li>
+    <li>org.wildfly.rule.xml-path-xa&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,mysql</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>com.mysql.jdbc</li>
+    <li>org.jboss.as.connector</li>
+  </ul>
+  <h3 id="layer-oracle-datasource">oracle-datasource&nbsp;<a href="#layer-oracle-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "data-source" : {
+        "OracleDS" : {
+          "_address" : "/subsystem=datasources/data-source=*",
+          "attributes" : [ {
+            "name" : "background-validation",
+            "value" : "${org.wildfly.datasources.oracle.background-validation,env.ORACLE_BACKGROUND_VALIDATION:false}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+          }, {
+            "name" : "background-validation-millis",
+            "value" : "${org.wildfly.datasources.oracle.background-validation-millis,env.ORACLE_BACKGROUND_VALIDATION_MILLIS:10000}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+          }, {
+            "name" : "connection-url",
+            "value" : "${org.wildfly.datasources.oracle.connection-url,env.ORACLE_URL,env.OPENSHIFT_ORACLE_URL}",
+            "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+          }, {
+            "name" : "driver-name",
+            "value" : "oracle",
+            "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+          }, {
+            "name" : "enabled",
+            "value" : "${org.wildfly.datasources.oracle.enabled,env.ORACLE_ENABLED:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+          }, {
+            "name" : "exception-sorter-class-name",
+            "value" : "${org.wildfly.datasources.oracle.exception-sorter-class-name,env.ORACLE_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.oracle.OracleExceptionSorter}",
+            "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+          }, {
+            "name" : "flush-strategy",
+            "value" : "${org.wildfly.datasources.oracle.flush-strategy,env.ORACLE_FLUSH_STRATEGY:FailingConnectionOnly}",
+            "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+          }, {
+            "name" : "idle-timeout-minutes",
+            "value" : "${org.wildfly.datasources.oracle.idle-timeout-minutes,env.ORACLE_IDLE_TIMEOUT_MINUTES:30}",
+            "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+          }, {
+            "name" : "jndi-name",
+            "value" : "${org.wildfly.datasources.oracle.jndi-name,env.ORACLE_JNDI:java:jboss/datasources/${org.wildfly.datasources.oracle.datasource,env.ORACLE_DATASOURCE,env.OPENSHIFT_ORACLE_DATASOURCE:OracleDS}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+          }, {
+            "name" : "jta",
+            "value" : "${org.wildfly.datasources.oracle.jta,env.ORACLE_JTA:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jta"
+          }, {
+            "name" : "max-pool-size",
+            "value" : "${org.wildfly.datasources.oracle.max-pool-size,env.ORACLE_MAX_POOL_SIZE:20}",
+            "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+          }, {
+            "name" : "min-pool-size",
+            "value" : "${org.wildfly.datasources.oracle.min-pool-size,env.ORACLE_MIN_POOL_SIZE:0}",
+            "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+          }, {
+            "name" : "password",
+            "value" : "${org.wildfly.datasources.oracle.password,env.ORACLE_PASSWORD,env.OPENSHIFT_ORACLE_DB_PASSWORD}",
+            "_address" : "/subsystem=datasources/data-source=*@@@password"
+          }, {
+            "name" : "stale-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.oracle.stale-connection-checker-class-name,env.ORACLE_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+          }, {
+            "name" : "transaction-isolation",
+            "value" : "${org.wildfly.datasources.oracle.transaction-isolation,env.ORACLE_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+            "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+          }, {
+            "name" : "user-name",
+            "value" : "${org.wildfly.datasources.oracle.user-name,env.ORACLE_USER,env.OPENSHIFT_ORACLE_DB_USERNAME}",
+            "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+          }, {
+            "name" : "valid-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.oracle.valid-connection-checker-class-name,env.ORACLE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+          }, {
+            "name" : "validate-on-match",
+            "value" : "${org.wildfly.datasources.oracle.validate-on-match,env.ORACLE_VALIDATE_ON_MATCH:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-oracle-driver">oracle-driver</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,oracle</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-unbound-datasources&nbsp;=&nbsp;JNDI env,ORACLE_JNDI=##ITEM##</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/oracle/env.yaml</li>
+  </ul>
+  <h3 id="layer-oracle-default-datasource">oracle-default-datasource&nbsp;<a href="#layer-oracle-default-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ee" : {
+      "_address" : "/subsystem=ee",
+      "service" : {
+        "default-bindings" : {
+          "_address" : "/subsystem=ee/service=default-bindings",
+          "attributes" : [ {
+            "name" : "datasource",
+            "value" : "java:jboss/datasources/${env.ORACLE_DATASOURCE,env.OPENSHIFT_ORACLE_DATASOURCE:OracleDS}",
+            "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-oracle-datasource">oracle-datasource</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,oracle:default</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-no-default-datasource&nbsp;=&nbsp;</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/oracle/env.yaml</li>
+  </ul>
+  <h3 id="layer-oracle-driver">oracle-driver&nbsp;<a href="#layer-oracle-driver" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "jdbc-driver" : {
+        "oracle" : {
+          "_address" : "/subsystem=datasources/jdbc-driver=*",
+          "attributes" : [ {
+            "name" : "driver-module-name",
+            "value" : "com.oracle.database.jdbc",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+          }, {
+            "name" : "driver-xa-datasource-class-name",
+            "value" : "oracle.jdbc.xa.client.OracleXADataSource",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.annotation.field.value-className&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,className=oracle.jdbc.*</li>
+    <li>org.wildfly.rule.annotation.field.value-url&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,url=jdbc:oracle:*</li>
+    <li>org.wildfly.rule.xml-path&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,oracle</li>
+    <li>org.wildfly.rule.xml-path-xa&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,oracle</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>com.oracle.database.jdbc</li>
+    <li>org.jboss.as.connector</li>
+  </ul>
+  <h3 id="layer-postgresql-datasource">postgresql-datasource&nbsp;<a href="#layer-postgresql-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "data-source" : {
+        "PostgreSQLDS" : {
+          "_address" : "/subsystem=datasources/data-source=*",
+          "attributes" : [ {
+            "name" : "background-validation",
+            "value" : "${org.wildfly.datasources.postgresql.background-validation,env.POSTGRESQL_BACKGROUND_VALIDATION:false}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation"
+          }, {
+            "name" : "background-validation-millis",
+            "value" : "${org.wildfly.datasources.postgresql.background-validation-millis,env.POSTGRESQL_BACKGROUND_VALIDATION_MILLIS:10000}",
+            "_address" : "/subsystem=datasources/data-source=*@@@background-validation-millis"
+          }, {
+            "name" : "connection-url",
+            "value" : "${org.wildfly.datasources.postgresql.connection-url,env.POSTGRESQL_URL:jdbc:postgresql://${org.wildfly.datasources.postgresql.host,env.POSTGRESQL_SERVICE_HOST,env.OPENSHIFT_POSTGRESQL_DB_HOST,env.POSTGRESQL_HOST:localhost}:${org.wildfly.datasources.postgresql.port,env.POSTGRESQL_SERVICE_PORT,env.OPENSHIFT_POSTGRESQL_DB_PORT,env.POSTGRESQL_PORT:5432}/${org.wildfly.datasources.postgresql.database,env.POSTGRESQL_DATABASE,env.OPENSHIFT_POSTGRESQL_DB_NAME}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@connection-url"
+          }, {
+            "name" : "driver-name",
+            "value" : "postgresql",
+            "_address" : "/subsystem=datasources/data-source=*@@@driver-name"
+          }, {
+            "name" : "enabled",
+            "value" : "${org.wildfly.datasources.postgresql.enabled, env.POSTGRESQL_ENABLED:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@enabled"
+          }, {
+            "name" : "exception-sorter-class-name",
+            "value" : "${org.wildfly.datasources.postgresql.exception-sorter-class-name, env.POSTGRESQL_EXCEPTION_SORTER:org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter}",
+            "_address" : "/subsystem=datasources/data-source=*@@@exception-sorter-class-name"
+          }, {
+            "name" : "flush-strategy",
+            "value" : "${org.wildfly.datasources.postgresql.flush-strategy,env.POSTGRESQL_FLUSH_STRATEGY:FailingConnectionOnly}",
+            "_address" : "/subsystem=datasources/data-source=*@@@flush-strategy"
+          }, {
+            "name" : "idle-timeout-minutes",
+            "value" : "${org.wildfly.datasources.postgresql.idle-timeout-minutes,env.POSTGRESQL_IDLE_TIMEOUT_MINUTES:30}",
+            "_address" : "/subsystem=datasources/data-source=*@@@idle-timeout-minutes"
+          }, {
+            "name" : "jndi-name",
+            "value" : "${org.wildfly.datasources.postgresql.jndi-name,env.POSTGRESQL_JNDI:java:jboss/datasources/${org.wildfly.datasources.postgresql.datasource, env.POSTGRESQL_DATASOURCE,env.OPENSHIFT_POSTGRESQL_DATASOURCE:PostgreSQLDS}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jndi-name"
+          }, {
+            "name" : "jta",
+            "value" : "${org.wildfly.datasources.postgresql.jta,env.POSTGRESQL_JTA:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@jta"
+          }, {
+            "name" : "max-pool-size",
+            "value" : "${org.wildfly.datasources.postgresql.max-pool-size,env.POSTGRESQL_MAX_POOL_SIZE:20}",
+            "_address" : "/subsystem=datasources/data-source=*@@@max-pool-size"
+          }, {
+            "name" : "min-pool-size",
+            "value" : "${org.wildfly.datasources.postgresql.min-pool-size,env.POSTGRESQL_MIN_POOL_SIZE:0}",
+            "_address" : "/subsystem=datasources/data-source=*@@@min-pool-size"
+          }, {
+            "name" : "password",
+            "value" : "${org.wildfly.datasources.postgresql.password,env.POSTGRESQL_PASSWORD,env.OPENSHIFT_POSTGRESQL_DB_PASSWORD}",
+            "_address" : "/subsystem=datasources/data-source=*@@@password"
+          }, {
+            "name" : "stale-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.postgresql.stale-connection-checker-class-name,env.POSTGRESQL_STALE_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@stale-connection-checker-class-name"
+          }, {
+            "name" : "statistics-enabled",
+            "value" : "${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}",
+            "_address" : "/subsystem=datasources/data-source=*@@@statistics-enabled"
+          }, {
+            "name" : "transaction-isolation",
+            "value" : "${org.wildfly.datasources.postgresql.transaction-isolation,env.POSTGRESQL_TX_ISOLATION:TRANSACTION_READ_COMMITTED}",
+            "_address" : "/subsystem=datasources/data-source=*@@@transaction-isolation"
+          }, {
+            "name" : "user-name",
+            "value" : "${org.wildfly.datasources.postgresql.user-name,env.POSTGRESQL_USER,env.OPENSHIFT_POSTGRESQL_DB_USERNAME}",
+            "_address" : "/subsystem=datasources/data-source=*@@@user-name"
+          }, {
+            "name" : "valid-connection-checker-class-name",
+            "value" : "${org.wildfly.datasources.postgresql.valid-connection-checker-class-name,env.POSTGRESQL_CONNECTION_CHECKER:org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker}",
+            "_address" : "/subsystem=datasources/data-source=*@@@valid-connection-checker-class-name"
+          }, {
+            "name" : "validate-on-match",
+            "value" : "${org.wildfly.datasources.postgresql.validate-on-match,env.POSTGRESQL_VALIDATE_ON_MATCH:true}",
+            "_address" : "/subsystem=datasources/data-source=*@@@validate-on-match"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-postgresql-driver">postgresql-driver</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,postgresql</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-unbound-datasources&nbsp;=&nbsp;JNDI env,POSTGRESQL_JNDI=##ITEM##</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/postgresql/env.yaml</li>
+  </ul>
+  <h3 id="layer-postgresql-default-datasource">postgresql-default-datasource&nbsp;<a href="#layer-postgresql-default-datasource" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "ee" : {
+      "_address" : "/subsystem=ee",
+      "service" : {
+        "default-bindings" : {
+          "_address" : "/subsystem=ee/service=default-bindings",
+          "attributes" : [ {
+            "name" : "datasource",
+            "value" : "${org.wildfly.datasources.postgresql.jndi-name,env.POSTGRESQL_JNDI:java:jboss/datasources/${org.wildfly.datasources.postgresql.datasource, env.POSTGRESQL_DATASOURCE,env.OPENSHIFT_POSTGRESQL_DATASOURCE:PostgreSQLDS}}",
+            "_address" : "/subsystem=ee/service=default-bindings@@@datasource"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+    <li>
+      <a href="#layer-postgresql-datasource">postgresql-datasource</a>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.add-on&nbsp;=&nbsp;database,postgresql:default</li>
+    <li>org.wildfly.rule.add-on-depends-on&nbsp;=&nbsp;only:datasources</li>
+    <li>org.wildfly.rule.add-on-description&nbsp;=&nbsp;Documentation in https://github.com/wildfly-extras/wildfly-datasources-galleon-pack</li>
+    <li>org.wildfly.rule.add-on-fix-no-default-datasource&nbsp;=&nbsp;</li>
+    <li>org.wildfly.rule.configuration&nbsp;=&nbsp;https://raw.githubusercontent.com/wildfly-extras/wildfly-datasources-galleon-pack/main/doc/postgresql/env.yaml</li>
+  </ul>
+  <h3 id="layer-postgresql-driver">postgresql-driver&nbsp;<a href="#layer-postgresql-driver" class="anchor-link">§</a></h3>
+
+
+  <h4 class="toggle-link">
+    <a href="#">Management Model</a>
+  </h4>
+  <div class="collapsible code-block-container">
+    <pre><code class="language-json">
+{
+  "subsystem" : {
+    "datasources" : {
+      "_address" : "/subsystem=datasources",
+      "jdbc-driver" : {
+        "postgresql" : {
+          "_address" : "/subsystem=datasources/jdbc-driver=*",
+          "attributes" : [ {
+            "name" : "driver-module-name",
+            "value" : "org.postgresql.jdbc",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-module-name"
+          }, {
+            "name" : "driver-xa-datasource-class-name",
+            "value" : "org.postgresql.xa.PGXADataSource",
+            "_address" : "/subsystem=datasources/jdbc-driver=*@@@driver-xa-datasource-class-name"
+          } ]
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+  <h4 class="toggle-link">
+    <a href="#">Dependencies</a>
+  </h4>
+  <ul class="collapsible">
+    <li>
+      <code>datasources</code>
+      - <em> required </em>
+    </li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Layer Properties</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.wildfly.category&nbsp;=&nbsp;Database</li>
+    <li>org.wildfly.rule.annotation.field.value-className&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,className=org.postgresql.*</li>
+    <li>org.wildfly.rule.annotation.field.value-url&nbsp;=&nbsp;jakarta.annotation.sql.DataSourceDefinition,url=jdbc:postgresql:*</li>
+    <li>org.wildfly.rule.xml-path&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/datasource/driver,postgresql</li>
+    <li>org.wildfly.rule.xml-path-xa&nbsp;=&nbsp;[/META-INF/*.xml,/WEB-INF/*.xml],/datasources/xa-datasource/driver,postgresql</li>
+  </ul>
+  <h4 class="toggle-link">
+    <a href="#">Packages</a>
+  </h4>
+  <ul class="collapsible">
+    <li>org.jboss.as.connector</li>
+    <li>org.postgresql.jdbc</li>
+  </ul>
+
+  <h2>About</h2>
+  <p>
+    This feature pack is hosted at  <a href="https://github.com/wildfly/wildfly-datasources-galleon-pack">https://github.com/wildfly/wildfly-datasources-galleon-pack</a>
+  </p>
+  <p>
+    Source code of this feature pack is hosted at <a href="https://github.com/wildfly/wildfly-datasources-galleon-pack">https://github.com/wildfly/wildfly-datasources-galleon-pack</a>
+  </p>
+  <p>This feature pack is licensed under:</p>
+  <ul>
+    <li>Apache License, Version 2.0</li>
+  </ul>
+<footer>
+  <hr />
+</footer></div>
+</body>
+</html>
