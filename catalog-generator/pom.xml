@@ -16,12 +16,12 @@
     <version.io.quarkus.qute>3.23.2</version.io.quarkus.qute>
     <version.org.wildfly.glow>1.5.1.Final</version.org.wildfly.glow>
     <exec.mainClass>org.wildfly.catalog.Main</exec.mainClass>
-    <wildfly.repo.scm.connection>git@github.com:wildfly-extras/wildfly-catalog.git</wildfly.repo.scm.connection>
-    <wildfly.repo.scm.url>https://github.com/wildfly-extras/wildfly-catalog</wildfly.repo.scm.url>
+    <wildfly.repo.scm.connection>git@github.com:wildfly/wildfly-catalog.git</wildfly.repo.scm.connection>
+    <wildfly.repo.scm.url>https://github.com/wildfly/wildfly-catalog</wildfly.repo.scm.url>
   </properties>
   <name>WildFly catalog generator</name>
   <description>WildFly catalog generator</description>
-  <url>https://github.com/wildfly-extras/wildfly-catalog</url>
+  <url>https://github.com/wildfly/wildfly-catalog</url>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>

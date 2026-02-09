@@ -205,7 +205,7 @@ public class Main {
     }
 
     private static List<String> patchFile(String resource, String wildflyVersion, Path jsonFile, boolean release, String variantDir, String variantDescription) throws Exception {
-        String uri = "https://wildfly-extras.github.io/wildfly-catalog/" + wildflyVersion + "/" + variantDir + "/wildfly-catalog.json";
+        String uri = "https://docs.wildfly.org/wildfly-catalog/" + wildflyVersion + "/" + variantDir + "/wildfly-catalog.json";
         if (jsonFile != null) {
             if (!release) {
                 uri = jsonFile.toUri().toString();

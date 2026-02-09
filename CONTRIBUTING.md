@@ -11,7 +11,7 @@ This guide will walk you through the steps for getting started on our project.
 
 
 ## Forking the Project 
-To contribute, you will first need to fork the [wildfly-catalog](https://github.com/wildfly-extras/wildfly-catalog) repository. 
+To contribute, you will first need to fork the [wildfly-catalog](https://github.com/wildfly/wildfly-catalog) repository. 
 
 This can be done by looking in the top-right corner of the repository page and clicking "Fork".
 
@@ -29,7 +29,7 @@ Be sure to replace [URL] with the URL that you copied.
 Now you have the repository on your computer!
 
 ## Issues
-This project uses Github Issues to manage issues. All issues can be found [here](https://github.com/wildfly-extras/wildfly-catalog/issues). 
+This project uses Github Issues to manage issues. All issues can be found [here](https://github.com/wildfly/wildfly-catalog/issues). 
 
 ## Setting up your Developer Environment
 You will need:
@@ -46,7 +46,7 @@ Add a remote ref to upstream, for pulling future updates.
 For example:
 
 ```
-git remote add upstream https://github.com/wildfly-extras/wildfly-catalog
+git remote add upstream https://github.com/wildfly/wildfly-catalog
 ```
 To build `wildfly-catalog` run:
 ```bash
