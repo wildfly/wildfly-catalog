@@ -1,0 +1,152 @@
+{
+    "subsystem.hashicorp-vault" : {
+        "name" : "subsystem.hashicorp-vault",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "profile,subsystem",
+            "op-params" : ""
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "hashicorp-vault",
+                "feature-id" : true
+            },
+            {
+                "name" : "extension",
+                "default" : "org.wildfly.extension.hashicorp-vault"
+            },
+            {
+                "name" : "host",
+                "default" : "GLN_UNDEFINED"
+            },
+            {
+                "name" : "profile",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "refs" : [
+            {
+                "feature" : "extension",
+                "include" : true
+            },
+            {
+                "feature" : "profile",
+                "nillable" : true
+            }
+        ],
+        "stability" : "community",
+        "packages" : [{"package" : "org.wildfly.extension.hashicorp-vault"}]
+    },
+    "subsystem.hashicorp-vault.credential-store" : {
+        "name" : "subsystem.hashicorp-vault.credential-store",
+        "annotation" : {
+            "name" : "add",
+            "addr-params" : "profile,subsystem,credential-store",
+            "op-params" : "authentication-context,credential-reference,host-address,namespace"
+        },
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "hashicorp-vault",
+                "feature-id" : true
+            },
+            {
+                "name" : "credential-store",
+                "feature-id" : true
+            },
+            {
+                "name" : "authentication-context",
+                "nillable" : true,
+                "stability" : "community"
+            },
+            {
+                "name" : "credential-reference",
+                "nillable" : true,
+                "stability" : "community"
+            },
+            {
+                "name" : "host-address",
+                "stability" : "community"
+            },
+            {
+                "name" : "namespace",
+                "nillable" : true,
+                "stability" : "community"
+            },
+            {
+                "name" : "profile",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ],
+        "provides" : ["$profile.org.wildfly.security.credential-store.$credential-store"],
+        "refs" : [
+            {"feature" : "subsystem.hashicorp-vault"},
+            {
+                "feature" : "profile",
+                "nillable" : true
+            }
+        ],
+        "requires" : [
+            {
+                "optional" : true,
+                "name" : "$profile.org.wildfly.security.authentication-context.$authentication-context"
+            },
+            {
+                "optional" : true,
+                "name" : "$profile.org.wildfly.security.credential-store.$credential-reference"
+            }
+        ],
+        "stability" : "community"
+    },
+    "subsystem.hashicorp-vault.credential-store.credential-reference" : {
+        "name" : "subsystem.hashicorp-vault.credential-store.credential-reference",
+        "annotation" : {
+            "name" : "write-attribute",
+            "complex-attribute" : "credential-reference",
+            "addr-params" : "profile,subsystem,credential-store",
+            "op-params" : "store,alias,type,clear-text"
+        },
+        "refs" : [
+            {"feature" : "subsystem.hashicorp-vault.credential-store"},
+            {
+                "feature" : "profile",
+                "nillable" : true
+            }
+        ],
+        "params" : [
+            {
+                "name" : "subsystem",
+                "default" : "hashicorp-vault",
+                "feature-id" : true
+            },
+            {
+                "name" : "credential-store",
+                "feature-id" : true
+            },
+            {
+                "name" : "store",
+                "nillable" : true
+            },
+            {
+                "name" : "alias",
+                "nillable" : true
+            },
+            {
+                "name" : "type",
+                "nillable" : true
+            },
+            {
+                "name" : "clear-text",
+                "nillable" : true
+            },
+            {
+                "name" : "profile",
+                "feature-id" : true,
+                "default" : "GLN_UNDEFINED"
+            }
+        ]
+    }
+}

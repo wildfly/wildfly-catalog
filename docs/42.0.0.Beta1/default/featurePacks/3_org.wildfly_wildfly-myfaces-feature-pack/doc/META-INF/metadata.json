@@ -1,0 +1,52 @@
+{
+  "groupId" : "org.wildfly",
+  "artifactId" : "wildfly-myfaces-feature-pack",
+  "version" : "2.0.2.Final",
+  "name" : "MyFaces 4 Support for WildFly - Feature Pack",
+  "description" : "MyFaces 4 Support for WildFly - Feature Pack",
+  "licenses" : [ "Apache License, Version 2.0" ],
+  "url" : "https://wildfly.org",
+  "scm-url" : "https://github.com/wildfly-extras/wildfly-myfaces-feature-pack",
+  "copyright" : null,
+  "layers" : [ {
+    "name" : "myfaces",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "cdi",
+      "optional" : false
+    }, {
+      "name" : "jsf",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "jsf" : {
+          "_address" : "/subsystem=jsf",
+          "attributes" : [ {
+            "name" : "default-jsf-impl-slot",
+            "value" : "myfaces",
+            "_address" : "/subsystem=jsf@@@default-jsf-impl-slot"
+          } ]
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "jsf,myfaces"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "only:jsf"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Jakarta EE"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for Jakarta Faces, MyFaces implementation."
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Support for MyFaces."
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "jakarta.faces.api.myfaces", "jakarta.faces.impl.myfaces", "org.jboss.as.jsf", "org.jboss.as.jsf-injection.myfaces" ]
+  } ]
+}

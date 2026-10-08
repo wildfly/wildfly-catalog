@@ -1,0 +1,46 @@
+{
+  "groupId" : "org.wildfly.extras.graphql",
+  "artifactId" : "wildfly-microprofile-graphql-feature-pack",
+  "version" : "2.6.0.Final",
+  "name" : "WildFly MicroProfile GraphQL - Feature Pack",
+  "description" : "WildFly implementation of MicroProfile GraphQL",
+  "licenses" : [ "Apache License, Version 2.0" ],
+  "url" : "https://github.com/wildfly-extras/wildfly-graphql-feature-pack/",
+  "scm-url" : "https://github.com/wildfly-extras/wildfly-graphql-feature-pack",
+  "layers" : [ {
+    "name" : "microprofile-graphql",
+    "stability" : "default",
+    "dependencies" : [ {
+      "name" : "cdi",
+      "optional" : false
+    }, {
+      "name" : "microprofile-config",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "microprofile-graphql-client-smallrye" : {
+          "_address" : "/subsystem=microprofile-graphql-client-smallrye"
+        },
+        "microprofile-graphql-smallrye" : {
+          "_address" : "/subsystem=microprofile-graphql-smallrye"
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.stability",
+      "value" : "community"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "Microprofile"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for microprofile graphql"
+    }, {
+      "name" : "org.wildfly.rule.annotations",
+      "value" : "org.eclipse.microprofile.graphql"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "io.smallrye.graphql", "io.smallrye.graphql.api", "io.smallrye.graphql.client.api", "io.smallrye.graphql.client.common", "io.smallrye.graphql.client.vertx", "org.wildfly.extension.microprofile.graphql-client-smallrye", "org.wildfly.extension.microprofile.graphql-smallrye" ]
+  } ]
+}
