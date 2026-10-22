@@ -1,0 +1,50 @@
+{
+  "groupId" : "org.wildfly.security.vault",
+  "artifactId" : "wildfly-vault-feature-pack",
+  "version" : "1.0.0.Final",
+  "name" : "WildFly Vault Feature Pack",
+  "description" : "WildFly feature pack for credential stores backed by external vaults",
+  "licenses" : [ "Apache License, Version 2.0" ],
+  "url" : "http://www.jboss.org",
+  "scm-url" : "https://github.com/wildfly-security-incubator/wildfly-vault-feature-pack",
+  "copyright" : null,
+  "layers" : [ {
+    "name" : "hashicorp-vault",
+    "stability" : "community",
+    "dependencies" : [ {
+      "name" : "elytron",
+      "optional" : false
+    }, {
+      "name" : "management",
+      "optional" : false
+    }, {
+      "name" : "core-tools",
+      "optional" : false
+    } ],
+    "managementModel" : {
+      "subsystem" : {
+        "hashicorp-vault" : {
+          "_address" : "/subsystem=hashicorp-vault"
+        }
+      }
+    },
+    "properties" : [ {
+      "name" : "org.wildfly.rule.add-on",
+      "value" : "security,hashicorp-vault"
+    }, {
+      "name" : "org.wildfly.rule.add-on-depends-on",
+      "value" : "none"
+    }, {
+      "name" : "org.wildfly.category",
+      "value" : "HashiCorp Vault"
+    }, {
+      "name" : "org.wildfly.description",
+      "value" : "Support for HashiCorp Vault"
+    }, {
+      "name" : "org.wildfly.rule.add-on-description",
+      "value" : "Support for HashiCorp Vault in the management model"
+    } ],
+    "configurations" : [ ],
+    "packages" : [ "org.wildfly.extension.hashicorp-vault" ]
+  } ]
+}

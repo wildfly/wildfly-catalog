@@ -1,0 +1,544 @@
+{
+    "children" : {"subsystem" : {
+        "model-description" : {"hashicorp-vault" : {
+            "description" : "HashiCorp Vault subsystem for credential store integration",
+            "stability" : "community",
+            "attributes" : {},
+            "operations" : {
+                "add" : {
+                    "operation-name" : "add",
+                    "description" : "Add the HashiCorp Vault subsystem",
+                    "request-properties" : {},
+                    "reply-properties" : {},
+                    "stability" : "community",
+                    "read-only" : false,
+                    "runtime-only" : false
+                },
+                "remove" : {
+                    "operation-name" : "remove",
+                    "description" : "Remove the HashiCorp Vault subsystem",
+                    "request-properties" : {},
+                    "reply-properties" : {},
+                    "stability" : "default",
+                    "read-only" : false,
+                    "restart-required" : "resource-services",
+                    "runtime-only" : false
+                }
+            },
+            "notifications" : null,
+            "children" : {"credential-store" : {
+                "description" : "A HashiCorp Vault credential store",
+                "model-description" : {"*" : {
+                    "description" : "description",
+                    "stability" : "community",
+                    "capabilities" : [{
+                        "name" : "org.wildfly.security.credential-store",
+                        "dynamic" : true,
+                        "dynamic-elements" : ["credential-store"],
+                        "stability" : "default"
+                    }],
+                    "attributes" : {
+                        "authentication-context" : {
+                            "type" : {
+                                "TYPE_MODEL_VALUE" : "STRING"
+                            },
+                            "description" : "authentication-context",
+                            "expressions-allowed" : true,
+                            "required" : false,
+                            "nillable" : true,
+                            "capability-reference" : "org.wildfly.security.authentication-context",
+                            "min-length" : 1,
+                            "max-length" : 2147483647,
+                            "stability" : "community",
+                            "access-type" : "read-write",
+                            "storage" : "configuration",
+                            "restart-required" : "all-services"
+                        },
+                        "credential-reference" : {
+                            "type" : {
+                                "TYPE_MODEL_VALUE" : "OBJECT"
+                            },
+                            "description" : "credential-reference",
+                            "expressions-allowed" : false,
+                            "required" : false,
+                            "nillable" : true,
+                            "capability-reference" : "org.wildfly.security.credential-store",
+                            "stability" : "community",
+                            "access-constraints" : {"sensitive" : {"credential" : {"type" : "core"}}},
+                            "value-type" : {
+                                "store" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "credential-reference.store",
+                                    "expressions-allowed" : false,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "default"
+                                },
+                                "alias" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "credential-reference.alias",
+                                    "expressions-allowed" : true,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "requires" : ["store"],
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "default"
+                                },
+                                "type" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "credential-reference.type",
+                                    "expressions-allowed" : true,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "default"
+                                },
+                                "clear-text" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "credential-reference.clear-text",
+                                    "expressions-allowed" : true,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "default"
+                                }
+                            },
+                            "access-type" : "read-write",
+                            "storage" : "configuration",
+                            "restart-required" : "all-services"
+                        },
+                        "host-address" : {
+                            "type" : {
+                                "TYPE_MODEL_VALUE" : "STRING"
+                            },
+                            "description" : "host-address",
+                            "expressions-allowed" : true,
+                            "required" : true,
+                            "nillable" : false,
+                            "min-length" : 1,
+                            "max-length" : 2147483647,
+                            "stability" : "community",
+                            "access-type" : "read-write",
+                            "storage" : "configuration",
+                            "restart-required" : "all-services"
+                        },
+                        "namespace" : {
+                            "type" : {
+                                "TYPE_MODEL_VALUE" : "STRING"
+                            },
+                            "description" : "namespace",
+                            "expressions-allowed" : true,
+                            "required" : false,
+                            "nillable" : true,
+                            "min-length" : 1,
+                            "max-length" : 2147483647,
+                            "stability" : "community",
+                            "access-type" : "read-write",
+                            "storage" : "configuration",
+                            "restart-required" : "all-services"
+                        }
+                    },
+                    "operations" : {
+                        "add" : {
+                            "operation-name" : "add",
+                            "description" : "add",
+                            "request-properties" : {
+                                "authentication-context" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "add-authentication-context",
+                                    "expressions-allowed" : true,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "capability-reference" : "org.wildfly.security.authentication-context",
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "community"
+                                },
+                                "credential-reference" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "OBJECT"
+                                    },
+                                    "description" : "add-credential-reference",
+                                    "expressions-allowed" : false,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "capability-reference" : "org.wildfly.security.credential-store",
+                                    "stability" : "community",
+                                    "value-type" : {
+                                        "store" : {
+                                            "type" : {
+                                                "TYPE_MODEL_VALUE" : "STRING"
+                                            },
+                                            "description" : "credential-reference.store",
+                                            "expressions-allowed" : false,
+                                            "required" : false,
+                                            "nillable" : true,
+                                            "min-length" : 1,
+                                            "max-length" : 2147483647,
+                                            "stability" : "default"
+                                        },
+                                        "alias" : {
+                                            "type" : {
+                                                "TYPE_MODEL_VALUE" : "STRING"
+                                            },
+                                            "description" : "credential-reference.alias",
+                                            "expressions-allowed" : true,
+                                            "required" : false,
+                                            "nillable" : true,
+                                            "requires" : ["store"],
+                                            "min-length" : 1,
+                                            "max-length" : 2147483647,
+                                            "stability" : "default"
+                                        },
+                                        "type" : {
+                                            "type" : {
+                                                "TYPE_MODEL_VALUE" : "STRING"
+                                            },
+                                            "description" : "credential-reference.type",
+                                            "expressions-allowed" : true,
+                                            "required" : false,
+                                            "nillable" : true,
+                                            "min-length" : 1,
+                                            "max-length" : 2147483647,
+                                            "stability" : "default"
+                                        },
+                                        "clear-text" : {
+                                            "type" : {
+                                                "TYPE_MODEL_VALUE" : "STRING"
+                                            },
+                                            "description" : "credential-reference.clear-text",
+                                            "expressions-allowed" : true,
+                                            "required" : false,
+                                            "nillable" : true,
+                                            "min-length" : 1,
+                                            "max-length" : 2147483647,
+                                            "stability" : "default"
+                                        }
+                                    }
+                                },
+                                "host-address" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "add-host-address",
+                                    "expressions-allowed" : true,
+                                    "required" : true,
+                                    "nillable" : false,
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "community"
+                                },
+                                "namespace" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "add-namespace",
+                                    "expressions-allowed" : true,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "community"
+                                }
+                            },
+                            "reply-properties" : {},
+                            "stability" : "community",
+                            "read-only" : false,
+                            "restart-required" : "resource-services",
+                            "runtime-only" : false
+                        },
+                        "read-aliases" : {
+                            "operation-name" : "read-aliases",
+                            "description" : "List aliases in the credential store, optionally filtered by path",
+                            "request-properties" : {
+                                "path" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "The Vault path to list aliases from (e.g., \"secret/myapp\")",
+                                    "expressions-allowed" : false,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "community"
+                                },
+                                "recursive" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "BOOLEAN"
+                                    },
+                                    "description" : "Whether to traverse subpaths recursively",
+                                    "expressions-allowed" : false,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "default" : false,
+                                    "stability" : "community"
+                                },
+                                "recursive-depth" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "INT"
+                                    },
+                                    "description" : "Maximum depth to traverse if recursive is true (0 = current path only, 1 = one level deep, etc.)",
+                                    "expressions-allowed" : false,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "default" : 100,
+                                    "stability" : "community"
+                                },
+                                "max-number-of-aliases" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "INT"
+                                    },
+                                    "description" : "Maximum number of aliases to return (must be positive)",
+                                    "expressions-allowed" : false,
+                                    "required" : false,
+                                    "nillable" : true,
+                                    "default" : 10000,
+                                    "stability" : "community"
+                                }
+                            },
+                            "reply-properties" : {},
+                            "stability" : "community",
+                            "read-only" : true,
+                            "runtime-only" : true
+                        },
+                        "add-alias" : {
+                            "operation-name" : "add-alias",
+                            "description" : "Add a new credential alias to the credential store",
+                            "request-properties" : {
+                                "alias" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "The alias name for the credential",
+                                    "expressions-allowed" : false,
+                                    "required" : true,
+                                    "nillable" : false,
+                                    "min-length" : 1,
+                                    "max-length" : 2147483647,
+                                    "stability" : "community"
+                                },
+                                "secret-value" : {
+                                    "type" : {
+                                        "TYPE_MODEL_VALUE" : "STRING"
+                                    },
+                                    "description" : "The secret value to store",
+                                    "expressions-allowed" : false,
+                                    "required" : true,
+                                    "nillable" : false,
+                                    "min-length" : 0,
+                                    "max-length" : 2147483647,
+                                    "stability" : "community"
+                                }
+                            },
+                            "reply-properties" : {},
+                            "stability" : "community",
+                            "read-only" : false,
+                            "runtime-only" : true
+                        },
+                        "remove-alias" : {
+                            "operation-name" : "remove-alias",
+                            "description" : "Remove a credential alias from the credential store",
+                            "request-properties" : {"alias" : {
+                                "type" : {
+                                    "TYPE_MODEL_VALUE" : "STRING"
+                                },
+                                "description" : "The alias name to remove",
+                                "expressions-allowed" : false,
+                                "required" : true,
+                                "nillable" : false,
+                                "min-length" : 1,
+                                "max-length" : 2147483647,
+                                "stability" : "community"
+                            }},
+                            "reply-properties" : {},
+                            "stability" : "community",
+                            "read-only" : false,
+                            "runtime-only" : true
+                        },
+                        "remove" : {
+                            "operation-name" : "remove",
+                            "description" : "remove",
+                            "request-properties" : {},
+                            "reply-properties" : {},
+                            "stability" : "default",
+                            "read-only" : false,
+                            "restart-required" : "resource-services",
+                            "runtime-only" : false
+                        }
+                    },
+                    "notifications" : null,
+                    "children" : {}
+                }}
+            }},
+            "address" : [[{
+                "subsystem" : "hashicorp-vault"
+            }]]
+        }},
+        "description" : "The subsystems that make up the server's profile."
+    }},
+    "description" : "WildFly feature pack for credential stores backed by external vaults",
+    "possible-capabilities" : [
+        {
+            "name" : "org.wildfly.management.audit.handler",
+            "dynamic" : true,
+            "registration-points" : [
+                "/core-service=management/access=audit/syslog-handler=*/protocol=tls/authentication=truststore",
+                "/core-service=management/access=audit/syslog-handler=*/protocol=tls/authentication=client-certificate-store"
+            ]
+        },
+        {
+            "name" : "org.wildfly.management.configuration.changes",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/service=configuration-changes"]
+        },
+        {
+            "name" : "org.wildfly.management.console-availability",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.executor",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.external-module",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.http-interface",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/management-interface=http-interface"]
+        },
+        {
+            "name" : "org.wildfly.management.http.extensible",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/management-interface=http-interface"]
+        },
+        {
+            "name" : "org.wildfly.management.identity",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/access=identity"]
+        },
+        {
+            "name" : "org.wildfly.management.model-controller-client-factory",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.native-interface",
+            "dynamic" : false,
+            "registration-points" : ["/core-service=management/management-interface=native-interface"]
+        },
+        {
+            "name" : "org.wildfly.management.notification-handler-registry",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path",
+            "dynamic" : true,
+            "registration-points" : ["/path=*"]
+        },
+        {
+            "name" : "org.wildfly.management.path-manager",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.controller.temp.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.home.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.base.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.config.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.data.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.log.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.path.jboss.server.temp.dir",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.process-state-notifier",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.management.socket-binding-manager",
+            "dynamic" : false,
+            "registration-points" : ["/socket-binding-group=*"]
+        },
+        {
+            "name" : "org.wildfly.network.interface",
+            "dynamic" : true,
+            "registration-points" : ["/interface=*"]
+        },
+        {
+            "name" : "org.wildfly.network.outbound-socket-binding",
+            "dynamic" : true,
+            "registration-points" : [
+                "/socket-binding-group=*/remote-destination-outbound-socket-binding=*",
+                "/socket-binding-group=*/local-destination-outbound-socket-binding=*"
+            ]
+        },
+        {
+            "name" : "org.wildfly.network.socket-binding",
+            "dynamic" : true,
+            "registration-points" : ["/socket-binding-group=*/socket-binding=*"]
+        },
+        {
+            "name" : "org.wildfly.security.credential-store",
+            "dynamic" : true,
+            "registration-points" : ["/subsystem=hashicorp-vault/credential-store=*"]
+        },
+        {
+            "name" : "org.wildfly.server.environment",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        },
+        {
+            "name" : "org.wildfly.server.suspend-controller",
+            "dynamic" : false,
+            "registration-points" : ["/"]
+        }
+    ]
+}
